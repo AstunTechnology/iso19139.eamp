@@ -45,7 +45,7 @@
 
        A custom directive is created.
   -->
-  <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.gemini22']" priority="200">
+  <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.eamp']" priority="200">
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
@@ -67,7 +67,7 @@
   <!-- gml:TimePeriod (format = %Y-%m-%dThh:mm:ss) -->
   <!-- ===================================================================== -->
 
-  <xsl:template mode="mode-iso19139" match="gml:beginPosition[$schema='iso19139.gemini22']|gml:endPosition[$schema='iso19139.gemini22']|gml:timePosition[$schema='iso19139.gemini22']"
+  <xsl:template mode="mode-iso19139" match="gml:beginPosition[$schema='iso19139.eamp']|gml:endPosition[$schema='iso19139.eamp']|gml:timePosition[$schema='iso19139.eamp']"
                 priority="200">
 
 
@@ -114,7 +114,7 @@
   </xsl:template>
 
   <!-- Use limitation with gmx:Anchor -->
-  <xsl:template mode="mode-iso19139" priority="200" match="gmd:useLimitation[$schema='iso19139.gemini22' and gmx:Anchor]">
+  <xsl:template mode="mode-iso19139" priority="200" match="gmd:useLimitation[$schema='iso19139.eamp' and gmx:Anchor]">
     <xsl:variable name="name" select="name(.)"/>
 
     <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>

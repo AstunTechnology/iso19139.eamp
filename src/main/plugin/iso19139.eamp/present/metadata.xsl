@@ -15,7 +15,7 @@
     <xsl:import href="../../iso19139/present/metadata.xsl"/>
 
 	<!-- main template - the way into processing GEMINI -->
-	<xsl:template name="metadata-iso19139.gemini22">
+	<xsl:template name="metadata-iso19139.eamp">
 		<xsl:param name="schema"/>
 		<xsl:param name="edit" select="false()"/>
 		<xsl:param name="embedded"/>
@@ -30,7 +30,7 @@
 		</xsl:apply-templates>
 	</xsl:template>
 
-    <xsl:template name="iso19139.gemini22CompleteTab">
+    <xsl:template name="iso19139.eampCompleteTab">
         <xsl:param name="tabLink"/>
         <xsl:param name="schema"/>
 
@@ -42,9 +42,9 @@
     </xsl:template>
 
     <!-- iso19139 one is empty as well -->
-    <xsl:template name="iso19139.gemini22-javascript"/>
+    <xsl:template name="iso19139.eamp-javascript"/>
 
-    <xsl:template name="iso19139.gemini22Brief">
+    <xsl:template name="iso19139.eampBrief">
         <!-- Let the original ISO19139 templates do the work -->
         <xsl:call-template name="iso19139Brief"/>
     </xsl:template>

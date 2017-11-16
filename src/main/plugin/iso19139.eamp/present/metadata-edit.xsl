@@ -15,8 +15,8 @@
 
   <xsl:import href="../../iso19139/present/metadata-edit.xsl"/>
 
-  <!-- main template - the way into processing GEMINI22 -->
-  <xsl:template name="metadata-iso19139.gemini22">
+  <!-- main template - the way into processing eamp -->
+  <xsl:template name="metadata-iso19139.eamp">
     <xsl:param name="schema"/>
     <xsl:param name="edit" select="false()"/>
     <xsl:param name="embedded"/>

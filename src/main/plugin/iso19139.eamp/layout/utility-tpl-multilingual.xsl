@@ -6,17 +6,17 @@
   <xsl:import href="../../iso19139/layout/utility-tpl-multilingual.xsl"/>
 
   <!-- Get the main metadata languages -->
-  <xsl:template name="get-iso19139.gemini22-language">
+  <xsl:template name="get-iso19139.eamp-language">
     <xsl:call-template name="get-iso19139-language"/>
   </xsl:template>
 
   <!-- Get the list of other languages in JSON -->
-  <xsl:template name="get-iso19139.gemini22-other-languages-as-json">
+  <xsl:template name="get-iso19139.eamp-other-languages-as-json">
     <xsl:call-template name="get-iso19139-other-languages-as-json"/>
   </xsl:template>
 
   <!-- Get the list of other languages -->
-  <xsl:template name="get-iso19139.gemini22-other-languages">
+  <xsl:template name="get-iso19139.eamp-other-languages">
     <xsl:call-template name="get-iso19139-other-languages"/>
   </xsl:template>
 </xsl:stylesheet>

@@ -15,24 +15,24 @@
   <xsl:include href="layout.xsl"/>
 
   <!-- Load the schema configuration for the editor -->
-  <xsl:template name="get-iso19139.gemini22-configuration">
+  <xsl:template name="get-iso19139.eamp-configuration">
     <xsl:copy-of select="document('config-editor.xml')"/>
   </xsl:template>
 
 
   <!-- Dispatch to the current profile mode -->
-  <xsl:template name="dispatch-iso19139.gemini22">
+  <xsl:template name="dispatch-iso19139.eamp">
     <xsl:param name="base" as="node()"/>
 		<xsl:param name="overrideLabel" as="xs:string" required="no" select="''"/>
 
     <!-- process in iso19139 mode - but we can override any templates
          defined for iso19139 by importing that stylesheet into our
-         gemini22 stylesheet - that way the iso19139 templates will have
+         eamp stylesheet - that way the iso19139 templates will have
          a lower priority than ours -->
     <xsl:apply-templates mode="mode-iso19139" select="$base">
       <xsl:with-param name="overrideLabel" select="$overrideLabel"/>
       <xsl:with-param name="schema" select="$schema"/>
-      <xsl:with-param name="labels" select="$iso19139.gemini22labels"/>
+      <xsl:with-param name="labels" select="$iso19139.eamplabels"/>
     </xsl:apply-templates>
   </xsl:template>
 </xsl:stylesheet>

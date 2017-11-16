@@ -7,19 +7,19 @@
   <xsl:import href="../../iso19139/layout/utility-tpl.xsl"/>
   <xsl:include href="utility-tpl-multilingual.xsl"/>
 
-  <xsl:template name="get-iso19139.gemini22-title">
+  <xsl:template name="get-iso19139.eamp-title">
     <xsl:call-template name="get-iso19139-title"/>
   </xsl:template>
 
-	<xsl:template name="get-iso19139.gemini22-is-service">
+	<xsl:template name="get-iso19139.eamp-is-service">
 		<xsl:call-template name="get-iso19139-is-service"/>
 	</xsl:template>
 
-	<xsl:template name="get-iso19139.gemini22-extents-as-json">
+	<xsl:template name="get-iso19139.eamp-extents-as-json">
 		<xsl:call-template name="get-iso19139-extents-as-json"/>
 	</xsl:template>
 
-  <xsl:template name="get-iso19139.gemini22-online-source-config">
+  <xsl:template name="get-iso19139.eamp-online-source-config">
     <xsl:param name="pattern"/>
     <xsl:call-template name="get-iso19139-online-source-config">
         <xsl:with-param name="pattern" select="$pattern"/>

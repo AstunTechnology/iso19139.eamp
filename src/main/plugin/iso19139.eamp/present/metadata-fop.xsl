@@ -13,7 +13,7 @@
     xmlns:geonet="http://www.fao.org/geonetwork"
     exclude-result-prefixes="xs" version="2.0">
 
-  <xsl:template name="metadata-fop-iso19139.gemini22-unused">
+  <xsl:template name="metadata-fop-iso19139.eamp-unused">
     <xsl:param name="schema"/>
     
     <!-- TODO improve block level element using mode -->
@@ -51,7 +51,7 @@
   </xsl:template>
 
 
-  <xsl:template name="metadata-fop-iso19139.gemini22">
+  <xsl:template name="metadata-fop-iso19139.eamp">
     <xsl:param name="schema"/>
 
     <!-- Title -->

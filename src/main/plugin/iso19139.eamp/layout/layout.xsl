@@ -15,14 +15,14 @@
   <xsl:include href="utility-tpl.xsl"/>
 
 
-  <xsl:variable name="iso19139.gemini22schema" select="/root/gui/schemas/iso19139.gemini22"/>
-  <xsl:variable name="iso19139.gemini22labels" select="$iso19139.gemini22schema/labels"/>
-  <xsl:variable name="iso19139.gemini22codelists" select="$iso19139.gemini22schema/codelists"/>
-  <xsl:variable name="iso19139.gemini22strings" select="$iso19139.gemini22schema/strings"/>
+  <xsl:variable name="iso19139.eampschema" select="/root/gui/schemas/iso19139.eamp"/>
+  <xsl:variable name="iso19139.eamplabels" select="$iso19139.eampschema/labels"/>
+  <xsl:variable name="iso19139.eampcodelists" select="$iso19139.eampschema/codelists"/>
+  <xsl:variable name="iso19139.eampstrings" select="$iso19139.eampschema/strings"/>
 
-  <!-- Match codelist values. Must use iso19139.gemini22 because some 
-	     19139 codelists are extended in gemini22 - if the codelist exists in
-			 iso19139.gemini22 then use that otherwise use iso19139 codelists 
+  <!-- Match codelist values. Must use iso19139.eamp because some 
+	     19139 codelists are extended in eamp - if the codelist exists in
+			 iso19139.eamp then use that otherwise use iso19139 codelists 
   
   eg. 
   <gmd:CI_RoleCode codeList="./resources/codeList.xml#CI_RoleCode" codeListValue="pointOfContact">
@@ -32,25 +32,25 @@
     <geonet:attribute name="codeSpace" add="true"/>
   
   -->
-  <xsl:template mode="mode-iso19139" priority="30000" match="*[*/@codeList and $schema='iso19139.gemini22' and name()!='gmd:dateType']">
+  <xsl:template mode="mode-iso19139" priority="30000" match="*[*/@codeList and $schema='iso19139.eamp' and name()!='gmd:dateType']">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
-    <xsl:param name="codelists" select="$iso19139.gemini22codelists" required="no"/>
+    <xsl:param name="codelists" select="$iso19139.eampcodelists" required="no"/>
 
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
     <xsl:variable name="elementName" select="name()"/>
 
-		<!-- check iso19139.gemini22 first, then fall back to iso19139 -->
+		<!-- check iso19139.eamp first, then fall back to iso19139 -->
 		<xsl:variable name="listOfValues" as="node()">
-			<xsl:variable name="gemini22List" as="node()" select="gn-fn-metadata:getCodeListValues($schema, name(*[@codeListValue]), $codelists, .)"/>
+			<xsl:variable name="eampList" as="node()" select="gn-fn-metadata:getCodeListValues($schema, name(*[@codeListValue]), $codelists, .)"/>
 			<xsl:choose>
-				<xsl:when test="count($gemini22List/*)=0"> <!-- do iso19139 -->
+				<xsl:when test="count($eampList/*)=0"> <!-- do iso19139 -->
 					<xsl:copy-of select="gn-fn-metadata:getCodeListValues('iso19139', name(*[@codeListValue]), $iso19139codelists, .)"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:copy-of select="$gemini22List"/>
+					<xsl:copy-of select="$eampList"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>				
@@ -73,7 +73,7 @@
   </xsl:template>
 
 	<!--
-    Take care of enumerations. Same as for codelists, check iso19139.gemini22
+    Take care of enumerations. Same as for codelists, check iso19139.eamp
 		first and if not found there, then check iso19139.
     
     In the metadocument an enumeration provide the list of possible values:
@@ -84,20 +84,20 @@
       <geonet:text value="biota"/>
       <geonet:text value="boundaries"/
   -->
-  <xsl:template mode="mode-iso19139" priority="30000" match="*[gn:element/gn:text and $schema='iso19139.gemini22']">
+  <xsl:template mode="mode-iso19139" priority="30000" match="*[gn:element/gn:text and $schema='iso19139.eamp']">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
-    <xsl:param name="codelists" select="$iso19139.gemini22codelists" required="no"/>
+    <xsl:param name="codelists" select="$iso19139.eampcodelists" required="no"/>
 
-		<!-- check iso19139.gemini22 first, then fall back to iso19139 -->
+		<!-- check iso19139.eamp first, then fall back to iso19139 -->
 		<xsl:variable name="listOfValues" as="node()">
-			<xsl:variable name="gemini22List" as="node()" select="gn-fn-metadata:getCodeListValues($schema, name(), $codelists, .)"/>
+			<xsl:variable name="eampList" as="node()" select="gn-fn-metadata:getCodeListValues($schema, name(), $codelists, .)"/>
 			<xsl:choose>
-				<xsl:when test="count($gemini22List/*)=0"> <!-- do iso19139 -->
+				<xsl:when test="count($eampList/*)=0"> <!-- do iso19139 -->
 					<xsl:copy-of select="gn-fn-metadata:getCodeListValues('iso19139', name(), $iso19139codelists, .)"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:copy-of select="$gemini22List"/>
+					<xsl:copy-of select="$eampList"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>				
@@ -117,10 +117,10 @@
   <!-- Rendering date type as a dropdown to select type
   and the calendar next to it.
   -->
-  <xsl:template mode="mode-iso19139" priority="2000" match="gmd:CI_Date/gmd:date[$schema='iso19139.gemini22']">
+  <xsl:template mode="mode-iso19139" priority="2000" match="gmd:CI_Date/gmd:date[$schema='iso19139.eamp']">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
-    <xsl:param name="codelists" select="$iso19139.gemini22codelists" required="no"/>
+    <xsl:param name="codelists" select="$iso19139.eampcodelists" required="no"/>
 
     <xsl:variable name="labelConfig"
                   select="gn-fn-metadata:getLabel($schema, name(), $labels)"/>
@@ -130,13 +130,13 @@
 
 		<!-- check iso19139.mcp first, then fall back to iso19139 -->
 		<xsl:variable name="listOfValues" as="node()">
-			<xsl:variable name="gemini22List" as="node()" select="gn-fn-metadata:getCodeListValues($schema, 'gmd:CI_DateTypeCode', $codelists, .)"/>
+			<xsl:variable name="eampList" as="node()" select="gn-fn-metadata:getCodeListValues($schema, 'gmd:CI_DateTypeCode', $codelists, .)"/>
 			<xsl:choose>
-				<xsl:when test="count($gemini22List/*)=0"> <!-- do iso19139 -->
+				<xsl:when test="count($eampList/*)=0"> <!-- do iso19139 -->
 					<xsl:copy-of select="gn-fn-metadata:getCodeListValues('iso19139', 'gmd:CI_DateTypeCode', $iso19139codelists, .)"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:copy-of select="$gemini22List"/>
+					<xsl:copy-of select="$eampList"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>				

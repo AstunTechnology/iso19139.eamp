@@ -7,11 +7,11 @@
 
     <xsl:import href="../../iso19139/present/metadata-subtemplates.xsl"/>
 
-    <xsl:template name="iso19139.gemini22-subtemplate">
+    <xsl:template name="iso19139.eamp-subtemplate">
 
         <!-- Let the original ISO19139 templates do the work -->
 
-      <xsl:call-template name="iso19139.gemini22-subtemplate" select="."/>
+      <xsl:call-template name="iso19139.eamp-subtemplate" select="."/>
   </xsl:template>
   
 </xsl:stylesheet>

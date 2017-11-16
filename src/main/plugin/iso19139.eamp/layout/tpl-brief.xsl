@@ -14,13 +14,13 @@
 
   <xsl:include href="utility-tpl.xsl"/>
 
-  <xsl:template name="iso19139.gemini22Brief">
+  <xsl:template name="iso19139.eampBrief">
     <metadata>
       <xsl:call-template name="iso19139-brief"/>
     </metadata>
   </xsl:template>
 
-  <xsl:template name="iso19139.gemini22-brief">
+  <xsl:template name="iso19139.eamp-brief">
     <xsl:call-template name="iso19139-brief"/>
   </xsl:template>
 </xsl:stylesheet>
