@@ -12,7 +12,7 @@
   <xsl:import href="../../iso19139/layout/evaluate.xsl"/>
 
   <!-- The following templates usually delegates all to iso19139. -->
-  <xsl:template name="evaluate-iso19139.gemini22">
+  <xsl:template name="evaluate-iso19139.eamp">
     <xsl:param name="base" as="node()"/>
     <xsl:param name="in"/>
 
@@ -22,7 +22,7 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template name="evaluate-iso19139.gemini22-boolean">
+  <xsl:template name="evaluate-iso19139.eamp-boolean">
   <xsl:param name="base" as="node()"/>
   <xsl:param name="in"/>
 
