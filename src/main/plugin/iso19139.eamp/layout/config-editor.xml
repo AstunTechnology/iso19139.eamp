@@ -29,13 +29,16 @@
     <for name="gmd:specificUsage" use="textarea"/>
     <for name="gmd:userNote" use="textarea"/>
     <for name="gmd:useLimitation" use="textarea"/>
+    <for name="eamp:EA_AfaStatus" use="textarea"/>
 
 
     <for name="gco:Distance" use="number"/>
     <for name="gco:Decimal" use="number"/>
     <for name="gco:Integer" use="number"/>
     <for name="gco:Real" use="number"/>
+    <for name="eamp:afaNumber" use="number"/>
     <for name="gco:Boolean" use="checkbox"/>
+
 
 
     <for name="gco:Date" use="data-gn-date-picker"/>
@@ -1821,6 +1824,7 @@
         <for name="gmd:processor"/>
         <for name="gmd:topicCategory"/>
         <for name="gmd:useLimitation"/>
+        <for name="eamp:EA_Constraints"/>
       </flatModeExceptions>
 
       <!--
