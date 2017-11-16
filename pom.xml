@@ -9,8 +9,8 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>schema-iso19139.gemini22</artifactId>
-  <name>GEMINI 2.2 standard</name>
+  <artifactId>schema-iso19139.eamp</artifactId>
+  <name>EAMP v1.1 Standard</name>
 
   <dependencies>
     <dependency>
