@@ -18,7 +18,7 @@
                service="xml_csw-record"
                nsUri="http://www.isotc211.org/2005/gmd"
                schemaLocation="www.isotc211.org/2005/gmd/gmd.xsd"
-               xslt="xml_gemini2gemini.xsl"/>
+               xslt="xml_gemini2gemini.xsl"/> -->
 
     <!-- reset the metadatastandardname and version -->
     <converter name="gemini2iso19139"
