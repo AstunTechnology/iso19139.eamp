@@ -3502,4 +3502,29 @@
 <element name="gmx:MimeFileType">
     <label>Mime file type</label>
   </element>
+
+  <!-- Entries for EA -->
+    <element name="eamp:EA_Metadata">
+    <label>EA specific metadata</label>
+    </element>
+    <element name="eamp:EA_Constraints">
+    <label>EA Constraints Information</label>
+    <description>AfA Information</description>
+    </element>
+    <element name="eamp:EA_Afa">
+    <label>Main parent element for AfA sub-elements</label>
+    </element>
+    <element name="eamp:EA_AfaStatus">
+    <label>AfA Status</label>
+    <description>The Approval for Access (AfA) status assigned to the data or the third party status.</description>
+    <help>The AfA status assigned to the data or the third party status</help>
+    <condition>Mandatory</condition>
+    </element>
+    <element name="gco:Decimal" context="eamp:afaNumber">
+    <label>AfA Number</label>
+    <description>The official Approval for Access (AfA) number of the data if assigned during the AfA process.</description>
+    </element>
+  <element name="gmd:MD_RestrictionCode">
+      <label>Restriction Code</label>
+    </element>
 </labels>

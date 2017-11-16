@@ -2026,4 +2026,48 @@
 			<label>Input/output</label>
 		</entry>
 	</codelist>	
+
+	<!--=== AfA Code for EA ===-->
+	<codelist name="eamp:EA_AfAStatus_Type">
+			<entry>
+					<code>openDataRiskAssessment</code>
+					<label>Open Data Risk Assessment</label>
+					<description>Legal checks for low risk datasets.</description>
+			</entry>
+			<entry>
+					<code>notAfaToBeAssessed</code>
+					<label>Not AfA (To be Assessed)</label>
+					<description>The information should be assessed at the time of the request and is the default category within Metadata Explorer. The data has not been assessed via the AfA process.</description>
+			</entry>
+			<entry>
+					<code>notAfaToBeAssessedWithGuidance</code>
+					<label>Not AfA (To be Assessed with Guidance)</label>
+					<description>The information should be assessed at the time of the request and includes guidance relevant to the dataset. The data has been assessed via the AfA process.</description>
+			</entry>
+			<entry>
+					<code>afaPubSchemeAndInfoForReuseReg</code>
+					<label>AfA (Publication Scheme and Information for Re-Use Register)</label>
+					<description>All approved attributes can be licensed without further checks. Data are included on the Information for Re-Use Register and Publication Scheme.</description>
+			</entry>
+			<entry>
+					<code>afaPublicRegister</code>
+					<label>AfA (Public Register)</label>
+					<description>Approved for inclusion onto the Public Register only. Not available for Re-Use.</description>
+			</entry>
+			<entry>
+					<code>afaPublicationScheme</code>
+					<label>AfA (Publication Scheme)</label>
+					<description>Approved for inclusion on the Publication Scheme. Not available for Re-Use.</description>
+			</entry>
+			<entry>
+					<code>afaInformationRequestsOnly</code>
+					<label>AfA (Information Requests only)</label>
+					<description>Approved for reactive requests for information only. Not for licensing pro-active use or publication scheme.</description>
+			</entry>
+			<entry>
+					<code>notApplicableThirdpartyDataset</code>
+					<label>Not Applicable - third party dataset</label>
+					<description>There is not a requirement to put through the approval for access process as licence conditions shall stipulate access to these data.</description>
+			</entry>
+	</codelist>
 </codelists>
