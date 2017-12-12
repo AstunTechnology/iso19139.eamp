@@ -175,12 +175,12 @@
     </sch:p>
     <sch:rule context="//gmd:MD_LegalConstraints | //*[@gco:isoType='gmd:MD_LegalConstraints']">
       <sch:assert test="(count(gmd:accessConstraints/*[@codeListValue = 'otherRestrictions']) &gt;= 1 and
-                  gmd:otherConstraints) or
+                  count(gmd:otherConstraints) &gt;= 1) or
                   count(gmd:accessConstraints/*[@codeListValue = 'otherRestrictions']) = 0">
         MD_LegalConstraints: OtherConstraints must be documented if accessConstraints = 'otherRestrictions'.
       </sch:assert>
       <sch:assert test="(count(gmd:useConstraints/*[@codeListValue = 'otherRestrictions']) &gt;= 1 and
-                  gmd:otherConstraints) or
+                  count(gmd:otherConstraints) &gt;= 1) or
                   count(gmd:useConstraints/*[@codeListValue = 'otherRestrictions']) = 0">
         MD_LegalConstraints: OtherConstraints must be documented if useConstraints = 'otherRestrictions'
       </sch:assert>
@@ -619,13 +619,13 @@
   <sch:pattern abstract="true" id="InnerTextPattern">
     <sch:rule context="$context">
       <sch:assert test="(count($element) = 0) or
-                  (string-length(normalize-space($element)) &gt; 0) or
+                  (count($element[text() != '']) = 0) or
                   ($element/@gco:nilReason = 'inapplicable' or
                   $element/@gco:nilReason = 'missing' or
                   $element/@gco:nilReason = 'template' or
                   $element/@gco:nilReason = 'unknown' or
                   $element/@gco:nilReason = 'withheld')">
-        The '<sch:value-of select="name($element)"/>' element should have a value.
+        The '<sch:value-of select="name($element[0])"/>' element should have a value.
       </sch:assert>
     </sch:rule>
   </sch:pattern>
