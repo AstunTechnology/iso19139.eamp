@@ -16,7 +16,7 @@
     <EAMP300>Point of Contact</EAMP300>
     <EAMP300.alert.name>Each Point of Contact must contain one Individual Name</EAMP300.alert.name>
     <EAMP300.alert.org>Each Point of Contact must contain one Organisation Name</EAMP300.alert.org>
-    <EAMP300.alert.position>Each Point of Contact must contain one one Position Name</EAMP300.alert.position>
+    <EAMP300.alert.position>Each Point of Contact must contain one Position Name</EAMP300.alert.position>
     <EAMP300.alert.role>Each Point of Contact must contain one Role</EAMP300.alert.role>
     <EAMP300.alert.custodian>Each dataset must have exactly two points of contact with the role "Custodian"</EAMP300.alert.custodian>
     <EAMP300.alert.owner>Each dataset must have exactly one point of contact with the role "Owner"</EAMP300.alert.owner>

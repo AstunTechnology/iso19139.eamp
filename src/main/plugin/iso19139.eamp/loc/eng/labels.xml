@@ -3524,7 +3524,4 @@
     <label>AfA Number</label>
     <description>The official Approval for Access (AfA) number of the data if assigned during the AfA process.</description>
     </element>
-  <element name="gmd:MD_RestrictionCode">
-      <label>Restriction Code</label>
-    </element>
 </labels>
