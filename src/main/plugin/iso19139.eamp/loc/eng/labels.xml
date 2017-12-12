@@ -3514,6 +3514,10 @@
     <element name="eamp:EA_Afa">
     <label>Main parent element for AfA sub-elements</label>
     </element>
+    <element name="eamp:afaNumber">
+    <label>AfA number</label>
+    <description>The official Approval for Access (AfA) number of the data if assigned during the AfA process.</description>
+    </element>
     <element name="eamp:EA_AfaStatus">
     <label>AfA Status</label>
     <description>The Approval for Access (AfA) status assigned to the data or the third party status.</description>
