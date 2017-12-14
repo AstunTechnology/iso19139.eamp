@@ -70,7 +70,7 @@
   <xsl:template mode="render-field"
                 match="*[gco:CharacterString|gco:Integer|gco:Decimal|
        gco:Boolean|gco:Real|gco:Measure|gco:Length|gco:Distance|
-       gco:Angle|gmx:FileName|
+       gco:Angle|gmx:FileName|eamp:afaStatus|eamp:EA_AfaStatus|
        gco:Scale|gco:Record|gco:RecordType|gmx:MimeFileType|gmd:URL|
        gco:LocalName|gmd:PT_FreeText|gml:beginPosition|gml:endPosition|
        gco:Date|gco:DateTime|*/@codeListValue]"
@@ -90,6 +90,14 @@
     </dl>
   </xsl:template>
 
+  <xsl:template mode="render-field"
+                match="eamp:EA_Afa"
+                priority="50">
+                
+    <xsl:for-each select="*">
+      <xsl:apply-templates mode="render-field" select="."/>
+    </xsl:for-each>
+  </xsl:template>
 
 
   <!-- Some elements are only containers so bypass them -->
@@ -101,13 +109,6 @@
     <xsl:apply-templates mode="render-field" select="*"/>
   </xsl:template>
 
-  <xsl:template mode="render-field"
-                match="*[count(eamp:*) = 1] "
-                priority="50">
-                
-    <xsl:apply-templates mode="render-value" select="@*"/>
-    <xsl:apply-templates mode="render-field" select="*"/>
-  </xsl:template>
 
 
   <!-- Some major sections are boxed -->

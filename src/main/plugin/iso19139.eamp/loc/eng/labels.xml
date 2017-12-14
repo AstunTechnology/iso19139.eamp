@@ -3524,6 +3524,12 @@
     <help>The AfA status assigned to the data or the third party status</help>
     <condition>Mandatory</condition>
     </element>
+    <element name="eamp:afaStatus">
+    <label>AfA Status</label>
+    <description>The Approval for Access (AfA) status assigned to the data or the third party status.</description>
+    <help>The AfA status assigned to the data or the third party status</help>
+    <condition>Mandatory</condition>
+    </element>
     <element name="gco:Decimal" context="eamp:afaNumber">
     <label>AfA Number</label>
     <description>The official Approval for Access (AfA) number of the data if assigned during the AfA process.</description>
