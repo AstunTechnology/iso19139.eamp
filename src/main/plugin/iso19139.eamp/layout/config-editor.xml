@@ -29,7 +29,6 @@
     <for name="gmd:specificUsage" use="textarea"/>
     <for name="gmd:userNote" use="textarea"/>
     <for name="gmd:useLimitation" use="textarea"/>
-    <for name="eamp:EA_AfaStatus" use="textarea"/>
 
 
     <for name="gco:Distance" use="number"/>

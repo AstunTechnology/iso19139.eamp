@@ -2028,7 +2028,7 @@
 	</codelist>	
 
 	<!--=== AfA Code for EA ===-->
-	<codelist name="eamp:EA_AfAStatus_Type">
+	<codelist name="eamp:EA_AfaStatus">
 			<entry>
 					<code>openDataRiskAssessment</code>
 					<label>Open Data Risk Assessment</label>
