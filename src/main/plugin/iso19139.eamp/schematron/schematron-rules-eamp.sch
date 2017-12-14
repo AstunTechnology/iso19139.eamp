@@ -55,6 +55,16 @@
                 and //*[eamp:afaNumber]//gco:Decimal=0)">$loc/strings/EAMP200.alert.number</sch:assert>
         </sch:rule>
     </sch:pattern>
+    
+    
+    
+    <sch:pattern>
+        <sch:title>EAMP-Afa Number and Status</sch:title>
+        <sch:rule context="//*[eamp:EA_Constraints]">
+            <sch:assert test="*/eamp:afaNumber and */eamp:EA_AfaStatus">$loc/strings/EAMP200.alert.mandatory</sch:assert>
+        </sch:rule>
+    </sch:pattern>
+ 
  
     <!-- POINT OF CONTACT -->
 
