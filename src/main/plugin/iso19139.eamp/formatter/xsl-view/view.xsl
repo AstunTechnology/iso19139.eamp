@@ -13,6 +13,7 @@
                 xmlns:gn-fn-render="http://geonetwork-opensource.org/xsl/functions/render"
                 xmlns:gn-fn-metadata="http://geonetwork-opensource.org/xsl/functions/metadata"
                 xmlns:saxon="http://saxon.sf.net/"
+                xmlns:eamp="http://environment.data.gov.uk/eamp"
                 extension-element-prefixes="saxon"
                 exclude-result-prefixes="#all">
   <!-- This formatter render an ISO19139 record based on the
@@ -96,6 +97,14 @@
                 match="*[count(gmd:*) = 1]"
                 priority="50">
 
+    <xsl:apply-templates mode="render-value" select="@*"/>
+    <xsl:apply-templates mode="render-field" select="*"/>
+  </xsl:template>
+
+  <xsl:template mode="render-field"
+                match="*[count(eamp:*) = 1] "
+                priority="50">
+                
     <xsl:apply-templates mode="render-value" select="@*"/>
     <xsl:apply-templates mode="render-field" select="*"/>
   </xsl:template>
