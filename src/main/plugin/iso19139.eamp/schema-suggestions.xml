@@ -248,6 +248,12 @@
     <suggest name="gmd:classification"/>
     <suggest name="gmd:useLimitation"/>
   </field>
+  
+  <field name="gmd:useLimitation">
+    <suggest name="gmx:Anchor"/>
+    <suggest name="gco:CharacterString"/>
+    <suggest name="eamp:EA_Afa"/>
+  </field>
 
 
 </fields>
