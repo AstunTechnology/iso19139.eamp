@@ -102,7 +102,7 @@
 
   <!-- Some elements are only containers so bypass them -->
   <xsl:template mode="render-field"
-                match="*[count(gmd:*) = 1]"
+                match="*[count(gmd:*) = 1 and name() != 'gmd:MD_Constraints']"
                 priority="50">
 
     <xsl:apply-templates mode="render-value" select="@*"/>
