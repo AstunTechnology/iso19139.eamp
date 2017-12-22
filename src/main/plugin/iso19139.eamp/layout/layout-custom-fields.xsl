@@ -15,7 +15,7 @@
   <xsl:template mode="mode-iso19139" priority="2000" match="gmd:metadataStandardName|gmd:metadataStandardVersion">
 
     <xsl:call-template name="render-element">
-      <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels)/label"/>
+      <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $iso19139.eamplabels)/label"/>
       <xsl:with-param name="value" select="*"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
@@ -52,7 +52,7 @@
 
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
-                      select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)/label"/>
+                      select="gn-fn-metadata:getLabel($schema, name(), $iso19139.eamplabels, name(..), $isoType, $xpath)/label"/>
       <xsl:with-param name="value" select="."/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
@@ -90,7 +90,7 @@
 
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
-                      select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', $xpath)/label"/>
+                      select="gn-fn-metadata:getLabel($schema, name(), $iso19139.eamplabels, name(..), '', $xpath)/label"/>
       <xsl:with-param name="name" select="gn:element/@ref"/>
       <xsl:with-param name="value" select="text()"/>
       <xsl:with-param name="cls" select="local-name()"/>
@@ -117,7 +117,7 @@
   <xsl:template mode="mode-iso19139" priority="200" match="gmd:useLimitation[$schema='iso19139.eamp' and gmx:Anchor]">
     <xsl:variable name="name" select="name(.)"/>
 
-    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $iso19139.eamplabels)"/>
     <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
 
 
