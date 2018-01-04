@@ -572,6 +572,7 @@
                     @codeListValue or
                     local-name() = 'MD_TopicCategoryCode' or
                     local-name() = 'URL' or
+                    local-name() = 'EA_AfaStatus' or
                     (@gco:nilReason = 'inapplicable' or
                     @gco:nilReason = 'missing' or
                     @gco:nilReason = 'template' or
