@@ -93,7 +93,7 @@
   <xsl:template mode="render-field"
                 match="eamp:EA_Afa"
                 priority="50">
-                
+
     <xsl:for-each select="*">
       <xsl:apply-templates mode="render-field" select="."/>
     </xsl:for-each>
@@ -635,6 +635,30 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <!-- Enumeration -->
+  <xsl:template mode="render-value"
+                match="eamp:EA_AfaStatus">
+    <xsl:variable name="id" select="."/>
+    <xsl:variable name="codelistTranslation"
+                  select="tr:codelist-value-label(
+                            tr:create($schema),
+                            local-name(), $id)"/>
+    <xsl:choose>
+      <xsl:when test="$codelistTranslation != ''">
+
+        <xsl:variable name="codelistDesc"
+                      select="tr:codelist-value-desc(
+                            tr:create($schema),
+                            local-name(), $id)"/>
+        <span title="{$codelistDesc}"><xsl:value-of select="$codelistTranslation"/></span>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$id"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
 
   <xsl:template mode="render-value"
                 match="@gco:nilReason[. = 'withheld']"
