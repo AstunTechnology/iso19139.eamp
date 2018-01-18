@@ -39,33 +39,33 @@
     <sch:pattern>
         <sch:title>AfANumber</sch:title>
     </sch:pattern>
-    
+
     <sch:pattern>
         <sch:title>EAMP-mi2-AfANumber</sch:title>
         <sch:rule context="//*[eamp:EA_Afa]">
             <sch:assert test="((//eamp:EA_AfaStatus = 'Not AfA (To be Assessed with Guidance)' or
-                //eamp:EA_AfaStatus = 'AfA (Publication Scheme and Information for Re-Use Register)' or
+                //eamp:EA_AfaStatus = 'AfA (Publication Scheme &amp; Information for Re-Use Register)' or
                 //eamp:EA_AfaStatus = 'AfA (Public Register)' or
                 //eamp:EA_AfaStatus = 'AfA (Publication Scheme)' or
                 //eamp:EA_AfaStatus = 'AfA (Information Requests only)') and
                 //*[eamp:afaNumber]//gco:Decimal!=0) or ((
                 //eamp:EA_AfaStatus = 'Not AfA (To be Assessed)' or
-                //eamp:EA_AfaStatus = 'Not Applicable - third party dataset') or
+                //eamp:EA_AfaStatus = 'Not Applicable – Third Party Dataset') or
                 //eamp:EA_AfaStatus = 'Open Data Risk Assessment'
                 and //*[eamp:afaNumber]//gco:Decimal=0)">$loc/strings/EAMP200.alert.number</sch:assert>
         </sch:rule>
     </sch:pattern>
-    
-    
-    
+
+
+
     <sch:pattern>
         <sch:title>EAMP-Afa Number and Status</sch:title>
         <sch:rule context="//*[eamp:EA_Constraints]">
-            <sch:assert test="*/eamp:afaNumber and */eamp:EA_AfaStatus">$loc/strings/EAMP200.alert.mandatory</sch:assert>
+            <sch:assert test="*//eamp:afaNumber and *//eamp:EA_AfaStatus">$loc/strings/EAMP200.alert.mandatory</sch:assert>
         </sch:rule>
     </sch:pattern>
- 
- 
+
+
     <!-- POINT OF CONTACT -->
 
     <sch:pattern>
@@ -90,7 +90,7 @@
             <sch:assert test="count(//gmd:pointOfContact/gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode[@codeListValue='pointOfContact'])=1">$loc/strings/EAMP300.alert.poc</sch:assert>
          </sch:rule>
      </sch:pattern>
-    
+
     <sch:pattern>
         <sch:title>EAMP-mi5-Resourcetype</sch:title>
         <sch:rule context="/*[1]">

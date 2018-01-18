@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	
+
  * Hide in edit mode : If some codelist needs to be hidden
  in edit mode, the hideInEditMode attribute could be added
  to any entries.
- 
+
  eg.
 	<entry hideInEditMode="true">
-	
+
  This will restrict the number of available entries for end
  user editors and keep all records ISO compatible when using
  codelist (eg. harvested records could use codelist hidden
  in local node and needs to be displayed in view mode).
- 
+
  By default, this attribute is not used.
- 
+
  * editorMode attribute allows to configure the editor form field.
- 
+
  * - not set -: simple combo box
  * radio : radio button in one line
  * radio_linebreak : radio button with line break
  * radio_withdesc : radion button with line break and codelist entry description
  * select : select box with size set to the number of items if lower than 7 entries.
- 
+
 -->
 <codelists xmlns:gmd="http://www.isotc211.org/2005/gmd">
 	<!-- ==================================================== -->
@@ -253,7 +253,7 @@
 			<label>Author</label>
 			<description>Party who authored the resource</description>
 		</entry>
-		<!-- ISO PROFIL CHE ONLY 
+		<!-- ISO PROFIL CHE ONLY
 		<entry>
 			<code>editor</code>
 			<label>Editor</label>
@@ -1216,7 +1216,7 @@
 			<description>Pamphlet or leaflet giving descriptive information</description>
 		</entry>
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - -->
-		<!-- ISO PROFIL CHE ONLY 
+		<!-- ISO PROFIL CHE ONLY
 		<entry>
 			<code>zip100</code>
 			<label>Zip100</label>
@@ -1520,7 +1520,7 @@
 			<label>Publication</label>
 			<description>Publication</description>
 		</entry>-->
-		
+
 		<!-- Used for facet translation only and not displayed in editor -->
 		<entry hideInEditMode="true">
 			<code>map</code>
@@ -2025,48 +2025,48 @@
 			<code>in/out</code>
 			<label>Input/output</label>
 		</entry>
-	</codelist>	
+	</codelist>
 
 	<!--=== AfA Code for EA ===-->
 	<codelist name="eamp:EA_AfaStatus">
 			<entry>
-					<code>openDataRiskAssessment</code>
+					<code>Open Data Risk Assessment</code>
 					<label>Open Data Risk Assessment</label>
 					<description>Legal checks for low risk datasets.</description>
 			</entry>
 			<entry>
-					<code>notAfaToBeAssessed</code>
+					<code>Not AfA (To be Assessed)</code>
 					<label>Not AfA (To be Assessed)</label>
 					<description>The information should be assessed at the time of the request and is the default category within Metadata Explorer. The data has not been assessed via the AfA process.</description>
 			</entry>
 			<entry>
-					<code>notAfaToBeAssessedWithGuidance</code>
+					<code>Not AfA (To be Assessed with Guidance)</code>
 					<label>Not AfA (To be Assessed with Guidance)</label>
 					<description>The information should be assessed at the time of the request and includes guidance relevant to the dataset. The data has been assessed via the AfA process.</description>
 			</entry>
 			<entry>
-					<code>afaPubSchemeAndInfoForReuseReg</code>
-					<label>AfA (Publication Scheme and Information for Re-Use Register)</label>
+					<code>AfA (Publication Scheme &amp; Information for Re-Use Register)</code>
+					<label>AfA (Publication Scheme &amp; Information for Re-Use Register)</label>
 					<description>All approved attributes can be licensed without further checks. Data are included on the Information for Re-Use Register and Publication Scheme.</description>
 			</entry>
 			<entry>
-					<code>afaPublicRegister</code>
+					<code>AfA (Public Register)</code>
 					<label>AfA (Public Register)</label>
 					<description>Approved for inclusion onto the Public Register only. Not available for Re-Use.</description>
 			</entry>
 			<entry>
-					<code>afaPublicationScheme</code>
+					<code>AfA (Publication Scheme)</code>
 					<label>AfA (Publication Scheme)</label>
 					<description>Approved for inclusion on the Publication Scheme. Not available for Re-Use.</description>
 			</entry>
 			<entry>
-					<code>afaInformationRequestsOnly</code>
+					<code>AfA (Information Requests only)</code>
 					<label>AfA (Information Requests only)</label>
 					<description>Approved for reactive requests for information only. Not for licensing pro-active use or publication scheme.</description>
 			</entry>
 			<entry>
-					<code>notApplicableThirdpartyDataset</code>
-					<label>Not Applicable - third party dataset</label>
+					<code>Not Applicable – Third Party Dataset</code>
+					<label>Not Applicable – Third Party Dataset</label>
 					<description>There is not a requirement to put through the approval for access process as licence conditions shall stipulate access to these data.</description>
 			</entry>
 	</codelist>
