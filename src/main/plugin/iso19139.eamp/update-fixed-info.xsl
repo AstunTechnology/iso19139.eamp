@@ -456,7 +456,7 @@
          including Java editor code.
     -->
     <xsl:template match="gmd:useLimitation"  priority="10">
-        <xsl:message>UFI: use limitation 2</xsl:message>
+       <!--  <xsl:message>UFI: use limitation 2</xsl:message> -->
         <xsl:copy>
             <xsl:apply-templates select="@*[not(name()='gco:nilReason')]"/>
 
