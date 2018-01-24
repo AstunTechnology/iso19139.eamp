@@ -72,7 +72,7 @@
       <xsl:with-param name="schema" select="$schema"/>
       <xsl:with-param name="edit"   select="$edit"/>
       <xsl:with-param name="text">
-        <xsl:call-template name="iso19139GetIsoLanguage_gemini">
+        <xsl:call-template name="iso19139GetIsoLanguage_eamp">
           <xsl:with-param name="schema" select="$schema"/>
           <xsl:with-param name="edit"   select="$edit"/>
           <xsl:with-param name="value" select="gco:CharacterString"/>
@@ -87,7 +87,7 @@
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
 
-    <xsl:call-template name="iso19139GetIsoLanguage_gemini">
+    <xsl:call-template name="iso19139GetIsoLanguage_eamp">
       <xsl:with-param name="value" select="string(@codeListValue)"/>
       <xsl:with-param name="ref" select="concat('_', geonet:element/@ref, '_codeListValue')"/>
       <xsl:with-param name="schema" select="$schema"/>
@@ -95,7 +95,7 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template name="iso19139GetIsoLanguage_gemini">
+  <xsl:template name="iso19139GetIsoLanguage_eamp">
     <xsl:param name="schema"/>
     <xsl:param name="edit"/>
     <xsl:param name="value"/>
