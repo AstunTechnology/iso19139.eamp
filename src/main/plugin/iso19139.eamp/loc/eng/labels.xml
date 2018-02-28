@@ -713,44 +713,39 @@
     <description>Alphanumeric value identifying an instance in the namespace</description>
     <condition>conditional</condition>
     <helper>
-      <!--Scottish Regions from ISO3166-2 -->
+      <!-- Counties from ISO3166-2 -->
       <option value="GB-SCT">Scotland (SCT)</option> 
       <option value="GBR">Great Britain (GBR)</option> 
       <option value="GB-ENG">England (ENG)</option> 
       <option value="GB-NIR">Northern Ireland (NIR)</option> 
       <option value="GB-WLS">Wales (WLS)</option> 
-      <option value="GB-ABE">Aberdeen City (ABE)</option>
-      <option value="GB-ABD">Aberdeenshire (ABD)</option>
-      <option value="GB-ANS">Angus (ANS)</option>
-      <option value="GB-AGB">Argyll and Bute (AGB)</option>
-      <option value="GB-CLK">Clackmannanshire (CLK)</option>
-      <option value="GB-DGY">Dumfries and Galloway (DGY)</option>
-      <option value="GB-DND">Dundee City (DND)</option>
-      <option value="GB-EAY">East Ayrshire (EAY)</option>
-      <option value="GB-EDU">East Dunbartonshire (EDU)</option>
-      <option value="GB-ELN">East Lothian (ELN)</option>
-      <option value="GB-ERW">East Renfrewshire (ERW)</option>
-      <option value="GB-EDH">Edinburgh, City of (EDH)</option>
-      <option value="GB-ELS">Eilean Siar (ELS)</option>
-      <option value="GB-FAL">Falkirk (FAL)</option>
-      <option value="GB-FIF">Fife (FIF)</option>
-      <option value="GB-GLG">Glasgow City (GLG)</option>
-      <option value="GB-HLD">Highland (HLD)</option>
-      <option value="GB-IVC">Inverclyde (IVC)</option>
-      <option value="GB-MLN">Midlothian (MLN)</option>
-      <option value="GB-MRY">Moray (MRY)</option>
-      <option value="GB-NAY">North Ayrshire (NAY)</option>
-      <option value="GB-NLK">North Lanarkshire (NLK)</option>
-      <option value="GB-ORK">Orkney Islands  (ORK)</option>
-      <option value="GB-PKN">Perth and Kinross (PKN)</option>
-      <option value="GB-RFW">Renfrewshire (RFW)</option>
-      <option value="GB-SCB">Scottish Borders, The (SCB)</option>
-      <option value="GB-ZET">Shetland Islands (ZET)</option>
-      <option value="GB-SAY">South Ayrshire (SAY)</option>
-      <option value="GB-SLK">South Lanarkshire (SLK)</option>
-      <option value="GB-STG">Stirling (STG)</option>
-      <option value="GB-WDU">West Dunbartonshire (WDU)</option>
-      <option value="GB-WLN">West Lothian (WLN)</option>
+      <option value="GB-BKM">Buckinghamshire (BKM)</option>
+      <option value="GB-CAM">Cambridgeshire (CAM)</option>
+      <option value="GB-CMA">Cumbria (CMA)</option>
+      <option value="GB-DBY">Derbyshire (DBY)</option>
+      <option value="GB-DEV">Devon (DEV)</option>
+      <option value="GB-ESX">East Sussex (ESX)</option>
+      <option value="GB-ESS">Essex (ESS)</option>
+      <option value="GB-GLS">Gloucestershire (GLS)</option>
+      <option value="GB-HAM">Hampshire (HAM)</option>
+      <option value="GB-HRT">Hertfordshire (HRT)</option>
+      <option value="GB-KEN">Kent (KEN)</option>
+      <option value="GB-LAN">Lancashire (LAN)</option>
+      <option value="GB-LEC">Leicestershire (LEC)</option>
+      <option value="GB-LIN">Lincolnshire (LIN)</option>
+      <option value="GB-NFK">Norfolk (NFK)</option>
+      <option value="GB-NYK">North Yorkshire (NYK)</option>
+      <option value="GB-NTH">Northamptonshire (NTH)</option>
+      <option value="GB-NTT">Nottinghamshire (NTT)</option>
+      <option value="GB-OXF">Oxfordshire (OXF)</option>
+      <option value="GB-SOM">Somerset (SOM)</option>
+      <option value="GB-STS">Staffordshire (STS)</option>
+      <option value="GB-SFK">Suffolk (SFK)</option>
+      <option value="GB-SRY">Surrey  (SRY)</option>
+      <option value="GB-WAR">Warwickshire (WAR)</option>
+      <option value="GB-WSX">West Sussex (WSX)</option>
+      <option value="GB-WOR">Worcestershire (WOR)</option>
+      <option value="GB-LND">London, City of (LND)</option>
     </helper>
   </element>
   <element name="gmd:code" id="547.0" context="gmd:MD_CodeValue">
