@@ -713,44 +713,39 @@
     <description>Alphanumeric value identifying an instance in the namespace</description>
     <condition>conditional</condition>
     <helper>
-      <!--Scottish Regions from ISO3166-2 -->
+      <!-- Counties from ISO3166-2 -->
       <option value="GB-SCT">Scotland (SCT)</option> 
       <option value="GBR">Great Britain (GBR)</option> 
       <option value="GB-ENG">England (ENG)</option> 
       <option value="GB-NIR">Northern Ireland (NIR)</option> 
       <option value="GB-WLS">Wales (WLS)</option> 
-      <option value="GB-ABE">Aberdeen City (ABE)</option>
-      <option value="GB-ABD">Aberdeenshire (ABD)</option>
-      <option value="GB-ANS">Angus (ANS)</option>
-      <option value="GB-AGB">Argyll and Bute (AGB)</option>
-      <option value="GB-CLK">Clackmannanshire (CLK)</option>
-      <option value="GB-DGY">Dumfries and Galloway (DGY)</option>
-      <option value="GB-DND">Dundee City (DND)</option>
-      <option value="GB-EAY">East Ayrshire (EAY)</option>
-      <option value="GB-EDU">East Dunbartonshire (EDU)</option>
-      <option value="GB-ELN">East Lothian (ELN)</option>
-      <option value="GB-ERW">East Renfrewshire (ERW)</option>
-      <option value="GB-EDH">Edinburgh, City of (EDH)</option>
-      <option value="GB-ELS">Eilean Siar (ELS)</option>
-      <option value="GB-FAL">Falkirk (FAL)</option>
-      <option value="GB-FIF">Fife (FIF)</option>
-      <option value="GB-GLG">Glasgow City (GLG)</option>
-      <option value="GB-HLD">Highland (HLD)</option>
-      <option value="GB-IVC">Inverclyde (IVC)</option>
-      <option value="GB-MLN">Midlothian (MLN)</option>
-      <option value="GB-MRY">Moray (MRY)</option>
-      <option value="GB-NAY">North Ayrshire (NAY)</option>
-      <option value="GB-NLK">North Lanarkshire (NLK)</option>
-      <option value="GB-ORK">Orkney Islands  (ORK)</option>
-      <option value="GB-PKN">Perth and Kinross (PKN)</option>
-      <option value="GB-RFW">Renfrewshire (RFW)</option>
-      <option value="GB-SCB">Scottish Borders, The (SCB)</option>
-      <option value="GB-ZET">Shetland Islands (ZET)</option>
-      <option value="GB-SAY">South Ayrshire (SAY)</option>
-      <option value="GB-SLK">South Lanarkshire (SLK)</option>
-      <option value="GB-STG">Stirling (STG)</option>
-      <option value="GB-WDU">West Dunbartonshire (WDU)</option>
-      <option value="GB-WLN">West Lothian (WLN)</option>
+      <option value="GB-BKM">Buckinghamshire (BKM)</option>
+      <option value="GB-CAM">Cambridgeshire (CAM)</option>
+      <option value="GB-CMA">Cumbria (CMA)</option>
+      <option value="GB-DBY">Derbyshire (DBY)</option>
+      <option value="GB-DEV">Devon (DEV)</option>
+      <option value="GB-ESX">East Sussex (ESX)</option>
+      <option value="GB-ESS">Essex (ESS)</option>
+      <option value="GB-GLS">Gloucestershire (GLS)</option>
+      <option value="GB-HAM">Hampshire (HAM)</option>
+      <option value="GB-HRT">Hertfordshire (HRT)</option>
+      <option value="GB-KEN">Kent (KEN)</option>
+      <option value="GB-LAN">Lancashire (LAN)</option>
+      <option value="GB-LEC">Leicestershire (LEC)</option>
+      <option value="GB-LIN">Lincolnshire (LIN)</option>
+      <option value="GB-NFK">Norfolk (NFK)</option>
+      <option value="GB-NYK">North Yorkshire (NYK)</option>
+      <option value="GB-NTH">Northamptonshire (NTH)</option>
+      <option value="GB-NTT">Nottinghamshire (NTT)</option>
+      <option value="GB-OXF">Oxfordshire (OXF)</option>
+      <option value="GB-SOM">Somerset (SOM)</option>
+      <option value="GB-STS">Staffordshire (STS)</option>
+      <option value="GB-SFK">Suffolk (SFK)</option>
+      <option value="GB-SRY">Surrey  (SRY)</option>
+      <option value="GB-WAR">Warwickshire (WAR)</option>
+      <option value="GB-WSX">West Sussex (WSX)</option>
+      <option value="GB-WOR">Worcestershire (WOR)</option>
+      <option value="GB-LND">London, City of (LND)</option>
     </helper>
   </element>
   <element name="gmd:code" id="547.0" context="gmd:MD_CodeValue">
@@ -1593,29 +1588,77 @@
     <condition>mandatory</condition>
   </element>
   <element name="gmd:name" context="gmd:MD_Format" id="285.0">
-    <label>Name</label>
-    <description>Name of the data transfer format(s)</description>
-    <help>name of the data transfer format(s)</help>
-    <condition>mandatory</condition>
-    <helper rel="gmd:version">
-      <option value="Text">Text</option>
-      <option value="ESRI Shapefile" title="1.0">ESRI Shapefile</option>
-      <option value="Mapinfo MIF/MID" title="4.5">Mapinfo MIF/MID</option>
-      <option value="Mapinfo TAB">Mapinfo TAB</option>
-      <option value="KML">KML</option>
-      <option value="GML" title="3.2.1">GML</option>
-      <option value="GeoTIFF" title="1.0">GeoTIFF</option>
-      <option value="TIFF">TIFF</option>
-      <option value="ECW">ECW</option>
-      <option value="JPEG2000">JPEG2000</option>
-      <option value="ZIP">ZIP</option>
-      <option value="PDF">PDF</option>
-      <option value="PNG">PNG</option>
-      <option value="JPEG">JPEG</option>
-      <option value="OGC:WMC">OGC:WMC</option>
-      <option value="OGC:OWS-C">OGC OWS Context</option>
-    </helper>
-  </element>
+		<label>Name</label>
+		<description>Name of the data distribution format(s)</description>
+		<help>Data should be available in at least one Open format</help>
+		<condition>mandatory</condition>
+		<helper rel="gmd:version">
+			<option value="Proprietary format | Access 2007 onwards database (ACCDB)">Access 2007 onwards database (ACCDB)</option>
+			<option value="Open format | Arc/Info ASCII Grid (AAIGrid)">Arc/Info ASCII Grid (AAIGrid)</option>                        
+			<option value="Proprietary Format | Arc/Info Binary Grid (AIG)">Arc/Info Binary Grid (AIG)</option>
+			<option value="Open Format | ASCII Gridded XYZ (XYZ)">ASCII Gridded XYZ (XYZ)</option>
+			<option value="Open Format | ASCII Text Files (non-csv, non-xyz gridded, non-tab separated format)">ASCII text files (non-csv, non-xyz gridded, non-tab separated format)</option>
+			<option value="Open Format | Bathymetric Attributed Grid (BAG)">Bathymetric Attributed Grid (BAG)</option>
+			<option value="Open format | CAD Data eXchange Format (DXF)">CAD Data eXchange Format (DXF)</option>
+			<option value="Proprietary format |  CAD Drawing file (DWG)">CAD Drawing file (DWG)</option>
+			<option value="OGC Web Services | Catalogue Service for the Web (CSW)">Catalogue Service for the Web (CSW)</option>
+			<option value="Open format | City GML (Citygml)">City GML (Citygml)</option>
+			<option value="Open format | Comma Separated Values file (CSV)">Comma Separated Values file (CSV)</option>
+			<option value="Open format | dBASE (DBF)">dBASE (DBF)</option>
+			<option value="Proprietary format |  ER Mapper (ECW)">ER Mapper (ECW)</option>
+			<option value="Proprietary format |  ERDAS IMAGINE (IMG)">ERDAS IMAGINE (IMG)</option>
+			<option value="Proprietary format |  ERDASRaw (RAW)">ERDASRaw (RAW)</option>
+			<option value="Proprietary format |  ESRI File based Geodatabase (GDB)">ESRI File based Geodatabase (GDB)</option>
+			<option value="Proprietary format |  Fledermaus scientific data (SD)">Fledermaus scientific data (SD)</option>
+			<option value="Proprietary format |  Fledermaus scientific data scene (SCENE)">Fledermaus scientific data scene (SCENE)</option>
+			<option value="Open format | Geo Tagged Image File Format (GeoTIFF)"> Geo Tagged Image File Format (GeoTIFF)</option>
+			<option value="Open format | Geography Markup Language (GML)">Geography Markup Language (GML)</option>
+			<option value="Open format | GeoPackage (GPKG)">GeoPackage (GPKG)</option>
+			<option value="Open format | GeoRSS (Geo)">GeoRSS (Geo)</option>
+			<option value="Proprietary format | Graphical Interchange Format (GIF)">Graphical Interchange Format (GIF)</option>
+			<option value="Open format | JavaScript Object Notation (GeoJSON)">JavaScript Object Notation (GeoJSON)</option>
+			<option value="Open format | GPS Exchange Format (GPX)">GPS Exchange Format (GPX)</option>
+			<option value="Proprietary format | Generic Sensor Format (GSF) ">Generic Sensor Format (GSF)</option>
+			<option value="OGC Web Services | JavaScript Object Notation (JSON)">JavaScript Object Notation (JSON)</option>
+			<option value="Open format | Joint Photographic Experts Group (JPEG)">Joint Photographic Experts Group (JPEG)</option>
+			<option value="Open format | Joint Photographic Experts Group 2000 (JPEG2000)">Joint Photographic Experts Group 2000 (JPEG2000)</option>
+			<option value="Open format | Keyhole Markup Language (KML)">Keyhole Markup Language (KML)</option>
+			<option value="Open format | Keyhole Markup Language Zipped (KMZ)">Keyhole Markup Language Zipped (KMZ)</option>
+			<option value="Proprietary format | Generic Sensor Format (ALL)">Konegsburg sensor files (ALL)</option>
+			<option value="Compressed format | Lempel-Ziv and Welch  (TIFF)">Lempel-Ziv and Welch (TIFF)</option>
+			<option value="Open format | Lidar Data Exchange Format (LAS)">Lidar Data Exchange Format (LAS)</option>
+			<option value="Open format | Lidar Data Exchange Format (LAZ)">Lidar Data Exchange Format (LAZ)</option>
+			<option value="Open format | Many DAT formats (DAT)">Many DAT formats (DAT)</option>
+			<option value="Open format | Many XML formats (XML)">Many XML formats (XML)</option>
+			<option value="Proprietary format |  MapInfo (TAB)">MapInfo (TAB)</option>
+			<option value="Proprietary format |  MapInfo MIF/MID (MIF)">MapInfo MIF/MID (MIF)</option>
+			<option value="Proprietary format |  ESRI, Intergraph, MS Access (MDB)">MDB (ESRI, Intergraph, MS Access) (MDB)</option>
+			<option value="Compressed format | Multi-resolution Seamless Image Database (MrSID)">Mr Sid (Multi-resolution Seamless Image Database) (MrSID)</option>
+			<option value="Proprietary format |  MS Excel (XLS)"> MS Excel (XLS)</option>
+			<option value="Open format |  MS Excel (XLSX)">MS Excel (XLSX)</option>
+			<option value="Open format | National Transfer Format - OS (NTF)">National Transfer Format - OS (NTF)</option>
+			<option value="Open format | Open Document Presentation (ODP)">Open Document Presentation (ODP)</option>
+			<option value="Open format | Open Document Spreadsheet (ODS)">Open Document Spreadsheet (ODS)</option>
+			<option value="Open format | Open Document Text (ODT)">Open Document Text (ODT)</option>
+			<option value="Proprietary format |  Outlook File Template (OFT)">Outlook File Template (OFT)</option>
+			<option value="Compressed format | Packbit (TIFF)">Packbit (TIFF)</option>
+			<option value="Open format | Microsoft Office Pipe Separated Values file format (PSV)">Pipe Separated Values</option>
+			<option value="Open format | Portable Document Format - 3D (PDF)">Portable Document Format - 3D (PDF)</option>
+			<option value="Open format | Portable Document Format - GeoReferenced (PDF)">Portable Document Format - GeoReferenced (PDF)</option>
+			<option value="Open format | Portable Document Format - Standardized (PDF)">Portable Document Format - Standardized (PDF)</option>
+			<option value="Open format | Portable Document Format - Unreferenced (PDF)">Portable Document Format - Unreferenced (PDF)</option>
+			<option value="Open format | Portable Network Graphic (PNG)">Portable Network Graphics (PNG)</option>
+			<option value="Open Format | Plain Text File (TXT)">Plain Text File (TXT)</option>
+			<option value="Open format | Resource Description Framework (RDF)">Resource Description Framework (RDF)</option>                       
+			<option value="Open format | Resource Description Framework (XML)">Resource Description Framework (XML)</option>
+			<option value="Open format | Rich Text Format (RTF)">Rich Text Format</option>
+			<option value="Open format | Shapefile (SHP)">Shapefile (SHP)</option>
+			<option value="Proprietary format |  Tab Separated Values (TSV)">Tab Separated Values (TSV)</option>
+			<option value="Open format | Tagged Image File Format (TIFF)">Tagged Image File Format (TIFF)</option>
+			<option value="Proprietary format |  MS Word 2010 onwards document (DOC)">Word 2010 onwards document (DOC)</option>
+			<option value="Proprietary format |  MS Word 2010 onwards document (DOCX)">Word 2010 onwards document (DOCX)</option>
+		</helper>
+	</element>
   <element name="gmd:name" context="gmd:MD_ExtendedElementInformation"
            id="307.0">
     <label>Name</label>
