@@ -95,9 +95,7 @@
       <!-- Create form for all existing attribute (not in gn namespace)
       and all non existing attributes not already present. -->
       <xsl:apply-templates mode="render-for-field-for-attribute"
-                           select="
-        gmx:Anchor/@*|
-        gmx:Anchor/gn:attribute[not(@name = parent::node()/@*/name())]">
+                           select="gmx:Anchor/@*|gmx:Anchor/gn:attribute[not(@name = parent::node()/@*/name())]">
         <xsl:with-param name="ref" select="gmx:Anchor/gn:element/@ref"/>
         <xsl:with-param name="insertRef" select="gmx:Anchor/gn:element/@ref"/>
       </xsl:apply-templates>
