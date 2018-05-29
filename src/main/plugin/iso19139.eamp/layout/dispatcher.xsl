@@ -32,7 +32,7 @@
     <xsl:apply-templates mode="mode-iso19139" select="$base">
       <xsl:with-param name="overrideLabel" select="$overrideLabel"/>
       <xsl:with-param name="schema" select="$schema"/>
-      <xsl:with-param name="labels" select="$iso19139.eamplabels"/>
+      <xsl:with-param name="labels" select="$labels"/>
     </xsl:apply-templates>
   </xsl:template>
 </xsl:stylesheet>
