@@ -12,10 +12,12 @@
                 xmlns:exslt="http://exslt.org/common" exclude-result-prefixes="#all">
 
   <!-- Readonly elements -->
-  <xsl:template mode="mode-iso19139" priority="2000" match="gmd:metadataStandardName|gmd:metadataStandardVersion">
+  <xsl:template mode="mode-iso19139" priority="2000" match="gmd:metadataStandardName[$schema='iso19139.eamp']|gmd:metadataStandardVersion[$schema='iso19139.eamp']">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
 
     <xsl:call-template name="render-element">
-      <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $iso19139.eamplabels)/label"/>
+      <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels)"/>
       <xsl:with-param name="value" select="*"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
@@ -46,13 +48,15 @@
        A custom directive is created.
   -->
   <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.eamp']" priority="200">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
 
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
-                      select="gn-fn-metadata:getLabel($schema, name(), $iso19139.eamplabels, name(..), $isoType, $xpath)/label"/>
+                      select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
       <xsl:with-param name="value" select="."/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
@@ -67,18 +71,21 @@
   <!-- gml:TimePeriod (format = %Y-%m-%dThh:mm:ss) -->
   <!-- ===================================================================== -->
 
-  <xsl:template mode="mode-iso19139" match="gml:beginPosition[$schema='iso19139.eamp']|gml:endPosition[$schema='iso19139.eamp']|gml:timePosition[$schema='iso19139.eamp']" 
+  <xsl:template mode="mode-iso19139" match="gml:beginPosition[$schema='iso19139.eamp']|gml:endPosition[$schema='iso19139.eamp']|gml:timePosition[$schema='iso19139.eamp']"
                 priority="200">
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
     <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
 
-    <div data-gn-date-picker="{.}" 
-         data-tag-name="" 
-         data-label="{$labelConfig/label}" 
-         data-element-name="{name(.)}" 
-         data-hide-time="true" 
+    <div data-gn-date-picker="{.}"
+         data-tag-name=""
+         data-label="{$labelConfig/label}"
+         data-element-name="{name(.)}"
+         data-hide-time="true"
          data-element-ref="{concat('_', gn:element/@ref)}">
     </div>
   </xsl:template>
@@ -87,7 +94,7 @@
   <xsl:template mode="mode-iso19139" priority="200" match="gmd:useLimitation[$schema='iso19139.eamp' and gmx:Anchor]">
     <xsl:variable name="name" select="name(.)"/>
 
-    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $iso19139.eamplabels)"/>
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>
     <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
 
 
@@ -115,8 +122,8 @@
   </xsl:template>
 
   <!-- Render dates as dates, not date time -->
-  <xsl:template mode="mode-iso19139" 
-                priority="2005" 
+  <xsl:template mode="mode-iso19139"
+                priority="2005"
                 match="gmd:CI_Date/gmd:date[$schema='iso19139.eamp']">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
@@ -164,7 +171,7 @@
       <div class="col-sm-6 gn-value">
         <div data-gn-date-picker="{gco:Date|gco:DateTime}"
              data-label=""
-             data-hide-time="true" 
+             data-hide-time="true"
              data-element-name="{name(gco:Date|gco:DateTime)}"
              data-element-ref="{concat('_X', gn:element/@ref)}">
         </div>
