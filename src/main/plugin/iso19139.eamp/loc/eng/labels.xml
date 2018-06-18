@@ -1591,7 +1591,7 @@
 		<label>Name</label>
 		<description>Name of the data distribution format(s)</description>
 		<help>Data should be available in at least one Open format</help>
-		<condition>mandatory</condition>
+		<!-- <condition>mandatory</condition> -->
 		<helper rel="gmd:version">
 			<option value="Proprietary format | Access 2007 onwards database (ACCDB)">Access 2007 onwards database (ACCDB)</option>
 			<option value="Open format | Arc/Info ASCII Grid (AAIGrid)">Arc/Info ASCII Grid (AAIGrid)</option>                        
