@@ -14,14 +14,14 @@
     xmlns:xlink="http://www.w3.org/1999/xlink"
     version="2.0" exclude-result-prefixes="#all">
 
-
-    <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:identifier/gmd:code[contains(gmx:Anchor, 'theme.inspire-theme')]">
+  
+  <xsl:template match="gmd:thesaurusName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code[contains(gmx:Anchor, 'theme.inspire-theme')]">
 
       <xsl:copy>
         <xsl:copy-of select="@*" />
 
         <gmx:Anchor>
-          <xsl:attribute name="xlink:href" select="replace(@xlink:href, 'inspire-theme', 'httpinspireeceuropaeutheme-theme')" />
+          <xsl:attribute name="xlink:href" select="replace(gmx:Anchor/@xlink:href, 'inspire-theme', 'httpinspireeceuropaeutheme-theme')" />
           <xsl:value-of select="replace(gmx:Anchor, 'inspire-theme', 'httpinspireeceuropaeutheme-theme')" />
         </gmx:Anchor>
       </xsl:copy>
