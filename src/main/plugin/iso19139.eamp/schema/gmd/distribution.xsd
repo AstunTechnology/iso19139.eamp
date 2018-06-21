@@ -149,7 +149,7 @@
 			<xs:extension base="gco:AbstractObject_Type">
 				<xs:sequence>
 					<xs:element name="name" type="gco:CharacterString_PropertyType"/>
-					<xs:element name="version" type="gco:CharacterString_PropertyType"/>
+					<xs:element name="version" type="gco:CharacterString_PropertyType" minOccurs="0"/>
 					<xs:element name="amendmentNumber" type="gco:CharacterString_PropertyType" minOccurs="0"/>
 					<xs:element name="specification" type="gco:CharacterString_PropertyType" minOccurs="0"/>
 					<xs:element name="fileDecompressionTechnique" type="gco:CharacterString_PropertyType" minOccurs="0"/>
