@@ -20,6 +20,6 @@
             <gmd:metadataStandardVersion>
                 <gco:CharacterString>1.1</gco:CharacterString>
             </gmd:metadataStandardVersion>
-        </gns:elements>
-    </gns:autodetect>
-</gns:schema>
+        </elements>
+    </autodetect>
+</schema>
