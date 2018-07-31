@@ -6,6 +6,7 @@
     <name>iso19139.eamp</name>
     <id>9e515100-2200-11df-8626-g35151002209</id>
     <version>1.1</version>
+    <appMinorVersionSupported>3.4.0</appMinorVersionSupported>
     <depends>iso19139</depends>
     <depends>iso19139.gemini22</depends>
     <title>Environment Agency Metadata Profile</title>
