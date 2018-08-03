@@ -32,7 +32,7 @@ Add the dependency in the web module in web/pom.xml:
 <dependency>
   <groupId>${project.groupId}</groupId>
   <artifactId>schema-iso19139.eamp</artifactId>
-  <version>${project.version}</version>
+  <version>${gn.schemas.version}</version>
 </dependency>
 ```
 
