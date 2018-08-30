@@ -10,6 +10,23 @@
 <xsl:stylesheet version="1.0" exclude-result-prefixes="eamp" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:eamp="http://environment.data.gov.uk/eamp" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" omit-xml-declaration="no"/>
+
+	<!-- get our scope code variable for use later -->
+	<xsl:variable name="scopecode">
+		<xsl:value-of select="/gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode"/>
+	</xsl:variable>
+
+	<!-- define different email addresses depending on value of scopecode -->
+	<xsl:variable name="email">
+		<xsl:choose>
+			<xsl:when test="contains($scopecode, 'nonGeographicDataset')">
+				<xsl:value-of select="'enquiries@naturalengland.org.uk'" />
+			</xsl:when>
+			<xsl:when test="contains($scopecode, 'dataset')">
+				<xsl:value-of select="'data.services@naturalengland.org.uk'" />
+			</xsl:when>
+		</xsl:choose>
+	</xsl:variable>
 	
 	<!-- Add any nodes here that are not to be copied over. Separate with '|', a pipe. If node is a parent, children will not be copied either. -->
 	<xsl:template match="gmd:pointOfContact"/>
@@ -74,6 +91,8 @@
 	</xsl:template>
 
 	<!-- Add generic Responsible Organisation contact after Abstract. All current ones are obliterated in the empty template above -->
+	<!-- TODO change to use  enquiries@ for non-spatial and data.services@ for spatial -->
+	<!-- /gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode dataset or nonGeographicDataset -->
 	<xsl:template match="*/gmd:abstract">
 	  <gmd:abstract>
 		<gco:CharacterString><xsl:value-of select="./gco:CharacterString"></xsl:value-of><xsl:text> Attribution statement: </xsl:text><xsl:for-each select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
@@ -89,7 +108,7 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>enquiries@naturalengland.org.uk</gco:CharacterString>
+					<gco:CharacterString><xsl:value-of select="$email" /></gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>
@@ -124,7 +143,7 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>enquiries@naturalengland.org.uk</gco:CharacterString>
+				  	<gco:CharacterString><xsl:value-of select="$email" /></gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>
