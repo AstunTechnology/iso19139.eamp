@@ -2240,6 +2240,7 @@
     <label>Protocol</label>
     <description>Connection protocol to be used</description>
     <helper sort="true">
+      <option value="DSP:ESRI">ESRI Data Download link from the DSP Platform</option>
       <option value="ESRI:AIMS--http--configuration">ArcIMS Map Service Configuration File (*.AXL)
       </option>
       <option value="ESRI:AIMS--http-get-feature">ArcIMS Internet Feature Map Service
