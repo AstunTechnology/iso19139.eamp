@@ -18,6 +18,31 @@
 	<xsl:template match="*/gmd:resourceConstraints">
 		<xsl:if test="not(./eamp:EA_Constraints)">
 			<xsl:for-each select="./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
+								<xsl:if test="contains(.,'For details on the licencing restrictions and conditions associated')">
+					<gmd:resourceConstraints>
+						<gmd:MD_Constraints>
+							<gmd:useLimitation>
+								<gco:CharacterString>Use limitation dependent upon licence</gco:CharacterString>
+							</gmd:useLimitation>
+						</gmd:MD_Constraints>
+					</gmd:resourceConstraints>
+					<gmd:resourceConstraints>
+						<gmd:MD_LegalConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" codeSpace="ISOTC211/19115">otherRestrictions</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="license" codeSpace="ISOTC211/19115">license</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:accessConstraints>
+								<gmd:MD_RestrictionCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
+							</gmd:accessConstraints>
+							<gmd:otherConstraints>
+								<gco:CharacterString><xsl:value-of select="../../gmd:otherConstraints[last()]/gco:CharacterString[last()]"></xsl:value-of></gco:CharacterString>
+							</gmd:otherConstraints>
+						</gmd:MD_LegalConstraints>
+					</gmd:resourceConstraints>						
+				</xsl:if>
 				<xsl:if test="contains(.,'Data will be licensed')">
 					<gmd:resourceConstraints>
 						<gmd:MD_Constraints>
@@ -150,10 +175,12 @@
 	<!-- Remove internal Resource Locators -->
 	<xsl:template match="*/gmd:transferOptions">
 		<gmd:transferOptions>
-            <gmd:MD_DigitalTransferOptions>
+             <gmd:MD_DigitalTransferOptions>
 				<xsl:for-each select="./gmd:MD_DigitalTransferOptions/gmd:onLine">
 					<xsl:variable name="URL"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/></xsl:variable>
 					<xsl:variable name="protocol"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString"/></xsl:variable>
+					<xsl:variable name="description"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:description/gco:CharacterString"/></xsl:variable>
+					<xsl:variable name="name"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:name/gco:CharacterString"/></xsl:variable>
 					<xsl:if test="contains($URL,'http')">
 						<xsl:if test="not(contains($URL,'intranet.ea.gov'))">
 							<gmd:onLine>
@@ -163,7 +190,13 @@
 									</gmd:linkage>
 									<gmd:protocol>
 										<gco:CharacterString><xsl:value-of select="$protocol"/></gco:CharacterString>
-									</gmd:protocol>	  
+									</gmd:protocol>	
+									<gmd:name>
+										<gco:CharacterString><xsl:value-of select="$name"/></gco:CharacterString>
+									</gmd:name>	
+									<gmd:description>
+										<gco:CharacterString><xsl:value-of select="$description"/></gco:CharacterString>
+									</gmd:description>	  
 								</gmd:CI_OnlineResource>
 							</gmd:onLine>
 						</xsl:if>  
