@@ -48,24 +48,30 @@
                     <xsl:variable name="name"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:name/gco:CharacterString"/></xsl:variable>
                     <xsl:choose>
                     <xsl:when test="$URL=$urlPrefix">
+                        <xsl:message>Updating URL</xsl:message>
                             <gmd:onLine>
                                 <gmd:CI_OnlineResource>
                                     <gmd:linkage>
                                         <gmd:URL><xsl:value-of select="$newUrlPrefix"/></gmd:URL>
+                                        <xsl:message>New URL <xsl:value-of select="$newUrlPrefix"/></xsl:message>
                                     </gmd:linkage>
                                     <gmd:protocol>
                                         <gco:CharacterString><xsl:value-of select="$newProtocol"/></gco:CharacterString>
+                                         <xsl:message>New Protocol <xsl:value-of select="$newProtocol"/></xsl:message>
                                     </gmd:protocol> 
                                     <gmd:name>
                                         <gco:CharacterString><xsl:value-of select="$newName"/></gco:CharacterString>
+                                         <xsl:message>New Name <xsl:value-of select="$newName"/></xsl:message>
                                     </gmd:name> 
                                     <gmd:description>
                                         <gco:CharacterString><xsl:value-of select="$newDescription"/></gco:CharacterString>
+                                         <xsl:message>New Description <xsl:value-of select="$newDescription"/></xsl:message>
                                     </gmd:description>    
                                 </gmd:CI_OnlineResource>
                             </gmd:onLine> 
                     </xsl:when>
                     <xsl:otherwise>
+                        <xsl:message>Not Updating URL</xsl:message>
                             <gmd:onLine>
                                 <gmd:CI_OnlineResource>
                                     <gmd:linkage>
