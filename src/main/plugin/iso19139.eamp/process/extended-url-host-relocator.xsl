@@ -47,7 +47,7 @@
                     <xsl:variable name="description"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:description/gco:CharacterString"/></xsl:variable>
                     <xsl:variable name="name"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:name/gco:CharacterString"/></xsl:variable>
                     <xsl:choose>
-                    <xsl:when test="contains($URL,$urlPrefix)">
+                    <xsl:when test="$URL=$urlPrefix">
                             <gmd:onLine>
                                 <gmd:CI_OnlineResource>
                                     <gmd:linkage>
