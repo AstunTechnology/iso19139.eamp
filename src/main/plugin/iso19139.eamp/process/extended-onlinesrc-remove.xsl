@@ -42,5 +42,5 @@ Stylesheet used to remove a reference to a online resource.
 
   <!-- Remove geonet:* elements. -->
   <xsl:template
-    match="geonet:*|gmd:onLine[normalize-space(gmd:CI_OnlineResource/gmd:linkage/gmd:URL) = $url" priority="2"/>
+    match="geonet:*|gmd:onLine[normalize-space(gmd:CI_OnlineResource/gmd:linkage/gmd:URL) = $url]" priority="2"/>
 </xsl:stylesheet>
