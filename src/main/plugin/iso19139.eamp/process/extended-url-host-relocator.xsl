@@ -48,7 +48,7 @@
                     <xsl:variable name="name"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:name/gco:CharacterString"/></xsl:variable>
                     <xsl:choose>
                     <xsl:when test="$URL=$urlPrefix">
-                        <xsl:message>Updating URL</xsl:message>
+                        <xsl:message>Updating URL: <xsl:value-of select="$URL"/></xsl:message>
                             <gmd:onLine>
                                 <gmd:CI_OnlineResource>
                                     <gmd:linkage>
@@ -71,7 +71,7 @@
                             </gmd:onLine> 
                     </xsl:when>
                     <xsl:otherwise>
-                        <xsl:message>Not Updating URL</xsl:message>
+                        <xsl:message>Not Updating URL:  <xsl:value-of select="$URL"/></xsl:message>
                             <gmd:onLine>
                                 <gmd:CI_OnlineResource>
                                     <gmd:linkage>
