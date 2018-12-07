@@ -18,7 +18,7 @@
 	<xsl:template match="*/gmd:resourceConstraints">
 		<xsl:if test="not(./eamp:EA_Constraints)">
 			<xsl:for-each select="./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
-								<xsl:if test="contains(.,'For details on the licencing restrictions and conditions associated')">
+								<xsl:if test="contains(.,'For details on the licensing restrictions and conditions associated')">
 					<gmd:resourceConstraints>
 						<gmd:MD_Constraints>
 							<gmd:useLimitation>
