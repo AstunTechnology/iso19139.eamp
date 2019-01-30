@@ -714,10 +714,10 @@
     <condition>conditional</condition>
     <helper>
       <!-- Counties from ISO3166-2 -->
-      <option value="GB-SCT">Scotland (SCT)</option> 
       <option value="GBR">Great Britain (GBR)</option> 
       <option value="GB-ENG">England (ENG)</option> 
-      <option value="GB-NIR">Northern Ireland (NIR)</option> 
+      <option value="GB-NIR">Northern Ireland (NIR)</option>
+      <option value="GB-SCT">Scotland (SCT)</option>  
       <option value="GB-WLS">Wales (WLS)</option> 
       <option value="GB-BKM">Buckinghamshire (BKM)</option>
       <option value="GB-CAM">Cambridgeshire (CAM)</option>
