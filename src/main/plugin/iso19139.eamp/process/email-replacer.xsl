@@ -55,12 +55,14 @@
       <xsl:value-of select="./gco:CharacterString"/>
     </xsl:variable>
     <xsl:choose>
-    <xsl:when test="$curEmail = $oldEmail">
+    <xsl:when test="lower-case($curEmail) = lower-case($oldEmail)">
+      <xsl:message>=====Found a match=====</xsl:message>
       <gmd:electronicMailAddress>
       <gco:CharacterString><xsl:value-of select="$newEmail"/></gco:CharacterString>
       </gmd:electronicMailAddress>
     </xsl:when>
-      <xsl:when test="not($curEmail= $oldEmail)">
+      <xsl:when test="not(lower-case($curEmail) = lower-case($oldEmail))">
+        <xsl:message>=====No match=====</xsl:message>
         <gmd:electronicMailAddress>
         <gco:CharacterString><xsl:value-of select="$curEmail"/></gco:CharacterString>
         </gmd:electronicMailAddress>
