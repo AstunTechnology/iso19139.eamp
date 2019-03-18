@@ -114,7 +114,7 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>open@defra.gsi.gov.uk</gco:CharacterString>
+					<gco:CharacterString>open@defra.gov.uk</gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>
@@ -149,7 +149,7 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>open@defra.gsi.gov.uk</gco:CharacterString>
+					<gco:CharacterString>open@defra.gov.uk</gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>
