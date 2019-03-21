@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xsl:stylesheet xmlns:iso="http://purl.oclc.org/dsdl/schematron"
+<xsl:stylesheet xmlns:xhtml="http://www.w3.org/1999/xhtml"
+                xmlns:iso="http://purl.oclc.org/dsdl/schematron"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:xhtml="http://www.w3.org/1999/xhtml"
                 xmlns:xs="http://www.w3.org/2001/XMLSchema"
                 xmlns:schold="http://www.ascc.net/xml/schematron"
                 xmlns:gml="http://www.opengis.net/gml/3.2"
@@ -11,8 +11,9 @@
                 xmlns:geonet="http://www.fao.org/geonetwork"
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 exclude-result-prefixes="#all"
-                version="2.0"><!--Implementers: please note that overriding process-prolog or process-root is 
-    the preferred method for meta-stylesheets to use where possible. -->
+                version="2.0"><!--Implementers: please note that overriding process-prolog or process-root is
+      the preferred method for meta-stylesheets to use where possible.
+    -->
 <xsl:param name="archiveDirParameter"/>
    <xsl:param name="archiveNameParameter"/>
    <xsl:param name="fileNameParameter"/>
@@ -46,20 +47,23 @@
 
 
 <!--MODE: SCHEMATRON-SELECT-FULL-PATH-->
-<!--This mode can be used to generate an ugly though full XPath for locators-->
+<!--This mode can be used to generate an ugly though full XPath for locators
+    -->
 <xsl:template match="*" mode="schematron-select-full-path">
       <xsl:apply-templates select="." mode="schematron-get-full-path"/>
    </xsl:template>
 
    <!--MODE: SCHEMATRON-FULL-PATH-->
-<!--This mode can be used to generate an ugly though full XPath for locators-->
+<!--This mode can be used to generate an ugly though full XPath for locators
+    -->
 <xsl:template match="*" mode="schematron-get-full-path">
       <xsl:apply-templates select="parent::*" mode="schematron-get-full-path"/>
       <xsl:text>/</xsl:text>
       <xsl:choose>
          <xsl:when test="namespace-uri()=''">
             <xsl:value-of select="name()"/>
-            <xsl:variable name="p_1" select="1+    count(preceding-sibling::*[name()=name(current())])"/>
+            <xsl:variable name="p_1"
+                          select="1+       count(preceding-sibling::*[name()=name(current())])"/>
             <xsl:if test="$p_1&gt;1 or following-sibling::*[name()=name(current())]">[<xsl:value-of select="$p_1"/>]</xsl:if>
          </xsl:when>
          <xsl:otherwise>
@@ -67,7 +71,7 @@
             <xsl:value-of select="local-name()"/>
             <xsl:text>']</xsl:text>
             <xsl:variable name="p_2"
-                          select="1+   count(preceding-sibling::*[local-name()=local-name(current())])"/>
+                          select="1+     count(preceding-sibling::*[local-name()=local-name(current())])"/>
             <xsl:if test="$p_2&gt;1 or following-sibling::*[local-name()=local-name(current())]">[<xsl:value-of select="$p_2"/>]</xsl:if>
          </xsl:otherwise>
       </xsl:choose>
@@ -75,7 +79,8 @@
    <xsl:template match="@*" mode="schematron-get-full-path">
       <xsl:text>/</xsl:text>
       <xsl:choose>
-         <xsl:when test="namespace-uri()=''">@<xsl:value-of select="name()"/>
+         <xsl:when test="namespace-uri()=''">@
+              <xsl:value-of select="name()"/>
          </xsl:when>
          <xsl:otherwise>
             <xsl:text>@*[local-name()='</xsl:text>
@@ -100,12 +105,14 @@
          </xsl:if>
       </xsl:for-each>
       <xsl:if test="not(self::*)">
-         <xsl:text/>/@<xsl:value-of select="name(.)"/>
+         <xsl:text/>/@
+        <xsl:value-of select="name(.)"/>
       </xsl:if>
    </xsl:template>
    <!--MODE: SCHEMATRON-FULL-PATH-3-->
-<!--This mode can be used to generate prefixed XPath for humans 
-	(Top-level element has index)-->
+<!--This mode can be used to generate prefixed XPath for humans
+      (Top-level element has index)
+    -->
 <xsl:template match="node() | @*" mode="schematron-get-full-path-3">
       <xsl:for-each select="ancestor-or-self::*">
          <xsl:text>/</xsl:text>
@@ -117,11 +124,12 @@
          </xsl:if>
       </xsl:for-each>
       <xsl:if test="not(self::*)">
-         <xsl:text/>/@<xsl:value-of select="name(.)"/>
+         <xsl:text/>/@
+        <xsl:value-of select="name(.)"/>
       </xsl:if>
    </xsl:template>
 
-   <!--MODE: GENERATE-ID-FROM-PATH -->
+   <!--MODE: GENERATE-ID-FROM-PATH-->
 <xsl:template match="/" mode="generate-id-from-path"/>
    <xsl:template match="text()" mode="generate-id-from-path">
       <xsl:apply-templates select="parent::*" mode="generate-id-from-path"/>
@@ -145,7 +153,7 @@
       <xsl:value-of select="concat('.',name(),'-',1+count(preceding-sibling::*[name()=name(current())]),'-')"/>
    </xsl:template>
 
-   <!--MODE: GENERATE-ID-2 -->
+   <!--MODE: GENERATE-ID-2-->
 <xsl:template match="/" mode="generate-id-2">U</xsl:template>
    <xsl:template match="*" mode="generate-id-2" priority="2">
       <xsl:text>U</xsl:text>
@@ -173,10 +181,13 @@
                               title="Schematron validation for ISO 19115(19139) UK GEMINI 2.2 Profile"
                               schemaVersion="">
          <xsl:comment>
-            <xsl:value-of select="$archiveDirParameter"/>   
-		 <xsl:value-of select="$archiveNameParameter"/>  
-		 <xsl:value-of select="$fileNameParameter"/>  
-		 <xsl:value-of select="$fileDirParameter"/>
+            <xsl:value-of select="$archiveDirParameter"/>
+         
+        <xsl:value-of select="$archiveNameParameter"/>
+         
+        <xsl:value-of select="$fileNameParameter"/>
+         
+        <xsl:value-of select="$fileDirParameter"/>
          </xsl:comment>
          <svrl:ns-prefix-in-attribute-values uri="http://www.opengis.net/gml/3.2" prefix="gml"/>
          <svrl:ns-prefix-in-attribute-values uri="http://www.isotc211.org/2005/gmd" prefix="gmd"/>
@@ -208,9 +219,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">
-               <xsl:value-of select="$loc/strings/UK999"/>
-            </xsl:attribute>
+            <xsl:attribute name="name">Title</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M10"/>
@@ -218,7 +227,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Title</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi1-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M11"/>
@@ -226,7 +235,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi1-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Alternative title</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M12"/>
@@ -234,7 +243,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Alternative title</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi2-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M13"/>
@@ -242,7 +251,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi2-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Dataset Language</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M14"/>
@@ -250,7 +259,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Dataset Language</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi3-Language</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M15"/>
@@ -258,7 +267,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi3-Language</xsl:attribute>
+            <xsl:attribute name="name">Abstract</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M16"/>
@@ -266,7 +275,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Abstract</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi4-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M17"/>
@@ -274,7 +283,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi4-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Topic Category</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M18"/>
@@ -282,7 +291,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Topic Category</xsl:attribute>
+            <xsl:attribute name="name">Keyword</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M19"/>
@@ -290,7 +299,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Keyword</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi6-Keyword-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M20"/>
@@ -298,7 +307,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi6-Keyword-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi6-Thesaurus-Title-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M21"/>
@@ -306,7 +315,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi6-Thesaurus-Title-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi6-Thesaurus-DateType-CodeList</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M22"/>
@@ -314,7 +323,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi6-Thesaurus-DateType-CodeList</xsl:attribute>
+            <xsl:attribute name="name">Temporal extent</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M23"/>
@@ -322,7 +331,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Temporal extent</xsl:attribute>
+            <xsl:attribute name="name">Dataset reference date</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M24"/>
@@ -330,7 +339,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Dataset reference date</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi8-ReferenceDate-DateType-CodeList</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M25"/>
@@ -338,7 +347,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi8-ReferenceDate-DateType-CodeList</xsl:attribute>
+            <xsl:attribute name="name">Lineage</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M26"/>
@@ -346,7 +355,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Lineage</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi10-Statement-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M27"/>
@@ -354,7 +363,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi10-Statement-Nillable</xsl:attribute>
+            <xsl:attribute name="name">West and east longitude, north and south latitude </xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M28"/>
@@ -362,7 +371,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">West and east longitude, north and south latitude </xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi11-BoundingBox</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M29"/>
@@ -370,7 +379,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi11-BoundingBox</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi11-West-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M30"/>
@@ -378,7 +387,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi11-West-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi11-East-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M31"/>
@@ -386,7 +395,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi11-East-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi11-South-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M32"/>
@@ -394,7 +403,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi11-South-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mill-North-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M33"/>
@@ -402,7 +411,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mill-North-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Extent</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M34"/>
@@ -410,7 +419,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Extent</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi15-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M35"/>
@@ -418,7 +427,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi15-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Vertical extent information</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M36"/>
@@ -426,7 +435,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Vertical extent information</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi16-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M37"/>
@@ -434,7 +443,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi16-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Spatial reference system</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M38"/>
@@ -442,7 +451,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Spatial reference system</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi17-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M39"/>
@@ -450,7 +459,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi17-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Spatial Resolution</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M40"/>
@@ -458,7 +467,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Spatial Resolution</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi18-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M41"/>
@@ -466,7 +475,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi18-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Resource locator</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M42"/>
@@ -474,7 +483,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Resource locator</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi19-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M43"/>
@@ -482,7 +491,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi19-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Data Format</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M44"/>
@@ -490,7 +499,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Data Format</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi21-Name-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M45"/>
@@ -498,7 +507,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi21-Name-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi21-Version-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M46"/>
@@ -506,7 +515,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi21-Version-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Responsible organisation</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M47"/>
@@ -514,7 +523,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Responsible organisation</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi23-ResponsibleParty</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M48"/>
@@ -522,7 +531,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi23-ResponsibleParty</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi23-OrganisationName-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M49"/>
@@ -530,7 +539,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi23-OrganisationName-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi23-Role-CodeList</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M50"/>
@@ -538,7 +547,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi23-Role-CodeList</xsl:attribute>
+            <xsl:attribute name="name">Frequency of update</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M51"/>
@@ -546,7 +555,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Frequency of update</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi24-CodeList</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M52"/>
@@ -554,7 +563,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi24-CodeList</xsl:attribute>
+            <xsl:attribute name="name">Limitations on public access</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M53"/>
@@ -562,7 +571,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Limitations on public access</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi25-OtherConstraints-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M54"/>
@@ -570,7 +579,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi25-OtherConstraints-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi25-AccessConstraints-CodeList</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M55"/>
@@ -578,7 +587,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi25-AccessConstraints-CodeList</xsl:attribute>
+            <xsl:attribute name="name">Use constraints</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M56"/>
@@ -586,7 +595,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Use constraints</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi26-UseLimitation-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M57"/>
@@ -594,7 +603,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi26-UseLimitation-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Additional information source</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M58"/>
@@ -602,7 +611,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Additional information source</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi27-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M59"/>
@@ -610,7 +619,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi27-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Unique resource identifier</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M60"/>
@@ -618,7 +627,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Unique resource identifier</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi36-Code-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M61"/>
@@ -626,7 +635,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi36-Code-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi36-CodeSpace-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M62"/>
@@ -634,7 +643,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi36-CodeSpace-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Resource type</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M63"/>
@@ -642,7 +651,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Resource type</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi39-CodeList</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M64"/>
@@ -650,7 +659,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi39-CodeList</xsl:attribute>
+            <xsl:attribute name="name">Conformity</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M65"/>
@@ -658,7 +667,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Conformity</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi41-Pass-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M66"/>
@@ -666,7 +675,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi41-Pass-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi41-Explanation-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M67"/>
@@ -674,7 +683,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi41-Explanation-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Specification</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M68"/>
@@ -682,7 +691,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Specification</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi42-Title-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M69"/>
@@ -690,7 +699,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi42-Title-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi42-Date-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M70"/>
@@ -698,7 +707,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi42-Date-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi42-DateType-CodeList</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M71"/>
@@ -706,7 +715,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi42-DateType-CodeList</xsl:attribute>
+            <xsl:attribute name="name">Equivalent scale</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M72"/>
@@ -714,7 +723,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Equivalent scale</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi43-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M73"/>
@@ -722,7 +731,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi43-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Metadata language</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M74"/>
@@ -730,7 +739,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Metadata language</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi33-Language</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M75"/>
@@ -738,7 +747,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi33-Language</xsl:attribute>
+            <xsl:attribute name="name">Metadata date</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M76"/>
@@ -746,7 +755,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Metadata date</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi30-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M77"/>
@@ -754,7 +763,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi30-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Metadata point of contact</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M78"/>
@@ -762,7 +771,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Metadata point of contact</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi35-ResponsibleParty</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M79"/>
@@ -770,7 +779,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi35-ResponsibleParty</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi35-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M80"/>
@@ -778,7 +787,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi35-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Spatial data service type</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M81"/>
@@ -786,7 +795,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Spatial data service type</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi37-Nillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M82"/>
@@ -794,7 +803,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-mi37-Nillable</xsl:attribute>
+            <xsl:attribute name="name">Coupled resource</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M83"/>
@@ -802,7 +811,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Coupled resource</xsl:attribute>
+            <xsl:attribute name="name">Data identification citation</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M84"/>
@@ -810,7 +819,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Data identification citation</xsl:attribute>
+            <xsl:attribute name="name">Metadata resource type test</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M85"/>
@@ -818,7 +827,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Metadata resource type test</xsl:attribute>
+            <xsl:attribute name="name">Metadata file identifier</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M86"/>
@@ -826,7 +835,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Metadata file identifier</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-at3-NotNillable</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M87"/>
@@ -834,7 +843,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Gemini2-at3-NotNillable</xsl:attribute>
+            <xsl:attribute name="name">Constraints</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M88"/>
@@ -842,7 +851,7 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Constraints</xsl:attribute>
+            <xsl:attribute name="name">Creation date type</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M89"/>
@@ -850,10 +859,18 @@
             <xsl:attribute name="document">
                <xsl:value-of select="document-uri(/)"/>
             </xsl:attribute>
-            <xsl:attribute name="name">Creation date type</xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi11-ExtentsDiffer</xsl:attribute>
             <xsl:apply-templates/>
          </svrl:active-pattern>
          <xsl:apply-templates select="/" mode="M90"/>
+         <svrl:active-pattern>
+            <xsl:attribute name="document">
+               <xsl:value-of select="document-uri(/)"/>
+            </xsl:attribute>
+            <xsl:attribute name="name">Gemini2-mi11-ReasonableExtents</xsl:attribute>
+            <xsl:apply-templates/>
+         </svrl:active-pattern>
+         <xsl:apply-templates select="/" mode="M91"/>
       </svrl:schematron-output>
    </xsl:template>
 
@@ -861,17 +878,20 @@
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Schematron validation for ISO 19115(19139) UK GEMINI 2.2 Profile</svrl:text>
    <xsl:variable name="langCodeList">eng;cym;gle;gla;cor;sco</xsl:variable>
 
-   <!--PATTERN $loc/strings/UK0503-->
+   <!--PATTERN
+        $loc/strings/UK0503-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">
       <xsl:copy-of select="$loc/strings/UK0503"/>
    </svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="gmd:MD_DataIdentification" priority="1000" mode="M8">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="gmd:MD_DataIdentification"/>
       <xsl:variable name="value" select=".//gmd:language/gmd:LanguageCode/@codeListValue"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="exists(tokenize($langCodeList, ';')[. = $value])"/>
          <xsl:otherwise>
@@ -887,7 +907,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--REPORT -->
+      <!--REPORT
+      -->
 <xsl:if test="true()">
          <svrl:successful-report xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
                                  test="true()">
@@ -909,17 +930,20 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M8"/>
    </xsl:template>
 
-   <!--PATTERN $loc/strings/UK0601-->
+   <!--PATTERN
+        $loc/strings/UK0601-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">
       <xsl:copy-of select="$loc/strings/UK0601"/>
    </svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="//gmd:MD_Metadata" priority="1000" mode="M9">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="//gmd:MD_Metadata"/>
       <xsl:variable name="value" select="gmd:language/gmd:LanguageCode/@codeListValue"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="exists(tokenize($langCodeList, ';')[. = $value])"/>
          <xsl:otherwise>
@@ -935,7 +959,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--REPORT -->
+      <!--REPORT
+      -->
 <xsl:if test="true()">
          <svrl:successful-report xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
                                  test="true()">
@@ -957,107 +982,28 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M9"/>
    </xsl:template>
 
-   <!--PATTERN $loc/strings/UK999-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">
-      <xsl:copy-of select="$loc/strings/UK999"/>
-   </svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="//gmd:MD_Metadata" priority="1000" mode="M10">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="//gmd:MD_Metadata"/>
-
-		    <!--REPORT -->
-<xsl:if test="true()">
-         <svrl:successful-report xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                 test="true()">
-            <xsl:attribute name="location">
-               <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-            </xsl:attribute>
-            <svrl:text>
-               <xsl:text/>
-               <xsl:copy-of select="$loc/strings/UK999.report.name"/>
-               <xsl:text/> 
-               <xsl:text/>
-               <xsl:copy-of select="gmd:metadataStandardName/gco:CharacterString"/>
-               <xsl:text/>
-            </svrl:text>
-         </svrl:successful-report>
-      </xsl:if>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="gmd:metadataStandardName/gco:CharacterString and gmd:metadataStandardName/gco:CharacterString = 'UK GEMINI'"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="gmd:metadataStandardName/gco:CharacterString and gmd:metadataStandardName/gco:CharacterString = 'UK GEMINI'">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>
-                  <xsl:copy-of select="$loc/strings/UK999.alert.name"/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-
-		    <!--REPORT -->
-<xsl:if test="true()">
-         <svrl:successful-report xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                 test="true()">
-            <xsl:attribute name="location">
-               <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-            </xsl:attribute>
-            <svrl:text>
-               <xsl:text/>
-               <xsl:copy-of select="$loc/strings/UK999.report.version"/>
-               <xsl:text/>
-               <xsl:text/>
-               <xsl:copy-of select="gmd:metadataStandardVersion/gco:CharacterString"/>
-               <xsl:text/>
-            </svrl:text>
-         </svrl:successful-report>
-      </xsl:if>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="gmd:metadataStandardVersion/gco:CharacterString and gmd:metadataStandardVersion/gco:CharacterString= '2.2'"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="gmd:metadataStandardVersion/gco:CharacterString and gmd:metadataStandardVersion/gco:CharacterString= '2.2'">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>
-                  <xsl:copy-of select="$loc/strings/UK999.alert.version"/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M10"/>
-   </xsl:template>
+   <!--PATTERN
+        Title-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Title</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M10"/>
    <xsl:template match="@*|node()" priority="-2" mode="M10">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M10"/>
    </xsl:template>
 
-   <!--PATTERN Title-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Title</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M11"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M11">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M11"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi1-NotNillable-->
+   <!--PATTERN
+        Gemini2-mi1-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi1-NotNillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:title"
                  priority="1000"
-                 mode="M12">
+                 mode="M11">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:title"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.)&gt;0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -1073,31 +1019,35 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M12"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M11"/>
    </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M11"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M11">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M11"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Alternative title-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Alternative title</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M12"/>
    <xsl:template match="@*|node()" priority="-2" mode="M12">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M12"/>
    </xsl:template>
 
-   <!--PATTERN Alternative title-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Alternative title</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M13"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M13">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M13"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi2-Nillable-->
+   <!--PATTERN
+        Gemini2-mi2-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi2-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:alternateTitle"
                  priority="1000"
-                 mode="M14">
+                 mode="M13">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:alternateTitle"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.)&gt;0) or (@gco:nilReason = 'inapplicable' or                                @gco:nilReason = 'missing' or                                @gco:nilReason = 'template' or                                @gco:nilReason = 'unknown' or                                @gco:nilReason = 'withheld' or                                starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -1113,30 +1063,34 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M14"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M13"/>
    </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M13"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M13">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M13"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Dataset Language-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Dataset Language</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M14"/>
    <xsl:template match="@*|node()" priority="-2" mode="M14">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M14"/>
    </xsl:template>
 
-   <!--PATTERN Dataset Language-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Dataset Language</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M15"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M15">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M15"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi3-Language-->
+   <!--PATTERN
+        Gemini2-mi3-Language-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi3-Language</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:language" priority="1001"
-                 mode="M16">
+                 mode="M15">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:language"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:LanguageCode) = 1"/>
          <xsl:otherwise>
@@ -1149,17 +1103,19 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M16"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M15"/>
    </xsl:template>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:language/gmd:LanguageCode"
                  priority="1000"
-                 mode="M16">
+                 mode="M15">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:language/gmd:LanguageCode"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(@codeListValue) &gt; 0"/>
          <xsl:otherwise>
@@ -1172,30 +1128,34 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M16"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M15"/>
    </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M15"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M15">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M15"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Abstract-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Abstract</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M16"/>
    <xsl:template match="@*|node()" priority="-2" mode="M16">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M16"/>
    </xsl:template>
 
-   <!--PATTERN Abstract-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Abstract</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M17"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M17">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M17"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi4-NotNillable-->
+   <!--PATTERN
+        Gemini2-mi4-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi4-NotNillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:abstract" priority="1000"
-                 mode="M18">
+                 mode="M17">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:abstract"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -1211,22 +1171,25 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M18"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M17"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M18"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M18">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M18"/>
+   <xsl:template match="text()" priority="-1" mode="M17"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M17">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M17"/>
    </xsl:template>
 
-   <!--PATTERN Topic Category-->
+   <!--PATTERN
+        Topic Category-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Topic Category</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1001" mode="M19">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1001" mode="M18">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="((../../gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or                                 ../../gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series')                                and                                  count(gmd:topicCategory) &gt;= 1)                               or                                (../../gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'dataset' and                                 ../../gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'series')                               or                                 count(../../gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
@@ -1239,16 +1202,18 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M19"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M18"/>
    </xsl:template>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:topicCategory" priority="1000"
-                 mode="M19">
+                 mode="M18">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:topicCategory"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="((../../../gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or                                 ../../../gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series')                                and                                  count(@gco:nilReason) = 0) or                                  (../../../gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'dataset' and                                   ../../../gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'series')                                or                                 count(../../../gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
@@ -1261,22 +1226,25 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M19"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M18"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M19"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M19">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M19"/>
+   <xsl:template match="text()" priority="-1" mode="M18"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M18">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M18"/>
    </xsl:template>
 
-   <!--PATTERN Keyword-->
+   <!--PATTERN
+        Keyword-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Keyword</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1000" mode="M20">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1000" mode="M19">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:descriptiveKeywords) &gt;= 1"/>
          <xsl:otherwise>
@@ -1289,24 +1257,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M20"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M19"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M20"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M20">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M20"/>
+   <xsl:template match="text()" priority="-1" mode="M19"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M19">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M19"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi6-Keyword-Nillable-->
+   <!--PATTERN
+        Gemini2-mi6-Keyword-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi6-Keyword-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:descriptiveKeywords/*[1]/gmd:keyword"
                  priority="1000"
-                 mode="M21">
+                 mode="M20">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:descriptiveKeywords/*[1]/gmd:keyword"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -1322,24 +1293,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M21"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M20"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M21"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M21">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M21"/>
+   <xsl:template match="text()" priority="-1" mode="M20"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M20">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M20"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi6-Thesaurus-Title-NotNillable-->
+   <!--PATTERN
+        Gemini2-mi6-Thesaurus-Title-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi6-Thesaurus-Title-NotNillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:descriptiveKeywords/*[1]/gmd:thesaurusName/*[1]/gmd:title"
                  priority="1000"
-                 mode="M22">
+                 mode="M21">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:descriptiveKeywords/*[1]/gmd:thesaurusName/*[1]/gmd:title"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -1355,24 +1329,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M22"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M21"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M22"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M22">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M22"/>
+   <xsl:template match="text()" priority="-1" mode="M21"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M21">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M21"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi6-Thesaurus-DateType-CodeList-->
+   <!--PATTERN
+        Gemini2-mi6-Thesaurus-DateType-CodeList-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi6-Thesaurus-DateType-CodeList</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:descriptiveKeywords/*[1]/gmd:thesaurusName/*[1]/gmd:date/*[1]/gmd:dateType/*[1]"
                  priority="1000"
-                 mode="M23">
+                 mode="M22">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:descriptiveKeywords/*[1]/gmd:thesaurusName/*[1]/gmd:date/*[1]/gmd:dateType/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(@codeListValue) &gt; 0"/>
          <xsl:otherwise>
@@ -1385,24 +1362,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M23"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M22"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M23"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M23">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M23"/>
+   <xsl:template match="text()" priority="-1" mode="M22"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M22">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M22"/>
    </xsl:template>
 
-   <!--PATTERN Temporal extent-->
+   <!--PATTERN
+        Temporal extent-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Temporal extent</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent |               /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType='gmd:EX_TemporalExtent'][1]/gmd:extent |               /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent |               /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType='gmd:EX_TemporalExtent'][1]/gmd:extent"
                  priority="1000"
-                 mode="M24">
+                 mode="M23">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent |               /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:temporalElement/*[@gco:isoType='gmd:EX_TemporalExtent'][1]/gmd:extent |               /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent |               /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:temporalElement/*[@gco:isoType='gmd:EX_TemporalExtent'][1]/gmd:extent"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gml:TimePeriod) = 1 or count(gml:TimeInstant) = 1"/>
          <xsl:otherwise>
@@ -1416,31 +1396,35 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M24"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M23"/>
    </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M23"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M23">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M23"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Dataset reference date-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Dataset reference date</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M24"/>
    <xsl:template match="@*|node()" priority="-2" mode="M24">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M24"/>
    </xsl:template>
 
-   <!--PATTERN Dataset reference date-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Dataset reference date</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M25"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M25">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M25"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi8-ReferenceDate-DateType-CodeList-->
+   <!--PATTERN
+        Gemini2-mi8-ReferenceDate-DateType-CodeList-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi8-ReferenceDate-DateType-CodeList</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:date/*[1]/gmd:dateType/*[1]"
                  priority="1000"
-                 mode="M26">
+                 mode="M25">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:date/*[1]/gmd:dateType/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(@codeListValue) &gt; 0"/>
          <xsl:otherwise>
@@ -1453,21 +1437,24 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M26"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M25"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M26"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M26">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M26"/>
+   <xsl:template match="text()" priority="-1" mode="M25"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M25">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M25"/>
    </xsl:template>
 
-   <!--PATTERN Lineage-->
+   <!--PATTERN
+        Lineage-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Lineage</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]" priority="1000" mode="M27">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]" priority="1000" mode="M26">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="((gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or                    gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series') and                    count(gmd:dataQualityInfo[1]/*[1]/gmd:lineage/*[1]/gmd:statement) = 1) or                    (gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'dataset' and                    gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'series') or                     count(gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
@@ -1480,24 +1467,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M27"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M26"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M27"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M27">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M27"/>
+   <xsl:template match="text()" priority="-1" mode="M26"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M26">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M26"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi10-Statement-Nillable-->
+   <!--PATTERN
+        Gemini2-mi10-Statement-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi10-Statement-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:dataQualityInfo[1]/*[1]/gmd:lineage/*[1]/gmd:statement"
                  priority="1000"
-                 mode="M28">
+                 mode="M27">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:dataQualityInfo[1]/*[1]/gmd:lineage/*[1]/gmd:statement"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld'                      or starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -1513,22 +1503,25 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M28"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M27"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M28"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M28">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M28"/>
+   <xsl:template match="text()" priority="-1" mode="M27"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M27">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M27"/>
    </xsl:template>
 
-   <!--PATTERN West and east longitude, north and south latitude -->
+   <!--PATTERN
+        West and east longitude, north and south latitude -->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">West and east longitude, north and south latitude </svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1000" mode="M29">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1000" mode="M28">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="((../../gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or                    ../../gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series') and                    (count(gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox) &gt;= 1) or                   count(gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'][1]) &gt;= 1) or                   (../../gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'dataset' and                    ../../gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'series') or                     count(../../gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
@@ -1542,24 +1535,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M29"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M28"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M29"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M29">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M29"/>
+   <xsl:template match="text()" priority="-1" mode="M28"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M28">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M28"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi11-BoundingBox-->
+   <!--PATTERN
+        Gemini2-mi11-BoundingBox-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-BoundingBox</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'] [1]|                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'][1]"
                  priority="1000"
-                 mode="M30">
+                 mode="M29">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'] [1]|                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'][1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(gmd:westBoundLongitude) = 0                               or (gmd:westBoundLongitude &gt;= -180.0 and                                   gmd:westBoundLongitude &lt;= 180.0)"/>
          <xsl:otherwise>
@@ -1575,7 +1571,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(gmd:eastBoundLongitude) = 0                               or (gmd:eastBoundLongitude &gt;= -180.0 and                               gmd:eastBoundLongitude &lt;= 180.0)"/>
          <xsl:otherwise>
@@ -1591,7 +1588,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(gmd:southBoundLatitude) = 0                               or (gmd:southBoundLatitude &gt;= -90.0 and                                   gmd:southBoundLatitude &lt;= gmd:northBoundLatitude)"/>
          <xsl:otherwise>
@@ -1607,7 +1605,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(gmd:northBoundLatitude) = 0                               or (gmd:northBoundLatitude &lt;= 90.0 and                                   gmd:northBoundLatitude &gt;= gmd:southBoundLatitude)"/>
          <xsl:otherwise>
@@ -1622,6 +1621,42 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M29"/>
+   </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M29"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M29">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M29"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Gemini2-mi11-West-NotNillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-West-NotNillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:westBoundLongitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:westBoundLongitude"
+                 priority="1000"
+                 mode="M30">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:westBoundLongitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:westBoundLongitude"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element is not nillable and shall have a value: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M30"/>
    </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M30"/>
@@ -1629,17 +1664,20 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M30"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi11-West-NotNillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-West-NotNillable</svrl:text>
+   <!--PATTERN
+        Gemini2-mi11-East-NotNillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-East-NotNillable</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:westBoundLongitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:westBoundLongitude"
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:eastBoundLongitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:eastBoundLongitude"
                  priority="1000"
                  mode="M31">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:westBoundLongitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:westBoundLongitude"/>
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:eastBoundLongitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:eastBoundLongitude"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -1662,17 +1700,20 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M31"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi11-East-NotNillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-East-NotNillable</svrl:text>
+   <!--PATTERN
+        Gemini2-mi11-South-NotNillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-South-NotNillable</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:eastBoundLongitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:eastBoundLongitude"
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:southBoundLatitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:southBoundLatitude"
                  priority="1000"
                  mode="M32">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:eastBoundLongitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:eastBoundLongitude"/>
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:southBoundLatitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:southBoundLatitude"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -1695,17 +1736,20 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M32"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi11-South-NotNillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-South-NotNillable</svrl:text>
+   <!--PATTERN
+        Gemini2-mill-North-NotNillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mill-North-NotNillable</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:southBoundLatitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:southBoundLatitude"
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:northBoundLatitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:northBoundLatitude"
                  priority="1000"
                  mode="M33">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:southBoundLatitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:southBoundLatitude"/>
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:northBoundLatitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:northBoundLatitude"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -1728,177 +1772,160 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M33"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mill-North-NotNillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mill-North-NotNillable</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:northBoundLatitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:northBoundLatitude"
-                 priority="1000"
-                 mode="M34">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[1]/gmd:northBoundLatitude |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[1]/gmd:northBoundLatitude"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element is not nillable and shall have a value: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M34"/>
-   </xsl:template>
+   <!--PATTERN
+        Extent-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Extent</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M34"/>
    <xsl:template match="@*|node()" priority="-2" mode="M34">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M34"/>
    </xsl:template>
 
-   <!--PATTERN Extent-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Extent</svrl:text>
+   <!--PATTERN
+        Gemini2-mi15-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi15-Nillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code"
+                 priority="1000"
+                 mode="M35">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M35"/>
+   </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M35"/>
    <xsl:template match="@*|node()" priority="-2" mode="M35">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M35"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi15-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi15-Nillable</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code"
-                 priority="1000"
-                 mode="M36">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/*[1]/gmd:code |                            /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicDescription'][1]/gmd:geographicIdentifier/*[1]/gmd:code"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M36"/>
-   </xsl:template>
+   <!--PATTERN
+        Vertical extent information-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Vertical extent information</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M36"/>
    <xsl:template match="@*|node()" priority="-2" mode="M36">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M36"/>
    </xsl:template>
 
-   <!--PATTERN Vertical extent information-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Vertical extent information</svrl:text>
+   <!--PATTERN
+        Gemini2-mi16-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi16-Nillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:verticalElement/*[1]/gmd:minimumValue |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:verticalElement/*[1]/gmd:maximumValue"
+                 priority="1000"
+                 mode="M37">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:verticalElement/*[1]/gmd:minimumValue |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:verticalElement/*[1]/gmd:maximumValue"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M37"/>
+   </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M37"/>
    <xsl:template match="@*|node()" priority="-2" mode="M37">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M37"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi16-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi16-Nillable</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:verticalElement/*[1]/gmd:minimumValue |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:verticalElement/*[1]/gmd:maximumValue"
-                 priority="1000"
-                 mode="M38">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:verticalElement/*[1]/gmd:minimumValue |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:verticalElement/*[1]/gmd:maximumValue"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M38"/>
-   </xsl:template>
+   <!--PATTERN
+        Spatial reference system-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Spatial reference system</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M38"/>
    <xsl:template match="@*|node()" priority="-2" mode="M38">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M38"/>
    </xsl:template>
 
-   <!--PATTERN Spatial reference system-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Spatial reference system</svrl:text>
+   <!--PATTERN
+        Gemini2-mi17-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi17-Nillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:referenceSystemInfo/*[1]/gmd:referenceSystemIdentifier/*[1]/gmd:code"
+                 priority="1000"
+                 mode="M39">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:referenceSystemInfo/*[1]/gmd:referenceSystemIdentifier/*[1]/gmd:code"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M39"/>
+   </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M39"/>
    <xsl:template match="@*|node()" priority="-2" mode="M39">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M39"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi17-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi17-Nillable</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:referenceSystemInfo/*[1]/gmd:referenceSystemIdentifier/*[1]/gmd:code"
-                 priority="1000"
-                 mode="M40">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:referenceSystemInfo/*[1]/gmd:referenceSystemIdentifier/*[1]/gmd:code"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M40"/>
-   </xsl:template>
+   <!--PATTERN
+        Spatial Resolution-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Spatial Resolution</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M40"/>
    <xsl:template match="@*|node()" priority="-2" mode="M40">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M40"/>
    </xsl:template>
 
-   <!--PATTERN Spatial Resolution-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Spatial Resolution</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M41"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M41">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M41"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi18-Nillable-->
+   <!--PATTERN
+        Gemini2-mi18-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi18-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:spatialResolution/*[1]/gmd:distance"
                  priority="1000"
-                 mode="M42">
+                 mode="M41">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:spatialResolution/*[1]/gmd:distance"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -1914,24 +1941,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M42"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M41"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M42"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M42">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M42"/>
+   <xsl:template match="text()" priority="-1" mode="M41"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M41">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M41"/>
    </xsl:template>
 
-   <!--PATTERN Resource locator-->
+   <!--PATTERN
+        Resource locator-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Resource locator</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:distributionInfo/*[1]/gmd:transferOptions/*[1]/gmd:onLine/*[1]"
                  priority="1000"
-                 mode="M43">
+                 mode="M42">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:distributionInfo/*[1]/gmd:transferOptions/*[1]/gmd:onLine/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:linkage) = 0 or                                (starts-with(normalize-space(gmd:linkage/*[1]), 'http://')  or                                 starts-with(normalize-space(gmd:linkage/*[1]), 'https://') or                                 starts-with(normalize-space(gmd:linkage/*[1]), 'ftp://'))"/>
          <xsl:otherwise>
@@ -1945,24 +1975,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M43"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M42"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M43"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M43">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M43"/>
+   <xsl:template match="text()" priority="-1" mode="M42"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M42">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M42"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi19-Nillable-->
+   <!--PATTERN
+        Gemini2-mi19-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi19-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="*[1]/gmd:distributionInfo/*[1]/gmd:transferOptions/*[1]/gmd:onLine/*[1]/gmd:linkage"
                  priority="1000"
-                 mode="M44">
+                 mode="M43">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="*[1]/gmd:distributionInfo/*[1]/gmd:transferOptions/*[1]/gmd:onLine/*[1]/gmd:linkage"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -1978,31 +2011,71 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M44"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M43"/>
    </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M43"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M43">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M43"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Data Format-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Data Format</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M44"/>
    <xsl:template match="@*|node()" priority="-2" mode="M44">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M44"/>
    </xsl:template>
 
-   <!--PATTERN Data Format-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Data Format</svrl:text>
+   <!--PATTERN
+        Gemini2-mi21-Name-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi21-Name-Nillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:distributionInfo/*[1]/gmd:distributionFormat/*[1]/gmd:name"
+                 priority="1000"
+                 mode="M45">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:distributionInfo/*[1]/gmd:distributionFormat/*[1]/gmd:name"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M45"/>
+   </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M45"/>
    <xsl:template match="@*|node()" priority="-2" mode="M45">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M45"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi21-Name-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi21-Name-Nillable</svrl:text>
+   <!--PATTERN
+        Gemini2-mi21-Version-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi21-Version-Nillable</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:distributionInfo/*[1]/gmd:distributionFormat/*[1]/gmd:name"
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:distributionInfo/*[1]/gmd:distributionFormat/*[1]/gmd:version"
                  priority="1000"
                  mode="M46">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:distributionInfo/*[1]/gmd:distributionFormat/*[1]/gmd:name"/>
+                       context="/*[1]/gmd:distributionInfo/*[1]/gmd:distributionFormat/*[1]/gmd:version"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -2025,48 +2098,18 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M46"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi21-Version-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi21-Version-Nillable</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:distributionInfo/*[1]/gmd:distributionFormat/*[1]/gmd:version"
-                 priority="1000"
-                 mode="M47">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:distributionInfo/*[1]/gmd:distributionFormat/*[1]/gmd:version"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M47"/>
-   </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M47"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M47">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M47"/>
-   </xsl:template>
-
-   <!--PATTERN Responsible organisation-->
+   <!--PATTERN
+        Responsible organisation-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Responsible organisation</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1001" mode="M48">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1001" mode="M47">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:pointOfContact) &gt;= 1"/>
          <xsl:otherwise>
@@ -2079,16 +2122,18 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M48"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M47"/>
    </xsl:template>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact" priority="1000"
-                 mode="M48">
+                 mode="M47">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -2101,23 +2146,26 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M48"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M47"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M48"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M48">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M48"/>
+   <xsl:template match="text()" priority="-1" mode="M47"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M47">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M47"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi23-ResponsibleParty-->
+   <!--PATTERN
+        Gemini2-mi23-ResponsibleParty-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi23-ResponsibleParty</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact" priority="1000"
-                 mode="M49">
+                 mode="M48">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(*/gmd:organisationName) = 1"/>
          <xsl:otherwise>
@@ -2131,7 +2179,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(*/gmd:contactInfo/*[1]/gmd:address/*[1]/gmd:electronicMailAddress) = 1"/>
          <xsl:otherwise>
@@ -2144,24 +2193,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M49"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M48"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M49"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M49">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M49"/>
+   <xsl:template match="text()" priority="-1" mode="M48"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M48">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M48"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi23-OrganisationName-NotNillable-->
+   <!--PATTERN
+        Gemini2-mi23-OrganisationName-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi23-OrganisationName-NotNillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact/*[1]/gmd:organisationName |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact/*[1]/gmd:contactInfo/*[1]/gmd:address/*[1]/gmd:electronicMailAddress"
                  priority="1000"
-                 mode="M50">
+                 mode="M49">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact/*[1]/gmd:organisationName |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact/*[1]/gmd:contactInfo/*[1]/gmd:address/*[1]/gmd:electronicMailAddress"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -2177,6 +2229,39 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M49"/>
+   </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M49"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M49">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M49"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Gemini2-mi23-Role-CodeList-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi23-Role-CodeList</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact/*[1]/gmd:role/*[1]"
+                 priority="1000"
+                 mode="M50">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact/*[1]/gmd:role/*[1]"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="string-length(@codeListValue) &gt; 0"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="string-length(@codeListValue) &gt; 0">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>The codeListValue attribute does not have a value.</svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M50"/>
    </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M50"/>
@@ -2184,54 +2269,28 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M50"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi23-Role-CodeList-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi23-Role-CodeList</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact/*[1]/gmd:role/*[1]"
-                 priority="1000"
-                 mode="M51">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:pointOfContact/*[1]/gmd:role/*[1]"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="string-length(@codeListValue) &gt; 0"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="string-length(@codeListValue) &gt; 0">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>The codeListValue attribute does not have a value.</svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M51"/>
-   </xsl:template>
+   <!--PATTERN
+        Frequency of update-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Frequency of update</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M51"/>
    <xsl:template match="@*|node()" priority="-2" mode="M51">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M51"/>
    </xsl:template>
 
-   <!--PATTERN Frequency of update-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Frequency of update</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M52"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M52">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M52"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi24-CodeList-->
+   <!--PATTERN
+        Gemini2-mi24-CodeList-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi24-CodeList</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceMaintenance/*[1]/gmd:maintenanceAndUpdateFrequency/*[1]"
                  priority="1000"
-                 mode="M53">
+                 mode="M52">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceMaintenance/*[1]/gmd:maintenanceAndUpdateFrequency/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(@codeListValue) &gt; 0"/>
          <xsl:otherwise>
@@ -2244,24 +2303,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M53"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M52"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M53"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M53">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M53"/>
+   <xsl:template match="text()" priority="-1" mode="M52"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M52">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M52"/>
    </xsl:template>
 
-   <!--PATTERN Limitations on public access-->
+   <!--PATTERN
+        Limitations on public access-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Limitations on public access</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/gmd:MD_LegalConstraints |                            /*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1][gco:isoType='gmd:MD_LegalConstraints']"
                  priority="1000"
-                 mode="M54">
+                 mode="M53">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/gmd:MD_LegalConstraints |                            /*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1][gco:isoType='gmd:MD_LegalConstraints']"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:accessConstraints[*/@codeListValue='otherRestrictions']) = 1"/>
          <xsl:otherwise>
@@ -2275,7 +2337,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:otherConstraints) &gt;= 1"/>
          <xsl:otherwise>
@@ -2288,24 +2351,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M54"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M53"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M54"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M54">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M54"/>
+   <xsl:template match="text()" priority="-1" mode="M53"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M53">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M53"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi25-OtherConstraints-Nillable-->
+   <!--PATTERN
+        Gemini2-mi25-OtherConstraints-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi25-OtherConstraints-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1]/gmd:otherConstraints"
                  priority="1000"
-                 mode="M55">
+                 mode="M54">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1]/gmd:otherConstraints"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -2321,24 +2387,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M55"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M54"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M55"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M55">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M55"/>
+   <xsl:template match="text()" priority="-1" mode="M54"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M54">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M54"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi25-AccessConstraints-CodeList-->
+   <!--PATTERN
+        Gemini2-mi25-AccessConstraints-CodeList-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi25-AccessConstraints-CodeList</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1]/gmd:accessConstraints/*[1]"
                  priority="1000"
-                 mode="M56">
+                 mode="M55">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1]/gmd:accessConstraints/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(@codeListValue) &gt; 0"/>
          <xsl:otherwise>
@@ -2351,22 +2420,25 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M56"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M55"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M56"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M56">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M56"/>
+   <xsl:template match="text()" priority="-1" mode="M55"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M55">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M55"/>
    </xsl:template>
 
-   <!--PATTERN Use constraints-->
+   <!--PATTERN
+        Use constraints-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Use constraints</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1000" mode="M57">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1000" mode="M56">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:resourceConstraints/*[1]/gmd:useLimitation) &gt;= 1"/>
          <xsl:otherwise>
@@ -2379,6 +2451,42 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M56"/>
+   </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M56"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M56">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M56"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Gemini2-mi26-UseLimitation-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi26-UseLimitation-Nillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1]/gmd:useLimitation"
+                 priority="1000"
+                 mode="M57">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1]/gmd:useLimitation"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M57"/>
    </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M57"/>
@@ -2386,57 +2494,28 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M57"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi26-UseLimitation-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi26-UseLimitation-Nillable</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1]/gmd:useLimitation"
-                 priority="1000"
-                 mode="M58">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:resourceConstraints/*[1]/gmd:useLimitation"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M58"/>
-   </xsl:template>
+   <!--PATTERN
+        Additional information source-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Additional information source</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M58"/>
    <xsl:template match="@*|node()" priority="-2" mode="M58">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M58"/>
    </xsl:template>
 
-   <!--PATTERN Additional information source-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Additional information source</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M59"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M59">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M59"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi27-Nillable-->
+   <!--PATTERN
+        Gemini2-mi27-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi27-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:supplementalInformation"
                  priority="1000"
-                 mode="M60">
+                 mode="M59">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:supplementalInformation"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -2452,23 +2531,26 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M60"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M59"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M60"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M60">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M60"/>
+   <xsl:template match="text()" priority="-1" mode="M59"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M59">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M59"/>
    </xsl:template>
 
-   <!--PATTERN Unique resource identifier-->
+   <!--PATTERN
+        Unique resource identifier-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Unique resource identifier</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]" priority="1000"
-                 mode="M61">
+                 mode="M60">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="((../../../../gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or                     ../../../../gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series') and                     count(gmd:identifier) &gt;= 1) or                     (../../../../gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'dataset' and                     ../../../../gmd:hierarchyLevel[1]/*[1]/@codeListValue != 'series') or                     count(../../../../gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
@@ -2482,24 +2564,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M61"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M60"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M61"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M61">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M61"/>
+   <xsl:template match="text()" priority="-1" mode="M60"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M60">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M60"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi36-Code-NotNillable-->
+   <!--PATTERN
+        Gemini2-mi36-Code-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi36-Code-NotNillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:identifier/*[1]/gmd:code"
                  priority="1000"
-                 mode="M62">
+                 mode="M61">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:identifier/*[1]/gmd:code"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -2509,6 +2594,42 @@
                   <xsl:apply-templates select="." mode="schematron-select-full-path"/>
                </xsl:attribute>
                <svrl:text>Element is not nillable and shall have a value: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M61"/>
+   </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M61"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M61">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M61"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Gemini2-mi36-CodeSpace-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi36-CodeSpace-Nillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:identifier/*[1]/gmd:codeSpace"
+                 priority="1000"
+                 mode="M62">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:identifier/*[1]/gmd:codeSpace"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
                   <xsl:copy-of select="name(.)"/>
                   <xsl:text/>
                </svrl:text>
@@ -2522,47 +2643,17 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M62"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi36-CodeSpace-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi36-CodeSpace-Nillable</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:identifier/*[1]/gmd:codeSpace"
-                 priority="1000"
-                 mode="M63">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation/*[1]/gmd:identifier/*[1]/gmd:codeSpace"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M63"/>
-   </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M63"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M63">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M63"/>
-   </xsl:template>
-
-   <!--PATTERN Resource type-->
+   <!--PATTERN
+        Resource type-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Resource type</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]" priority="1000" mode="M64">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]" priority="1000" mode="M63">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:hierarchyLevel) = 1"/>
          <xsl:otherwise>
@@ -2576,7 +2667,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'dataset' or                               gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'series' or                               gmd:hierarchyLevel[1]/*[1]/@codeListValue = 'service'"/>
          <xsl:otherwise>
@@ -2589,22 +2681,25 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M64"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M63"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M64"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M64">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M64"/>
+   <xsl:template match="text()" priority="-1" mode="M63"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M63">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M63"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi39-CodeList-->
+   <!--PATTERN
+        Gemini2-mi39-CodeList-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi39-CodeList</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:hierarchyLevel/*[1]" priority="1000" mode="M65">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:hierarchyLevel/*[1]" priority="1000" mode="M64">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:hierarchyLevel/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(@codeListValue) &gt; 0"/>
          <xsl:otherwise>
@@ -2617,31 +2712,35 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M65"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M64"/>
    </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M64"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M64">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M64"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Conformity-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Conformity</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M65"/>
    <xsl:template match="@*|node()" priority="-2" mode="M65">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M65"/>
    </xsl:template>
 
-   <!--PATTERN Conformity-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Conformity</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M66"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M66">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M66"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi41-Pass-NotNillable-->
+   <!--PATTERN
+        Gemini2-mi41-Pass-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi41-Pass-NotNillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:pass"
                  priority="1000"
-                 mode="M67">
+                 mode="M66">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:pass"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -2651,6 +2750,42 @@
                   <xsl:apply-templates select="." mode="schematron-select-full-path"/>
                </xsl:attribute>
                <svrl:text>Element is not nillable and shall have a value: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M66"/>
+   </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M66"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M66">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M66"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Gemini2-mi41-Explanation-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi41-Explanation-Nillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:explanation"
+                 priority="1000"
+                 mode="M67">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:explanation"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
                   <xsl:copy-of select="name(.)"/>
                   <xsl:text/>
                </svrl:text>
@@ -2664,57 +2799,28 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M67"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi41-Explanation-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi41-Explanation-Nillable</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:explanation"
-                 priority="1000"
-                 mode="M68">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:explanation"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M68"/>
-   </xsl:template>
+   <!--PATTERN
+        Specification-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Specification</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M68"/>
    <xsl:template match="@*|node()" priority="-2" mode="M68">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M68"/>
    </xsl:template>
 
-   <!--PATTERN Specification-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Specification</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M69"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M69">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M69"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi42-Title-NotNillable-->
+   <!--PATTERN
+        Gemini2-mi42-Title-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi42-Title-NotNillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:title"
                  priority="1000"
-                 mode="M70">
+                 mode="M69">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:title"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -2724,6 +2830,42 @@
                   <xsl:apply-templates select="." mode="schematron-select-full-path"/>
                </xsl:attribute>
                <svrl:text>Element is not nillable and shall have a value: <xsl:text/>
+                  <xsl:copy-of select="name(.)"/>
+                  <xsl:text/>
+               </svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M69"/>
+   </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M69"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M69">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M69"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Gemini2-mi42-Date-Nillable-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi42-Date-Nillable</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:date/*[1]/gmd:date"
+                 priority="1000"
+                 mode="M70">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:date/*[1]/gmd:date"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
                   <xsl:copy-of select="name(.)"/>
                   <xsl:text/>
                </svrl:text>
@@ -2737,50 +2879,20 @@
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M70"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi42-Date-Nillable-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi42-Date-Nillable</svrl:text>
+   <!--PATTERN
+        Gemini2-mi42-DateType-CodeList-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi42-DateType-CodeList</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:date/*[1]/gmd:date"
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:date/*[1]/gmd:date/*[1]/gmd:dateType/*[1]"
                  priority="1000"
                  mode="M71">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
-                       context="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:date/*[1]/gmd:date"/>
-
-		    <!--ASSERT -->
-<xsl:choose>
-         <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
-         <xsl:otherwise>
-            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="(string-length(.) &gt; 0) or (@gco:nilReason = 'inapplicable' or @gco:nilReason = 'missing' or @gco:nilReason = 'template' or @gco:nilReason = 'unknown' or @gco:nilReason = 'withheld' or starts-with(@gco:nilReason, 'other:'))">
-               <xsl:attribute name="location">
-                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
-               </xsl:attribute>
-               <svrl:text>Element shall have a value or a valid Nil Reason: <xsl:text/>
-                  <xsl:copy-of select="name(.)"/>
-                  <xsl:text/>
-               </svrl:text>
-            </svrl:failed-assert>
-         </xsl:otherwise>
-      </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M71"/>
-   </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M71"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M71">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M71"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi42-DateType-CodeList-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi42-DateType-CodeList</svrl:text>
-
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:date/*[1]/gmd:date/*[1]/gmd:dateType/*[1]"
-                 priority="1000"
-                 mode="M72">
-      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:dataQualityInfo/*[1]/gmd:report/*[1]/gmd:result/*[1]/gmd:specification/*[1]/gmd:date/*[1]/gmd:date/*[1]/gmd:dateType/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(@codeListValue) &gt; 0"/>
          <xsl:otherwise>
@@ -2793,31 +2905,35 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M72"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M71"/>
    </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M71"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M71">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M71"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Equivalent scale-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Equivalent scale</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M72"/>
    <xsl:template match="@*|node()" priority="-2" mode="M72">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M72"/>
    </xsl:template>
 
-   <!--PATTERN Equivalent scale-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Equivalent scale</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M73"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M73">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M73"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi43-Nillable-->
+   <!--PATTERN
+        Gemini2-mi43-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi43-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:spatialResolution/*[1]/gmd:equivalentScale/*[1]/gmd:denominator"
                  priority="1000"
-                 mode="M74">
+                 mode="M73">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:spatialResolution/*[1]/gmd:equivalentScale/*[1]/gmd:denominator"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -2833,21 +2949,24 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M74"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M73"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M74"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M74">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M74"/>
+   <xsl:template match="text()" priority="-1" mode="M73"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M73">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M73"/>
    </xsl:template>
 
-   <!--PATTERN Metadata language-->
+   <!--PATTERN
+        Metadata language-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Metadata language</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]" priority="1000" mode="M75">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]" priority="1000" mode="M74">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:language) = 1"/>
          <xsl:otherwise>
@@ -2860,21 +2979,24 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M75"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M74"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M75"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M75">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M75"/>
+   <xsl:template match="text()" priority="-1" mode="M74"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M74">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M74"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi33-Language-->
+   <!--PATTERN
+        Gemini2-mi33-Language-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi33-Language</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:language" priority="1001" mode="M76">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:language" priority="1001" mode="M75">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]/gmd:language"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:LanguageCode) = 1"/>
          <xsl:otherwise>
@@ -2887,15 +3009,17 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M76"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M75"/>
    </xsl:template>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:language/gmd:LanguageCode" priority="1000" mode="M76">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:language/gmd:LanguageCode" priority="1000" mode="M75">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:language/gmd:LanguageCode"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(@codeListValue) &gt; 0"/>
          <xsl:otherwise>
@@ -2908,28 +3032,32 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M76"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M75"/>
    </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M75"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M75">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M75"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Metadata date-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Metadata date</svrl:text>
    <xsl:template match="text()" priority="-1" mode="M76"/>
    <xsl:template match="@*|node()" priority="-2" mode="M76">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M76"/>
    </xsl:template>
 
-   <!--PATTERN Metadata date-->
-<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Metadata date</svrl:text>
-   <xsl:template match="text()" priority="-1" mode="M77"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M77">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M77"/>
-   </xsl:template>
-
-   <!--PATTERN Gemini2-mi30-Nillable-->
+   <!--PATTERN
+        Gemini2-mi30-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi30-Nillable</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:dateStamp" priority="1000" mode="M78">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:dateStamp" priority="1000" mode="M77">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]/gmd:dateStamp"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -2945,21 +3073,24 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M78"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M77"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M78"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M78">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M78"/>
+   <xsl:template match="text()" priority="-1" mode="M77"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M77">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M77"/>
    </xsl:template>
 
-   <!--PATTERN Metadata point of contact-->
+   <!--PATTERN
+        Metadata point of contact-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Metadata point of contact</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:contact" priority="1000" mode="M79">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:contact" priority="1000" mode="M78">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]/gmd:contact"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -2973,7 +3104,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(parent::node()[gmd:contact/*[1]/gmd:role/*[1]/@codeListValue='pointOfContact']) &gt;= 1"/>
          <xsl:otherwise>
@@ -2987,21 +3119,24 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M79"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M78"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M79"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M79">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M79"/>
+   <xsl:template match="text()" priority="-1" mode="M78"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M78">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M78"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi35-ResponsibleParty-->
+   <!--PATTERN
+        Gemini2-mi35-ResponsibleParty-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi35-ResponsibleParty</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:contact" priority="1000" mode="M80">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:contact" priority="1000" mode="M79">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]/gmd:contact"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(*/gmd:organisationName) = 1"/>
          <xsl:otherwise>
@@ -3015,7 +3150,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(*/gmd:contactInfo/*[1]/gmd:address/*[1]/gmd:electronicMailAddress) = 1"/>
          <xsl:otherwise>
@@ -3028,24 +3164,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M80"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M79"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M80"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M80">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M80"/>
+   <xsl:template match="text()" priority="-1" mode="M79"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M79">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M79"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi35-NotNillable-->
+   <!--PATTERN
+        Gemini2-mi35-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi35-NotNillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:contact/*[1]/gmd:organisationName | /*[1]/gmd:contact/*[1]/gmd:contactInfo/*[1]/gmd:address/*[1]/gmd:electronicMailAddress"
                  priority="1000"
-                 mode="M81">
+                 mode="M80">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:contact/*[1]/gmd:organisationName | /*[1]/gmd:contact/*[1]/gmd:contactInfo/*[1]/gmd:address/*[1]/gmd:electronicMailAddress"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -3061,24 +3200,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M81"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M80"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M81"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M81">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M81"/>
+   <xsl:template match="text()" priority="-1" mode="M80"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M80">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M80"/>
    </xsl:template>
 
-   <!--PATTERN Spatial data service type-->
+   <!--PATTERN
+        Spatial data service type-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Spatial data service type</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/srv:SV_ServiceIdentification |                            /*[1]/gmd:identificationInfo[1]/*[@gco:isoType='srv:SV_ServiceIdentification'][1]"
                  priority="1000"
-                 mode="M82">
+                 mode="M81">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/srv:SV_ServiceIdentification |                            /*[1]/gmd:identificationInfo[1]/*[@gco:isoType='srv:SV_ServiceIdentification'][1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(../../gmd:hierarchyLevel/*[1]/@codeListValue = 'service' and                                count(srv:serviceType) = 1) or                               ../../gmd:hierarchyLevel/*[1]/@codeListValue != 'service'"/>
          <xsl:otherwise>
@@ -3093,7 +3235,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="srv:serviceType/*[1] = 'discovery' or                               srv:serviceType/*[1] = 'view' or                               srv:serviceType/*[1] = 'download' or                               srv:serviceType/*[1] = 'transformation' or                               srv:serviceType/*[1] = 'invoke' or                               srv:serviceType/*[1] = 'other'"/>
          <xsl:otherwise>
@@ -3108,23 +3251,26 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M82"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M81"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M82"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M82">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M82"/>
+   <xsl:template match="text()" priority="-1" mode="M81"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M81">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M81"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-mi37-Nillable-->
+   <!--PATTERN
+        Gemini2-mi37-Nillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi37-Nillable</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/srv:serviceType" priority="1000"
-                 mode="M83">
+                 mode="M82">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/srv:serviceType"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="(string-length(.) &gt; 0) or                     (@gco:nilReason = 'inapplicable' or                      @gco:nilReason = 'missing' or                      @gco:nilReason = 'template' or                      @gco:nilReason = 'unknown' or                      @gco:nilReason = 'withheld' or                    starts-with(@gco:nilReason, 'other:'))"/>
          <xsl:otherwise>
@@ -3140,23 +3286,26 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M83"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M82"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M83"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M83">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M83"/>
+   <xsl:template match="text()" priority="-1" mode="M82"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M82">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M82"/>
    </xsl:template>
 
-   <!--PATTERN Coupled resource-->
+   <!--PATTERN
+        Coupled resource-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Coupled resource</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/srv:operatesOn" priority="1000"
-                 mode="M84">
+                 mode="M83">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/srv:operatesOn"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(@xlink:href) = 1"/>
          <xsl:otherwise>
@@ -3170,23 +3319,26 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M84"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M83"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M84"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M84">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M84"/>
+   <xsl:template match="text()" priority="-1" mode="M83"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M83">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M83"/>
    </xsl:template>
 
-   <!--PATTERN Data identification citation-->
+   <!--PATTERN
+        Data identification citation-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Data identification citation</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation" priority="1000"
-                 mode="M85">
+                 mode="M84">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:citation"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -3199,18 +3351,20 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M85"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M84"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M85"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M85">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M85"/>
+   <xsl:template match="text()" priority="-1" mode="M84"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M84">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M84"/>
    </xsl:template>
 
-   <!--PATTERN Metadata resource type test-->
+   <!--PATTERN
+        Metadata resource type test-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Metadata resource type test</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]" priority="1000" mode="M86">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]" priority="1000" mode="M85">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]"/>
       <xsl:variable name="isData"
@@ -3222,7 +3376,8 @@
       <xsl:variable name="serviceIdExists"
                     select="count(*[local-name()='SV_ServiceIdentification'])=1 or                                             count(*[@gco:isoType='srv:SV_ServiceIdentification'])=1"/>
 
-		    <!--REPORT -->
+      <!--REPORT
+      -->
 <xsl:if test="$isData">
          <svrl:successful-report xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
                                  test="$isData">
@@ -3233,7 +3388,8 @@
          </svrl:successful-report>
       </xsl:if>
 
-		    <!--REPORT -->
+      <!--REPORT
+      -->
 <xsl:if test="$isService">
          <svrl:successful-report xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
                                  test="$isService">
@@ -3244,7 +3400,8 @@
          </svrl:successful-report>
       </xsl:if>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="not($isData) or                           ( $isData and $dataIdExists ) or                           count(../gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
@@ -3259,7 +3416,8 @@
          </xsl:otherwise>
       </xsl:choose>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="not($isService) or                           ( $isService and $serviceIdExists ) or                           count(../gmd:hierarchyLevel) = 0"/>
          <xsl:otherwise>
@@ -3273,21 +3431,24 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M86"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M85"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M86"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M86">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M86"/>
+   <xsl:template match="text()" priority="-1" mode="M85"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M85">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M85"/>
    </xsl:template>
 
-   <!--PATTERN Metadata file identifier-->
+   <!--PATTERN
+        Metadata file identifier-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Metadata file identifier</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]" priority="1000" mode="M87">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]" priority="1000" mode="M86">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:fileIdentifier) = 1"/>
          <xsl:otherwise>
@@ -3301,21 +3462,24 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M87"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M86"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M87"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M87">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M87"/>
+   <xsl:template match="text()" priority="-1" mode="M86"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M86">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M86"/>
    </xsl:template>
 
-   <!--PATTERN Gemini2-at3-NotNillable-->
+   <!--PATTERN
+        Gemini2-at3-NotNillable-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-at3-NotNillable</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:fileIdentifier" priority="1000" mode="M88">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:fileIdentifier" priority="1000" mode="M87">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl" context="/*[1]/gmd:fileIdentifier"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="string-length(.) &gt; 0 and count(./@gco:nilReason) = 0"/>
          <xsl:otherwise>
@@ -3331,22 +3495,25 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M88"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M87"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M88"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M88">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M88"/>
+   <xsl:template match="text()" priority="-1" mode="M87"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M87">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M87"/>
    </xsl:template>
 
-   <!--PATTERN Constraints-->
+   <!--PATTERN
+        Constraints-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Constraints</svrl:text>
 
-	  <!--RULE -->
-<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1000" mode="M89">
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]" priority="1000" mode="M88">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="/*[1]/gmd:identificationInfo[1]/*[1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:resourceConstraints) &gt;= 1"/>
          <xsl:otherwise>
@@ -3359,24 +3526,27 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M89"/>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M88"/>
    </xsl:template>
-   <xsl:template match="text()" priority="-1" mode="M89"/>
-   <xsl:template match="@*|node()" priority="-2" mode="M89">
-      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M89"/>
+   <xsl:template match="text()" priority="-1" mode="M88"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M88">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M88"/>
    </xsl:template>
 
-   <!--PATTERN Creation date type-->
+   <!--PATTERN
+        Creation date type-->
 <svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Creation date type</svrl:text>
 
-	  <!--RULE -->
+  <!--RULE
+      -->
 <xsl:template match="//gmd:CI_Citation | //*[@gco:isoType='gmd:CI_Citation'][1]"
                  priority="1000"
-                 mode="M90">
+                 mode="M89">
       <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
                        context="//gmd:CI_Citation | //*[@gco:isoType='gmd:CI_Citation'][1]"/>
 
-		    <!--ASSERT -->
+      <!--ASSERT
+      -->
 <xsl:choose>
          <xsl:when test="count(gmd:date/*[1]/gmd:dateType/*[1][@codeListValue='creation']) &lt;= 1"/>
          <xsl:otherwise>
@@ -3389,10 +3559,106 @@
             </svrl:failed-assert>
          </xsl:otherwise>
       </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M89"/>
+   </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M89"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M89">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M89"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Gemini2-mi11-ExtentsDiffer-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-ExtentsDiffer</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'] [1]|                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'][1]"
+                 priority="1000"
+                 mode="M90">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'] [1]|                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'][1]"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="gmd:westBoundLongitude != gmd:eastBoundLongitude"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="gmd:westBoundLongitude != gmd:eastBoundLongitude">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>West and East bound longitudes have the same value, which is incorrect.</svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="gmd:northBoundLatitude != gmd:southBoundLatitude"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="gmd:northBoundLatitude != gmd:southBoundLatitude">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>North and South bound longitudes have the same value, which is incorrect.</svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M90"/>
    </xsl:template>
    <xsl:template match="text()" priority="-1" mode="M90"/>
    <xsl:template match="@*|node()" priority="-2" mode="M90">
       <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M90"/>
+   </xsl:template>
+
+   <!--PATTERN
+        Gemini2-mi11-ReasonableExtents-->
+<svrl:text xmlns:svrl="http://purl.oclc.org/dsdl/svrl">Gemini2-mi11-ReasonableExtents</svrl:text>
+
+  <!--RULE
+      -->
+<xsl:template match="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'] [1]|                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'][1]"
+                 priority="1000"
+                 mode="M91">
+      <svrl:fired-rule xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+                       context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'] [1]|                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'][1]"/>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="number(translate(string(gmd:westBoundLongitude), '-','')) - number(translate(string(gmd:eastBoundLongitude), '-','')) &gt;= 0.000001"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="number(translate(string(gmd:westBoundLongitude), '-','')) - number(translate(string(gmd:eastBoundLongitude), '-','')) &gt;= 0.000001">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>West and East bound longitudes are closer than 0.1 mm, please check.</svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+
+      <!--ASSERT
+      -->
+<xsl:choose>
+         <xsl:when test="number(translate(string(gmd:northBoundLatitude), '-','')) - number(translate(string(gmd:southBoundLatitude), '-','')) &gt;=0.000001"/>
+         <xsl:otherwise>
+            <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
+                                test="number(translate(string(gmd:northBoundLatitude), '-','')) - number(translate(string(gmd:southBoundLatitude), '-','')) &gt;=0.000001">
+               <xsl:attribute name="location">
+                  <xsl:apply-templates select="." mode="schematron-select-full-path"/>
+               </xsl:attribute>
+               <svrl:text>North and South bound longitudes are closer than 0.1mm, please check.</svrl:text>
+            </svrl:failed-assert>
+         </xsl:otherwise>
+      </xsl:choose>
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M91"/>
+   </xsl:template>
+   <xsl:template match="text()" priority="-1" mode="M91"/>
+   <xsl:template match="@*|node()" priority="-2" mode="M91">
+      <xsl:apply-templates select="*|comment()|processing-instruction()" mode="M91"/>
    </xsl:template>
 </xsl:stylesheet>
