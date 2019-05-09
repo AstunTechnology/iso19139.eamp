@@ -44,7 +44,7 @@
         <sch:title>EAMP-mi2-AfANumber</sch:title>
         <sch:rule context="//*[eamp:EA_Afa]">
             <sch:assert test="((//eamp:EA_AfaStatus = 'Not AfA (To be Assessed with Guidance)' or
-                //eamp:EA_AfaStatus = 'AfA (Publication Scheme &amp; Information for Re-Use Register)' or
+                //eamp:EA_AfaStatus = 'AfA (Publication Scheme and Information for Re-Use Register)' or
                 //eamp:EA_AfaStatus = 'AfA (Public Register)' or
                 //eamp:EA_AfaStatus = 'AfA (Publication Scheme)' or
                 //eamp:EA_AfaStatus = 'AfA (Information Requests only)') and

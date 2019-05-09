@@ -2045,8 +2045,8 @@
 					<description>The information should be assessed at the time of the request and includes guidance relevant to the dataset. The data has been assessed via the AfA process.</description>
 			</entry>
 			<entry>
-					<code>AfA (Publication Scheme &amp; Information for Re-Use Register)</code>
-					<label>AfA (Publication Scheme &amp; Information for Re-Use Register)</label>
+					<code>AfA (Publication Scheme and Information for Re-Use Register)</code>
+					<label>AfA (Publication Scheme and Information for Re-Use Register)</label>
 					<description>All approved attributes can be licensed without further checks. Data are included on the Information for Re-Use Register and Publication Scheme.</description>
 			</entry>
 			<entry>
