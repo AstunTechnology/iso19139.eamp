@@ -120,8 +120,7 @@
 	<!-- /gmd:MD_Metadata/gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:scope/gmd:DQ_Scope/gmd:level/gmd:MD_ScopeCode dataset or nonGeographicDataset -->
 	<xsl:template match="*/gmd:abstract">
 	  <gmd:abstract>
-		<gco:CharacterString><xsl:value-of select="./gco:CharacterString"></xsl:value-of><xsl:text> Attribution statement: </xsl:text><xsl:for-each select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
-			<xsl:if test="contains(.,'copyright')"><xsl:value-of select="."></xsl:value-of><xsl:text> </xsl:text></xsl:if></xsl:for-each></gco:CharacterString>
+		<gco:CharacterString><xsl:value-of select="./gco:CharacterString"></xsl:value-of></gco:CharacterString>
 	  </gmd:abstract>
 	  <gmd:pointOfContact>
 		<gmd:CI_ResponsibleParty>
