@@ -139,17 +139,17 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>data.info@environment-agency.gov.uk</gco:CharacterString>
+					<gco:CharacterString>DSPcustomerforum@environment-agency.gov.uk</gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>
 			  <gmd:onlineResource>
 				<gmd:CI_OnlineResource>
 				  <gmd:linkage>
-					  <gmd:URL>https://www.gov.uk/government/organisations/environment-agency</gmd:URL>
+					  <gmd:URL>https://support.environment.data.gov.uk/hc/en-gb</gmd:URL>
 				  </gmd:linkage>
 				  <gmd:description>
-					<gco:CharacterString>Environment Agency Website</gco:CharacterString>
+					<gco:CharacterString>Defra Data Services Forum</gco:CharacterString>
 				  </gmd:description>
 				</gmd:CI_OnlineResource>
 			  </gmd:onlineResource>
@@ -174,7 +174,7 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>data.info@environment-agency.gov.uk</gco:CharacterString>
+					<gco:CharacterString>DSPcustomerforum@environment-agency.gov.uk</gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>
