@@ -174,7 +174,7 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>DSPcustomerforum@environment-agency.gov.uk</gco:CharacterString>
+					<gco:CharacterString>metadata@environment-agency.gov.uk</gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>
