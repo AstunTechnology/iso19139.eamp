@@ -77,4 +77,56 @@
 			</xsl:for-each>
 		</Document>
 	</xsl:template>
+
+	<xsl:template mode="index-contact" match="gmd:CI_ResponsibleParty|*[@gco:isoType = 'gmd:CI_ResponsibleParty']">
+    <xsl:param name="type"/>
+    <xsl:param name="fieldPrefix"/>
+    <xsl:param name="position" select="'0'"/>
+
+    <xsl:variable name="orgName" select="gmd:organisationName/(gco:CharacterString|gmx:Anchor)"/>
+
+    <Field name="orgName" string="{string($orgName)}" store="true" index="true"/>
+    <Field name="orgNameTree" string="{string($orgName)}" store="true" index="true"/>
+
+    <xsl:variable name="uuid" select="@uuid"/>
+    <xsl:variable name="role" select="gmd:role/*/@codeListValue"/>
+    <xsl:variable name="roleTranslation"
+                  select="util:getCodelistTranslation('gmd:CI_RoleCode', string($role), string($isoLangId))"/>
+    <xsl:variable name="logo" select=".//gmx:FileName/@src"/>
+    <xsl:variable name="email"
+                  select="gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/gco:CharacterString"/>
+    <xsl:variable name="url" select="gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage/gmd:URL/text()"/>
+    <xsl:variable name="phone"
+                  select="gmd:contactInfo/*/gmd:phone/*/gmd:voice[normalize-space(.) != '']/*/text()"/>
+    <xsl:variable name="individualName"
+                  select="gmd:individualName/gco:CharacterString/text()"/>
+    <xsl:variable name="positionName"
+                  select="gmd:positionName/gco:CharacterString/text()"/>
+    <xsl:variable name="address" select="string-join(gmd:contactInfo/*/gmd:address/*/(
+                                        gmd:deliveryPoint|gmd:postalCode|gmd:city|
+                                        gmd:administrativeArea|gmd:country)/gco:CharacterString/text(), ', ')"/>
+
+    <Field name="{$fieldPrefix}"
+           string="{concat($roleTranslation, '|', $type,'|',
+                             $orgName, '|',
+                             $logo, '|',
+                             string-join($email, ','), '|',
+                             $url, '|',
+                             $individualName, '|',
+                             $positionName, '|',
+                             $address, '|',
+                             string-join($phone, ','), '|',
+                             $uuid, '|',
+                             $position)}"
+           store="true" index="false"/>
+
+    <xsl:for-each select="$email">
+      <Field name="{$fieldPrefix}Email" string="{string(.)}" store="true" index="true"/>
+      <Field name="{$fieldPrefix}RoleAndEmail" string="{$role}|{string(.)}" store="true" index="true"/>
+    </xsl:for-each>
+    <xsl:for-each select="@uuid">
+      <Field name="{$fieldPrefix}Uuid" string="{string(.)}" store="true" index="true"/>
+      <Field name="{$fieldPrefix}RoleAndUuid" string="{$role}|{string(.)}" store="true" index="true"/>
+    </xsl:for-each>
+  </xsl:template>
 </xsl:stylesheet>
