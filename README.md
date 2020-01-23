@@ -15,8 +15,7 @@ This is the Environment Agency's extended metadata profile, based on Gemini 2.2,
 
 #### GeoNetwork version to use with this plugin
 
-Use GeoNetwork 3.2.0+.
-It's not supported in 2.10.x or 3.0.x so don't plug it into it!
+Use GeoNetwork 3.2.0+ and choose the correct branch of this repository for your version of GeoNetwork. This plugin is supported in previous versions of GeoNetwork, or in versions for which there is not a corresponding branch.
 
 #### Adding the plugin to the source code
 
