@@ -10,13 +10,13 @@ the outcome of an Environment Agency legal process decision as to whether or not
 
 ## EAMP v1.1 schema plugin
 
-This is the Environment Agency's extended metadata profile, based on Gemini 2.2, implemented as a schema plugin for GeoNetwork 3.4.x or greater.
+This is the Environment Agency's extended metadata profile, based on Gemini 2.2, implemented as a schema plugin for GeoNetwork 3.2.x or greater.
 
 ### Installing the plugin
 
 #### GeoNetwork version to use with this plugin
 
-Use GeoNetwork 3.4.0+ and choose the correct branch of this repository for your version of GeoNetwork.
+Use GeoNetwork 3.2.0+ and choose the correct branch of this repository for your version of GeoNetwork.
 This plugin is supported in previous versions of GeoNetwork, or in versions for which there is not a corresponding branch.
 
 #### Adding the plugin to the source code
