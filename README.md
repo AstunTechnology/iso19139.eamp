@@ -8,6 +8,8 @@ the outcome of an Environment Agency legal process decision as to whether or not
  
 **EAMP Version 1.1 is the current version of the profile, based on UK Gemini 2.2. A version based on UK Gemini 2.3 will be released in early 2020.**
 
+See https://github.com/AstunTechnology/iso19139.eamp/wiki for version details
+
 ## EAMP v1.1 schema plugin
 
 This is the Environment Agency's extended metadata profile, based on Gemini 2.2, implemented as a schema plugin for GeoNetwork 3.2.x or greater.
