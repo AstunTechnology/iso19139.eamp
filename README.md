@@ -13,7 +13,7 @@ This is the Environment Agency's extended metadata profile, based on UK Gemini, 
 
 **EAMP Version 1.1 is the current version of the profile, based on UK Gemini 2.2. A version based on UK Gemini 2.3 will be released in early 2020.**
 
-See https://github.com/AstunTechnology/iso19139.eamp/wiki for version details.
+See https://github.com/AstunTechnology/iso19139.eamp/wiki/Version-History for details of previous versions.
 
 ### Installing the plugin
 
