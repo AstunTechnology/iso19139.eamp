@@ -6,13 +6,13 @@ The Environment Agency Metadata Profile (EAMP) extends the UK Gemini Metadata Pr
 the outcome of an Environment Agency legal process decision as to whether or not data and information within the data source is legally safe to share.
  * **Approval for Access (AfA) code**: This is an additional element required alongside the AfA Status to indicate the process-derived unique identifier associated with the data source.
  
+
+## EAMP schema plugin
+
+This is the Environment Agency's extended metadata profile, based on UK Gemini, implemented as a schema plugin for GeoNetwork 3.2.x or greater.
 **EAMP Version 1.1 is the current version of the profile, based on UK Gemini 2.2. A version based on UK Gemini 2.3 will be released in early 2020.**
 
-See https://github.com/AstunTechnology/iso19139.eamp/wiki for version details
-
-## EAMP v1.1 schema plugin
-
-This is the Environment Agency's extended metadata profile, based on Gemini 2.2, implemented as a schema plugin for GeoNetwork 3.2.x or greater.
+See https://github.com/AstunTechnology/iso19139.eamp/wiki for version details.
 
 ### Installing the plugin
 
