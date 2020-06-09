@@ -100,13 +100,12 @@
   </xsl:template>
 
     <xsl:template mode="mode-iso19139"
-                match="gmd:topicCategory[1]"
-                priority="2100">
+                match="gmd:topicCategory[position() =1 and $schema='iso19139.eamp']"
+                priority="2200">
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
     <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
-
 
     <xsl:variable name="elementName" select="name()" />
 
@@ -117,21 +116,34 @@
       </xsl:for-each>
     </xsl:variable>
 
-    <xsl:call-template name="render-element">
-      <xsl:with-param name="label"
-                      select="$labelConfig"/>
-      <xsl:with-param name="value" select="$topicCategories"/>
+    <xsl:variable name="errors">
+      <xsl:if test="$showValidationErrors">
+        <xsl:call-template name="get-errors"/>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:variable name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+
+    <xsl:call-template name="render-boxed-element">
+      <xsl:with-param name="label" select="$label/label"/>
+      <xsl:with-param name="editInfo" select="gn:element"/>
+      <xsl:with-param name="errors" select="$errors"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
-      <xsl:with-param name="directive" select="'gn-topiccategory-selector'"/>
-      <xsl:with-param name="editInfo" select="gn:element"/>
-      <xsl:with-param name="parentEditInfo" select="../gn:element"/>
+      <xsl:with-param name="subTreeSnippet">
+        <xsl:call-template name="render-element">
+          <xsl:with-param name="label"
+                          select="$labelConfig"/>
+          <xsl:with-param name="value" select="$topicCategories"/>
+          <xsl:with-param name="cls" select="local-name()"/>
+          <xsl:with-param name="xpath" select="$xpath"/>
+          <xsl:with-param name="type" select="'data-gn-topiccategory-selector-div'"/>
+          <xsl:with-param name="editInfo" select="gn:element"/>
+          <xsl:with-param name="parentEditInfo" select="../gn:element"/>
+        </xsl:call-template>
+      </xsl:with-param>
     </xsl:call-template>
-  </xsl:template>
 
-  <!-- Ignore the following topic categories-->
-  <xsl:template mode="mode-iso19139"
-                match="gmd:topicCategory[
-                        preceding-sibling::*[1]/name() = name()]|gn:child[@name = 'topicCategory']"
-                priority="2100"/>
+
+  </xsl:template>
 </xsl:stylesheet>

@@ -12,15 +12,36 @@
                 xmlns:exslt="http://exslt.org/common" exclude-result-prefixes="#all">
 
   <!-- Readonly elements -->
-  <!-- Only metadata standard name and version at the moment -->
-  <xsl:template mode="mode-iso19139" priority="2000" match="gmd:metadataStandardName[$schema='iso19139.eamp']|gmd:metadataStandardVersion[$schema='iso19139.eamp']">
-    
+  <!-- Uncomment to make gmd:metadataStandardName and gmd:metadataStandardVersion readonly -->
+<xsl:template mode="mode-iso19139" priority="5000" match="gmd:metadataStandardName[$schema='iso19139.eamp']|gmd:metadataStandardVersion[$schema='iso19139.eamp']">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
+
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="fieldLabelConfig"
+                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+
+    <xsl:variable name="labelConfig">
+      <xsl:choose>
+        <xsl:when test="$overrideLabel != ''">
+          <element>
+            <label><xsl:value-of select="$overrideLabel"/></label>
+          </element>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="$fieldLabelConfig"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)" />
 
     <xsl:call-template name="render-element">
-      <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels)"/>
+      <xsl:with-param name="label"
+                      select="$labelConfig/*"/>
       <xsl:with-param name="value" select="*"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
@@ -33,68 +54,52 @@
 
   </xsl:template>
 
-  <!-- Duration
+  <!-- Restrict to gemini 2.3 codelists (same template in iso19139 uses explicitly the codelists from iso19139,
+       doesn't use the current schema codelists, so has to be overriden with higher priority than same template in iso19139 (priority=200).
+       Be careful with priority to not be higher than the template for gmd:dateType (4000) or will cause side effects. -->
 
-       xsd:duration elements use the following format:
-
-       Format: PnYnMnDTnHnMnS
-
-       *  P indicates the period (required)
-       * nY indicates the number of years
-       * nM indicates the number of months
-       * nD indicates the number of days
-       * T indicates the start of a time section (required if you are going to specify hours, minutes, or seconds)
-       * nH indicates the number of hours
-       * nM indicates the number of minutes
-       * nS indicates the number of seconds
-
-       A custom directive is created.
-  -->
-  <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.eamp']" priority="200">
+  <xsl:template mode="mode-iso19139" priority="500" match="*[*/@codeList and $schema='iso19139.eamp']">
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="codelists" select="$codelists" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="elementName" select="name()"/>
+    <xsl:variable name="labelConfig">
+      <xsl:choose>
+        <xsl:when test="$overrideLabel != ''">
+          <element>
+            <label><xsl:value-of select="$overrideLabel"/></label>
+          </element>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), '', $xpath)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
 
     <xsl:call-template name="render-element">
-      <xsl:with-param name="label"
-                      select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
-      <xsl:with-param name="value" select="."/>
+      <xsl:with-param name="label" select="$labelConfig/*"/>
+      <xsl:with-param name="value" select="*/@codeListValue"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
-      <xsl:with-param name="directive" select="'gn-field-duration'"/>
-      <xsl:with-param name="editInfo" select="gn:element"/>
-      <xsl:with-param name="parentEditInfo" select="../gn:element"/>
+      <xsl:with-param name="type" select="gn-fn-iso19139:getCodeListType(name())"/>
+      <xsl:with-param name="name"
+                      select="if ($isEditing) then concat(*/gn:element/@ref, '_codeListValue') else ''"/>
+      <xsl:with-param name="editInfo" select="*/gn:element"/>
+      <xsl:with-param name="parentEditInfo" select="gn:element"/>
+      <xsl:with-param name="listOfValues"
+                      select="gn-fn-metadata:getCodeListValues($schema, name(*[@codeListValue]), $codelists, .)"/>
+      <xsl:with-param name="isFirst"
+                      select="count(preceding-sibling::*[name() = $elementName]) = 0"/>
     </xsl:call-template>
 
   </xsl:template>
 
-  <!-- ===================================================================== -->
-  <!-- gml:TimePeriod (format = %Y-%m-%dThh:mm:ss) -->
-  <!-- ===================================================================== -->
-
-  <xsl:template mode="mode-iso19139" match="gml:beginPosition[$schema='iso19139.eamp']|gml:endPosition[$schema='iso19139.eamp']|gml:timePosition[$schema='iso19139.eamp']"
-                priority="200">
-    <xsl:param name="schema" select="$schema" required="no"/>
-    <xsl:param name="labels" select="$labels" required="no"/>
-
-
-    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
-    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
-    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
-
-    <div data-gn-date-picker="{.}"
-         data-tag-name=""
-         data-label="{$labelConfig/label}"
-         data-element-name="{name(.)}"
-         data-hide-time="true"
-         data-element-ref="{concat('_', gn:element/@ref)}">
-    </div>
-  </xsl:template>
-
-  <!-- Use limitation with gmx:Anchor -->
-  <xsl:template mode="mode-iso19139" priority="200" match="gmd:useLimitation[$schema='iso19139.eamp' and gmx:Anchor]">
+   <!-- otherConstraints with gmx:Anchor -->
+  <xsl:template mode="mode-iso19139" priority="200" match="gmd:otherConstraints[$schema='iso19139.eamp' and gmx:Anchor]">
     <xsl:variable name="name" select="name(.)"/>
 
     <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, $name, $labels)"/>
@@ -124,80 +129,295 @@
     </xsl:call-template>
   </xsl:template>
 
-  <!-- Render dates as dates, not date time -->
-  <xsl:template mode="mode-iso19139"
-                priority="2005"
-                match="gmd:CI_Date/gmd:date[$schema='iso19139.eamp']">
-    <xsl:param name="schema" select="$schema" required="no"/>
-    <xsl:param name="labels" select="$labels" required="no"/>
-    <xsl:param name="listOfValues" select="$iso19139codelists" required="no"/>
+
+  <!-- ===================================================================== -->
+  <!-- gml:TimePeriod (format = %Y-%m-%dThh:mm:ss) -->
+  <!-- ===================================================================== -->
+
+  <!-- This template is required as iso19139 uses gml (http://www.opengis.net/gml/3.2) and
+       GEMINI 2.3 uses gml 3.2 (http://www.opengis.net/gml/3.2).
+
+       Any template to handle gml elements that is defined in iso19139 should be redefined in the GEMINI schema to use
+       the correct namespace url.
+  -->
+  <xsl:template mode="mode-iso19139" match="gml:beginPosition[$schema='iso19139.eamp']|gml:endPosition[$schema='iso19139.eamp']|gml:timePosition[$schema='iso19139.eamp']"
+                priority="5000">
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+    <xsl:variable name="value" select="normalize-space(text())"/>
+    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+
+
+    <xsl:variable name="attributes">
+      <xsl:if test="$isEditing">
+        <!-- Create form for all existing attribute (not in gn namespace)
+        and all non existing attributes not already present. -->
+        <xsl:apply-templates mode="render-for-field-for-attribute"
+                             select="             @*|           gn:attribute[not(@name = parent::node()/@*/name())]">
+          <xsl:with-param name="ref" select="gn:element/@ref"/>
+          <xsl:with-param name="insertRef" select="gn:element/@ref"/>
+        </xsl:apply-templates>
+      </xsl:if>
+    </xsl:variable>
+
+
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label"
+                      select="$labelConfig"/>
+      <xsl:with-param name="name" select="gn:element/@ref"/>
+      <xsl:with-param name="value" select="text()"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <!--
+          Default field type is Date.
+
+          TODO : Add the capability to edit those elements as:
+           * xs:time
+           * xs:dateTime
+           * xs:anyURI
+           * xs:decimal
+           * gml:CalDate
+          See http://trac.osgeo.org/geonetwork/ticket/661
+        -->
+      <xsl:with-param name="type"
+                      select="if (string-length($value) = 10 or $value = '') then 'date' else 'datetime'"/>
+      <xsl:with-param name="editInfo" select="gn:element"/>
+      <xsl:with-param name="attributesSnippet" select="$attributes"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <!-- Duration
+
+      xsd:duration elements use the following format:
+
+      Format: PnYnMnDTnHnMnS
+
+      *  P indicates the period (required)
+      * nY indicates the number of years
+      * nM indicates the number of months
+      * nD indicates the number of days
+      * T indicates the start of a time section (required if you are going to specify hours, minutes, or seconds)
+      * nH indicates the number of hours
+      * nM indicates the number of minutes
+      * nS indicates the number of seconds
+
+      A custom directive is created.
+ -->
+  <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.eamp']" priority="200">
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
-    <xsl:variable name="labelConfig"
-                  select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
-    <xsl:variable name="dateTypeElementRef"
-                  select="../gn:element/@ref"/>
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
 
-    <div class="form-group gn-field gn-date gn-required"
-         id="gn-el-{$dateTypeElementRef}"
-         data-gn-field-highlight="">
-      <label class="col-sm-2 control-label">
-        <xsl:value-of select="$labelConfig/label"/>
-      </label>
-      <div class="col-sm-3 gn-value">
-        <xsl:variable name="codelist"
-                      select="gn-fn-metadata:getCodeListValues($schema,
-                                  'gmd:CI_DateTypeCode',
-                                  $listOfValues,
-                                  .)"/>
-        <xsl:call-template name="render-codelist-as-select">
-          <xsl:with-param name="listOfValues" select="$codelist"/>
-          <xsl:with-param name="lang" select="$lang"/>
-          <xsl:with-param name="isDisabled" select="ancestor-or-self::node()[@xlink:href]"/>
-          <xsl:with-param name="elementRef"
-                          select="../gmd:dateType/gmd:CI_DateTypeCode/gn:element/@ref"/>
-          <xsl:with-param name="isRequired" select="true()"/>
-          <xsl:with-param name="hidden" select="false()"/>
-          <xsl:with-param name="valueToEdit"
-                          select="../gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"/>
-          <xsl:with-param name="name"
-                          select="concat(../gmd:dateType/gmd:CI_DateTypeCode/gn:element/@ref, '_codeListValue')"/>
-        </xsl:call-template>
+    <xsl:call-template name="render-element">
+      <xsl:with-param name="label"
+                      select="$labelConfig"/>
+      <xsl:with-param name="value" select="."/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="type" select="'data-gn-field-duration-div'"/>
+      <xsl:with-param name="editInfo" select="gn:element"/>
+      <xsl:with-param name="parentEditInfo" select="../gn:element"/>
+    </xsl:call-template>
 
-
-        <xsl:call-template name="render-form-field-control-move">
-          <xsl:with-param name="elementEditInfo" select="../../gn:element"/>
-          <xsl:with-param name="domeElementToMoveRef" select="$dateTypeElementRef"/>
-        </xsl:call-template>
-      </div>
-      <div class="col-sm-6 gn-value">
-        <div data-gn-date-picker="{gco:Date|gco:DateTime}"
-             data-label=""
-             data-hide-time="true"
-             data-element-name="{name(gco:Date|gco:DateTime)}"
-             data-element-ref="{concat('_X', gn:element/@ref)}">
-        </div>
-
-
-        <!-- Create form for all existing attribute (not in gn namespace)
-         and all non existing attributes not already present. -->
-        <div class="well well-sm gn-attr {if ($isDisplayingAttributes = true()) then '' else 'hidden'}">
-          <xsl:apply-templates mode="render-for-field-for-attribute"
-                               select="
-            ../../@*|
-            ../../gn:attribute[not(@name = parent::node()/@*/name())]">
-            <xsl:with-param name="ref" select="../../gn:element/@ref"/>
-            <xsl:with-param name="insertRef" select="../gn:element/@ref"/>
-          </xsl:apply-templates>
-        </div>
-      </div>
-      <div class="col-sm-1 gn-control">
-        <xsl:call-template name="render-form-field-control-remove">
-          <xsl:with-param name="editInfo" select="../gn:element"/>
-          <xsl:with-param name="parentEditInfo" select="../../gn:element"/>
-        </xsl:call-template>
-      </div>
-    </div>
   </xsl:template>
+
+
+  <!-- Topic categories boxed -->
+  <xsl:template mode="mode-iso19139"
+                match="gmd:topicCategory[position() =1 and $schema='iso19139.eamp']"
+                priority="2200">
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+
+    <xsl:variable name="elementName" select="name()" />
+
+    <xsl:variable name="topicCategories">
+      <xsl:for-each select="../*[name() = $elementName]">
+        <xsl:value-of select="gmd:MD_TopicCategoryCode/text()" />
+        <xsl:if test="position() != last()">,</xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
+
+    <xsl:variable name="errors">
+      <xsl:if test="$showValidationErrors">
+        <xsl:call-template name="get-errors"/>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:variable name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+
+    <xsl:call-template name="render-boxed-element">
+      <xsl:with-param name="label" select="$label/label"/>
+      <xsl:with-param name="editInfo" select="gn:element"/>
+      <xsl:with-param name="errors" select="$errors"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="subTreeSnippet">
+        <xsl:call-template name="render-element">
+          <xsl:with-param name="label"
+                          select="$labelConfig"/>
+          <xsl:with-param name="value" select="$topicCategories"/>
+          <xsl:with-param name="cls" select="local-name()"/>
+          <xsl:with-param name="xpath" select="$xpath"/>
+          <xsl:with-param name="type" select="'data-gn-topiccategory-selector-div'"/>
+          <xsl:with-param name="editInfo" select="gn:element"/>
+          <xsl:with-param name="parentEditInfo" select="../gn:element"/>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+
+
+  </xsl:template>
+
+
+  <!-- Service type boxed -->
+  <xsl:template mode="mode-iso19139"
+                match="srv:serviceType[$schema='iso19139.eamp']"
+                priority="2200">
+
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+
+    <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
+
+    <xsl:variable name="labelConfig">
+      <xsl:choose>
+        <xsl:when test="$overrideLabel != ''">
+          <element>
+            <label><xsl:value-of select="$overrideLabel"/></label>
+          </element>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="$labelConfig"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="errors">
+      <xsl:if test="$showValidationErrors">
+        <xsl:call-template name="get-errors"/>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:call-template name="render-boxed-element">
+      <xsl:with-param name="label" select="$labelConfig/*[1]/label"/>
+      <xsl:with-param name="editInfo" select="gn:element"/>
+      <xsl:with-param name="errors" select="$errors"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="subTreeSnippet">
+        <xsl:call-template name="render-element">
+          <xsl:with-param name="label" select="$labelConfig/*[1]"/>
+          <xsl:with-param name="value"
+                          select="gco:LocalName"/>
+          <xsl:with-param name="listOfValues" select="$helper"/>
+          <xsl:with-param name="name" select="if ($isEditing) then gco:LocalName/gn:element/@ref else ''"/>
+          <xsl:with-param name="cls" select="local-name()"/>
+          <xsl:with-param name="xpath" select="$xpath"/>
+          <xsl:with-param name="editInfo" select="gco:LocalName/gn:element"/>
+          <xsl:with-param name="parentEditInfo" select="gn:element"/>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+  <!-- spatial representation type boxed -->
+  <xsl:template mode="mode-iso19139"
+                match="gmd:spatialRepresentationType[$schema='iso19139.eamp']"
+                priority="2200">
+
+    <xsl:param name="schema" select="$schema" required="no"/>
+    <xsl:param name="labels" select="$labels" required="no"/>
+    <xsl:param name="overrideLabel" select="''" required="no"/>
+
+    <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+    <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="elementName" select="name()"/>
+
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+
+    <xsl:variable name="labelConfig">
+      <xsl:choose>
+        <xsl:when test="$overrideLabel != ''">
+          <element>
+            <label><xsl:value-of select="$overrideLabel"/></label>
+          </element>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="$labelConfig"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <xsl:variable name="errors">
+      <xsl:if test="$showValidationErrors">
+        <xsl:call-template name="get-errors"/>
+      </xsl:if>
+    </xsl:variable>
+
+    <xsl:call-template name="render-boxed-element">
+      <xsl:with-param name="label" select="$labelConfig/*[1]/label"/>
+      <xsl:with-param name="editInfo" select="gn:element"/>
+      <xsl:with-param name="errors" select="$errors"/>
+      <xsl:with-param name="cls" select="local-name()"/>
+      <xsl:with-param name="xpath" select="$xpath"/>
+      <xsl:with-param name="subTreeSnippet">
+
+        <xsl:call-template name="render-element">
+          <xsl:with-param name="label" select="$labelConfig/*"/>
+          <xsl:with-param name="value" select="*/@codeListValue"/>
+          <xsl:with-param name="cls" select="local-name()"/>
+          <xsl:with-param name="xpath" select="$xpath"/>
+          <xsl:with-param name="type" select="gn-fn-iso19139:getCodeListType(name())"/>
+          <xsl:with-param name="name"
+                          select="if ($isEditing) then concat(*/gn:element/@ref, '_codeListValue') else ''"/>
+          <xsl:with-param name="editInfo" select="*/gn:element"/>
+          <xsl:with-param name="parentEditInfo" select="gn:element"/>
+          <xsl:with-param name="listOfValues"
+                          select="gn-fn-metadata:getCodeListValues($schema, name(*[@codeListValue]), $codelists, .)"/>
+          <xsl:with-param name="isFirst"
+                          select="count(preceding-sibling::*[name() = $elementName]) = 0"/>
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+
+
+ <xsl:template mode="mode-iso19139"
+               match="gmd:verticalCRS[(count(gml:*) = 0) and $schema='iso19139.eamp']"
+               priority="2200">
+
+   <xsl:param name="schema" select="$schema" required="no"/>
+   <xsl:param name="labels" select="$labels" required="no"/>
+   <xsl:param name="overrideLabel" select="''" required="no"/>
+
+   <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
+   <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+   <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+   <xsl:variable name="helper" select="gn-fn-metadata:getHelper($labelConfig/helper, .)"/>
+   <xsl:call-template name="render-element">
+     <xsl:with-param name="label" select="$labelConfig"/>
+     <xsl:with-param name="value"
+                     select="@xlink:href"/>
+     <xsl:with-param name="name"
+                     select="if ($isEditing) then concat(gn:element/@ref, '_xlinkCOLONhref') else ''"/>
+     <xsl:with-param name="cls" select="local-name()"/>
+     <xsl:with-param name="editInfo" select="gn:element"/>
+     <xsl:with-param name="isDisabled" select="false()"/>
+     <xsl:with-param name="listOfValues" select="$helper"/>
+
+   </xsl:call-template>
+
+
+ </xsl:template>
 </xsl:stylesheet>
