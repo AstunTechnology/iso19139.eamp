@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <!--	Trasformation for EAMP extended metadata to data.go.uk, anonymizing and removing information on the way out of GeoNetwork.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 	Some information has been swapped around so that it displays more pertinently on the data.gov.uk website, as the headings of
 	the elements on the display page are not Gemini compliant and a bit muddled.
 	Author:		Environment Agency
@@ -101,8 +101,8 @@
 	<!-- Add generic Responsible Organisation contact after Abstract. All current ones are obliterated in the empty template above -->
 	<xsl:template match="*/gmd:abstract">
 	  <gmd:abstract>
-		<gco:CharacterString><xsl:value-of select="./gco:CharacterString"></xsl:value-of><xsl:text> Attribution statement: </xsl:text><xsl:for-each select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
-			<xsl:if test="contains(.,'copyright')"><xsl:value-of select="."></xsl:value-of><xsl:text> </xsl:text></xsl:if></xsl:for-each></gco:CharacterString>
+		<gco:CharacterString><xsl:value-of select="./gco:CharacterString"></xsl:value-of><xsl:for-each select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
+			<xsl:if test="contains(.,'copyright') or contains(.,'Copyright') or contains(.,'©')"><xsl:text> Attribution Statement: </xsl:text><xsl:value-of select="."></xsl:value-of><xsl:text> </xsl:text></xsl:if></xsl:for-each></gco:CharacterString>
 	  </gmd:abstract>
 	  <gmd:pointOfContact>
 		<gmd:CI_ResponsibleParty>

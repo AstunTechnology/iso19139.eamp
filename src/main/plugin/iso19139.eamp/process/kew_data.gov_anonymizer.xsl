@@ -76,8 +76,8 @@
 	<!-- Add generic Responsible Organisation contact after Abstract. All current ones are obliterated in the empty template above -->
 	<xsl:template match="*/gmd:abstract">
 	  <gmd:abstract>
-		<gco:CharacterString><xsl:value-of select="./gco:CharacterString"></xsl:value-of><xsl:text> Attribution statement: </xsl:text><xsl:for-each select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
-			<xsl:if test="contains(.,'copyright')"><xsl:value-of select="."></xsl:value-of><xsl:text> </xsl:text></xsl:if></xsl:for-each></gco:CharacterString>
+		<gco:CharacterString><xsl:value-of select="./gco:CharacterString"></xsl:value-of><xsl:for-each select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString">
+			<xsl:if test="contains(.,'copyright') or contains(.,'Copyright') or contains(.,'©')"><xsl:text> Attribution Statement: </xsl:text><xsl:value-of select="."></xsl:value-of><xsl:text> </xsl:text></xsl:if></xsl:for-each></gco:CharacterString>
 	  </gmd:abstract>
 	  <gmd:pointOfContact>
 		<gmd:CI_ResponsibleParty>
