@@ -57,7 +57,6 @@
 	<!-- eamp -->
 	<system systemId="http://environment.data.gov.uk/eamp/schema.xsd"
 			uri="schema/extensions/eamp5.xsd"/>
-
 	<!-- eden -->		
 
 	<system systemId="http://eden.ign.fr/xsd/isotc211/isofull/20090316/srv/srv.xsd"

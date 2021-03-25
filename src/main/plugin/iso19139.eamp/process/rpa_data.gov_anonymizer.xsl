@@ -126,7 +126,7 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>open.rpa@rpa.gov.uk</gco:CharacterString>
+					<gco:CharacterString>open.data@rpa.gov.uk</gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>
@@ -161,7 +161,7 @@
 			  <gmd:address>
 				<gmd:CI_Address>
 				  <gmd:electronicMailAddress>
-					<gco:CharacterString>open.rpa@rpa.gov.uk</gco:CharacterString>
+					<gco:CharacterString>open.data@rpa.gov.uk</gco:CharacterString>
 				  </gmd:electronicMailAddress>
 				</gmd:CI_Address>
 			  </gmd:address>

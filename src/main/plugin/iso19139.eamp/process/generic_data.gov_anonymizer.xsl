@@ -112,13 +112,13 @@
 			<xsl:variable name="orgEmail">
 				<xsl:choose>
 				<xsl:when test="contains($email, 'defra')">
-					<xsl:value-of select="'open@defra.gsi.gov.uk'" />
+					<xsl:value-of select="'open@defra.gov.uk'" />
 				</xsl:when>
 				<xsl:when test="contains($email, 'rpa')">
-					<xsl:value-of select="'Open.RPA@rpa.gsi.gov.uk'" />
+					<xsl:value-of select="'open.data@rpa.gov.uk'" />
 				</xsl:when>
 				<xsl:when test="contains($email, 'apha')">
-					<xsl:value-of select="'APHAOpendata@apha.gsi.gov.uk'" />
+					<xsl:value-of select="'aphaopendata@apha.gov.uk'" />
 				</xsl:when>
 				<xsl:when test="contains($email, 'marinemanagement')">
 					<xsl:value-of select="'dkm@marinemanagement.org.uk'" />
@@ -127,7 +127,7 @@
 					<xsl:value-of select="'enquiries@naturalengland.org.uk'" />
 				</xsl:when>
 				<xsl:when test="contains($email, 'forestry')">
-					<xsl:value-of select="'mapping.geodata@forestry.gsi.gov.uk'" />
+					<xsl:value-of select="'mapping.geodata@forestry.gov.uk'" />
 				</xsl:when>
 				<xsl:when test="contains($email, 'kew')">
 					<xsl:value-of select="'info@kew.org'" />
@@ -266,13 +266,13 @@
 		<xsl:variable name="orgEmail">
 			<xsl:choose>
 			<xsl:when test="contains($email, 'defra')">
-				<xsl:value-of select="'open@defra.gsi.gov.uk'" />
+				<xsl:value-of select="'open@defra.gov.uk'" />
 			</xsl:when>
 			<xsl:when test="contains($email, 'rpa')">
-				<xsl:value-of select="'Open.RPA@rpa.gsi.gov.uk'" />
+				<xsl:value-of select="'open.data@rpa.gov.uk'" />
 			</xsl:when>
 			<xsl:when test="contains($email, 'apha')">
-				<xsl:value-of select="'APHAOpendata@apha.gsi.gov.uk'" />
+				<xsl:value-of select="'aphaopendata@apha.gov.uk'" />
 			</xsl:when>
 			<xsl:when test="contains($email, 'marinemanagement')">
 				<xsl:value-of select="'dkm@marinemanagement.org.uk'" />
@@ -281,7 +281,7 @@
 				<xsl:value-of select="'enquiries@naturalengland.org.uk'" />
 			</xsl:when>
 			<xsl:when test="contains($email, 'forestry')">
-				<xsl:value-of select="'mapping.geodata@forestry.gsi.gov.uk'" />
+				<xsl:value-of select="'mapping.geodata@forestry.gov.uk'" />
 			</xsl:when>
 			<xsl:when test="contains($email, 'kew')">
 				<xsl:value-of select="'info@kew.org'" />
