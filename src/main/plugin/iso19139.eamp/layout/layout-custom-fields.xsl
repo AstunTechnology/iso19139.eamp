@@ -16,12 +16,15 @@
     <xsl:param name="schema" select="$schema" required="no"/>
     <xsl:param name="labels" select="$labels" required="no"/>
 
+        <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)" />
+
+
     <xsl:call-template name="render-element">
       <xsl:with-param name="label" select="gn-fn-metadata:getLabel($schema, name(), $labels)"/>
       <xsl:with-param name="value" select="*"/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="gn-fn-metadata:getXPath(.)"/>
-      <xsl:with-param name="type" select="gn-fn-metadata:getFieldType($editorConfig, name(), '')"/>
+      <xsl:with-param name="type" select="gn-fn-metadata:getFieldType($editorConfig, name(), '', $xpath)"/>
       <xsl:with-param name="name" select="''"/>
       <xsl:with-param name="editInfo" select="*/gn:element"/>
       <xsl:with-param name="parentEditInfo" select="gn:element"/>
@@ -47,20 +50,19 @@
 
        A custom directive is created.
   -->
-  <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.eamp']" priority="200">
-    <xsl:param name="schema" select="$schema" required="no"/>
-    <xsl:param name="labels" select="$labels" required="no"/>
+  <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.gemini23']" priority="200">
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
+    <xsl:variable name="labelConfig" select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
 
     <xsl:call-template name="render-element">
       <xsl:with-param name="label"
-                      select="gn-fn-metadata:getLabel($schema, name(), $labels, name(..), $isoType, $xpath)"/>
+                      select="$labelConfig"/>
       <xsl:with-param name="value" select="."/>
       <xsl:with-param name="cls" select="local-name()"/>
       <xsl:with-param name="xpath" select="$xpath"/>
-      <xsl:with-param name="directive" select="'gn-field-duration'"/>
+      <xsl:with-param name="type" select="'data-gn-field-duration-div'"/>
       <xsl:with-param name="editInfo" select="gn:element"/>
       <xsl:with-param name="parentEditInfo" select="../gn:element"/>
     </xsl:call-template>
