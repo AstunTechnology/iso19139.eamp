@@ -563,7 +563,7 @@
   <sch:pattern fpi="TestValues">
     <sch:title>Element Values or Nil Reason Attributes</sch:title>
     <sch:rule context="//*">
-      <sch:assert test="name() = 'geonet:element' or count(*[name()!='geonet:element']) &gt; 0 or
+      <sch:assert test="substring-before(name(), concat(':', local-name())) = 'geonet' or name() = 'geonet:text' or name() = 'geonet:element' or count(*[name()!='geonet:element']) &gt; 0 or
                     namespace-uri() = 'http://www.isotc211.org/2005/gco' or
                     namespace-uri() = 'http://www.isotc211.org/2005/gmx' or
                     namespace-uri() = 'http://www.opengis.net/gml/3.2' or
