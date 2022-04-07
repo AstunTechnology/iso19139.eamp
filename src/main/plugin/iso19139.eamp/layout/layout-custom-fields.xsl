@@ -50,7 +50,7 @@
 
        A custom directive is created.
   -->
-  <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.gemini23']" priority="200">
+  <xsl:template mode="mode-iso19139" match="gml:duration[$schema='iso19139.eamp']" priority="200">
 
     <xsl:variable name="xpath" select="gn-fn-metadata:getXPath(.)"/>
     <xsl:variable name="isoType" select="if (../@gco:isoType) then ../@gco:isoType else ''"/>
