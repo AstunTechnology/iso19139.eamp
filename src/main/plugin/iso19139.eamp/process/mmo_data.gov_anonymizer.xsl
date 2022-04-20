@@ -161,6 +161,7 @@
 	
 	<!-- Remove internal Resource Locators -->
 	<xsl:template match="*/gmd:transferOptions">
+		<gmd:MD_DigitalTransferOptions>
 		<gmd:transferOptions>
            <xsl:for-each select="./gmd:MD_DigitalTransferOptions/gmd:onLine">
 					<xsl:variable name="URL"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/></xsl:variable>
@@ -189,6 +190,7 @@
 					</xsl:if>
 				</xsl:for-each>	
 		</gmd:transferOptions>
+	</gmd:MD_DigitalTransferOptions>
 	</xsl:template>
 	
 	<!-- Change standard from EAMP to Gemini -->
