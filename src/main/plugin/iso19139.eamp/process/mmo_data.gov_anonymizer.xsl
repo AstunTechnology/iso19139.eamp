@@ -162,10 +162,11 @@
 	<!-- Remove internal Resource Locators -->
 	<xsl:template match="*/gmd:transferOptions">
 		<gmd:transferOptions>
-            <gmd:MD_DigitalTransferOptions>
-				<xsl:for-each select="./gmd:MD_DigitalTransferOptions/gmd:onLine">
+           <xsl:for-each select="./gmd:MD_DigitalTransferOptions/gmd:onLine">
 					<xsl:variable name="URL"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:linkage/gmd:URL"/></xsl:variable>
 					<xsl:variable name="protocol"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:protocol/gco:CharacterString"/></xsl:variable>
+					<xsl:variable name="description"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:description/gco:CharacterString"/></xsl:variable>
+					<xsl:variable name="name"><xsl:value-of select="./gmd:CI_OnlineResource/gmd:name/gco:CharacterString"/></xsl:variable>
 					<xsl:if test="contains($URL,'http')">
 						<xsl:if test="not(contains($URL,'intranet.ea.gov'))">
 							<gmd:onLine>
@@ -175,13 +176,18 @@
 									</gmd:linkage>
 									<gmd:protocol>
 										<gco:CharacterString><xsl:value-of select="$protocol"/></gco:CharacterString>
-									</gmd:protocol>	  
+									</gmd:protocol>	
+									<gmd:name>
+										<gco:CharacterString><xsl:value-of select="$name"/></gco:CharacterString>
+									</gmd:name>	
+									<gmd:description>
+										<gco:CharacterString><xsl:value-of select="$description"/></gco:CharacterString>
+									</gmd:description>	  
 								</gmd:CI_OnlineResource>
 							</gmd:onLine>
 						</xsl:if>  
 					</xsl:if>
 				</xsl:for-each>	
-			</gmd:MD_DigitalTransferOptions>
 		</gmd:transferOptions>
 	</xsl:template>
 	
