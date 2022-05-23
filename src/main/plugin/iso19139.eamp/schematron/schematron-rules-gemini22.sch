@@ -903,9 +903,9 @@
         <sch:title>Gemini2-mi11-ReasonableExtents</sch:title>
         <sch:rule context="/*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/gmd:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'] [1]|                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/gmd:EX_GeographicBoundingBox |                /*[1]/gmd:identificationInfo[1]/*[1]/srv:extent/*[1]/gmd:geographicElement/*[@gco:isoType='gmd:EX_GeographicBoundingBox'][1]">
             
-            <sch:assert test="number(translate(string(gmd:westBoundLongitude), '-','')) - number(translate(string(gmd:eastBoundLongitude), '-','')) &gt;= 0.000001">West and East bound longitudes are closer than 0.1 mm, please check.</sch:assert>
+            <sch:assert test="number(translate(string(number(translate(string(gmd:westBoundLongitude), '-','')) - number(translate(string(gmd:eastBoundLongitude), '-',''))), '-','')) &gt;= 0.000001">West and East bound longitudes are closer than 0.1 mm, please check.</sch:assert>
             
-            <sch:assert test="number(translate(string(gmd:northBoundLatitude), '-','')) - number(translate(string(gmd:southBoundLatitude), '-','')) &gt;=0.000001">North and South bound longitudes are closer than 0.1mm, please check.</sch:assert>
+            <sch:assert test="number(translate(string(number(translate(string(gmd:northBoundLatitude), '-','')) - number(translate(string(gmd:southBoundLatitude), '-',''))), '-','')) &gt;=0.000001">North and South bound longitudes are closer than 0.1mm, please check.</sch:assert>
             
         </sch:rule>
     </sch:pattern> 

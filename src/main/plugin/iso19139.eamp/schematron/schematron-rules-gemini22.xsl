@@ -3629,10 +3629,10 @@
       <!--ASSERT
       -->
 <xsl:choose>
-         <xsl:when test="number(translate(string(gmd:westBoundLongitude), '-','')) - number(translate(string(gmd:eastBoundLongitude), '-','')) &gt;= 0.000001"/>
+         <xsl:when test="number(translate(string(number(translate(string(gmd:westBoundLongitude), '-','')) - number(translate(string(gmd:eastBoundLongitude), '-',''))), '-','')) &gt;= 0.000001"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="number(translate(string(gmd:westBoundLongitude), '-','')) - number(translate(string(gmd:eastBoundLongitude), '-','')) &gt;= 0.000001">
+                                test="number(translate(string(number(translate(string(gmd:westBoundLongitude), '-','')) - number(translate(string(gmd:eastBoundLongitude), '-',''))), '-','')) &gt;= 0.000001">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-select-full-path"/>
                </xsl:attribute>
@@ -3644,10 +3644,10 @@
       <!--ASSERT
       -->
 <xsl:choose>
-         <xsl:when test="number(translate(string(gmd:northBoundLatitude), '-','')) - number(translate(string(gmd:southBoundLatitude), '-','')) &gt;=0.000001"/>
+         <xsl:when test="number(translate(string(number(translate(string(gmd:northBoundLatitude), '-','')) - number(translate(string(gmd:southBoundLatitude), '-',''))), '-','')) &gt;=0.000001"/>
          <xsl:otherwise>
             <svrl:failed-assert xmlns:svrl="http://purl.oclc.org/dsdl/svrl" ref="#_{geonet:element/@ref}"
-                                test="number(translate(string(gmd:northBoundLatitude), '-','')) - number(translate(string(gmd:southBoundLatitude), '-','')) &gt;=0.000001">
+                                test="number(translate(string(number(translate(string(gmd:northBoundLatitude), '-','')) - number(translate(string(gmd:southBoundLatitude), '-',''))), '-','')) &gt;=0.000001">
                <xsl:attribute name="location">
                   <xsl:apply-templates select="." mode="schematron-select-full-path"/>
                </xsl:attribute>
