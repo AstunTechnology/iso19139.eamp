@@ -3,37 +3,27 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
-    <artifactId>schemas</artifactId>
+    <artifactId>gn-schemas</artifactId>
     <groupId>org.geonetwork-opensource.schemas</groupId>
-    <version>3.12-SNAPSHOT</version>
+    <version>4.0.6-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>schema-iso19139.eamp</artifactId>
-  <name>EAMP v1.1 Standard</name>
+  <artifactId>gn-schema-iso19139.eamp</artifactId>
+  <name>GeoNetwork schema plugin for EAMP v1.1 Standard</name>
 
    <dependencies>
     <dependency>
       <groupId>org.geonetwork-opensource.schemas</groupId>
-      <artifactId>schema-core</artifactId>
+      <artifactId>gn-schema-core</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.geonetwork-opensource</groupId>
+      <artifactId>gn-core</artifactId>
       <version>${project.version}</version>
       <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>schema-iso19139</artifactId>
-      <version>3.12-SNAPSHOT</version>
-        <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.xmlunit</groupId>
-      <artifactId>xmlunit-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.xmlunit</groupId>
-      <artifactId>xmlunit-matchers</artifactId>
     </dependency>
   </dependencies>
 
@@ -50,7 +40,6 @@
     <plugins>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>2.5</version>
         <executions>
           <execution>
             <id>test-jar</id>
@@ -60,7 +49,27 @@
           </execution>
         </executions>
       </plugin>
-    </plugins>
+
+      <!-- package up plugin folder as a zip -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>plugin-assembly</id>
+            <phase>package</phase>
+            <goals><goal>single</goal></goals>
+            <inherited>false</inherited>
+            <configuration>
+             <appendAssemblyId>false</appendAssemblyId>
+             <descriptors>
+              <descriptor>src/assembly/schema-plugin.xml</descriptor>
+             </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      </plugins>
   </build>
 
   <profiles>
