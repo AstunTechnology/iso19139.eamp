@@ -15,6 +15,21 @@
 	
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" omit-xml-declaration="no"/>
 	
+	<!-- fix namespaces -->
+	<xsl:template name="add-namespaces">
+		<xsl:namespace name="xsi" select="'http://www.w3.org/2001/XMLSchema-instance'"/>
+		<xsl:namespace name="gco" select="'http://www.isotc211.org/2005/gco'"/>
+		<xsl:namespace name="gmd" select="'http://www.isotc211.org/2005/gmd'"/>
+		<xsl:namespace name="srv" select="'http://www.isotc211.org/2005/srv'"/>
+		<xsl:namespace name="gmx" select="'http://www.isotc211.org/2005/gmx'"/>
+		<xsl:namespace name="gts" select="'http://www.isotc211.org/2005/gts'"/>
+		<xsl:namespace name="gsr" select="'http://www.isotc211.org/2005/gsr'"/>
+		<xsl:namespace name="gmi" select="'http://www.isotc211.org/2005/gmi'"/>
+		<xsl:namespace name="gml" select="'http://www.opengis.net/gml/3.2'"/>
+		<xsl:namespace name="xlink" select="'http://www.w3.org/1999/xlink'"/>
+		<xsl:namespace name="eamp" select="'http://environment.data.gov.uk/eamp'"/>
+	</xsl:template>
+	
 	<!-- Don't copy these nodes at all- they are covered by later templates -->
 	<xsl:template match="gmd:pointOfContact"/>
 	
@@ -38,15 +53,18 @@
 	
 	<!--  Change schema location to gemini version  -->
 	<xsl:template match="gmd:MD_Metadata">
-		<xsl:element name="{name()}" namespace="{namespace-uri()}">
+		<!--<xsl:element name="{name()}" namespace="{namespace-uri()}">-->
 			<!--<xsl:namespace name="gml" select="'http://www.opengis.net/gml/3.2'" />-->
 			<!--<xsl:copy-of select="namespace::*[not(name() = ('gml','xsl'))]"/>-->
-			<xsl:copy-of select="namespace::*[not(name() = ('gml') or name()=('xsl'))]"/>
+			<!--<xsl:copy-of select="namespace::*[not(name() = ('gml') or name()=('xsl'))]"/>-->
 			
+			<xsl:copy copy-namespaces="no">
+				<xsl:call-template name="add-namespaces"/>
+				
+						
 			<xsl:apply-templates select="gmd:fileIdentifier" />
 			<xsl:apply-templates select="gmd:language" />  
 			<xsl:apply-templates select="gmd:characterSet" />
-			<xsl:apply-templates select="gmd:characterSet"/>
 				<xsl:if test="not(gmd:characterSet)">
 					<xsl:message>==== Adding default character set ====</xsl:message>
 					<gmd:characterSet>
@@ -96,12 +114,13 @@
 			<xsl:apply-templates select="gmd:propertyType" />    
 			<xsl:apply-templates select="gmd:featureType" />    
 			<xsl:apply-templates select="gmd:featureAttribute" /> 
-		</xsl:element>
+		<!--</xsl:element>-->
+			</xsl:copy>
 	</xsl:template>
 	
 	<!-- geographic identifier element -->
 	<xsl:template match="*/gmd:extent/gmd:EX_Extent">
-		<xsl:copy>
+		<xsl:copy copy-namespaces="no">
 			    <xsl:apply-templates select="gmd:geographicElement"/>
 			<xsl:message>==== Adding default Geographic Identifier Element ====</xsl:message>
 			<gmd:geographicElement>
@@ -124,7 +143,7 @@
 	
 	<!-- EA AfA Status to be inserted as new gmd:resourceConstraints block, first in the list after the last gmd:descriptiveKeyword -->
 	<xsl:template match="*/gmd:descriptiveKeywords[not(following-sibling::gmd:descriptiveKeywords)]">
-		<xsl:copy>
+		<xsl:copy copy-namespaces="no">
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:copy>
 		<gmd:resourceConstraints>
@@ -259,7 +278,7 @@
 				<gmd:role>
 					<gmd:CI_RoleCode
 						codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
-						codeListValue="pointOfContact">Custodian</gmd:CI_RoleCode>
+						codeListValue="Custodian">Custodian</gmd:CI_RoleCode>
 				</gmd:role>
 			</gmd:CI_ResponsibleParty>
 		</gmd:pointOfContact>
@@ -315,7 +334,7 @@
 				<gmd:role>
 					<gmd:CI_RoleCode
 						codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
-						codeListValue="pointOfContact">Custodian</gmd:CI_RoleCode>
+						codeListValue="Custodian">Custodian</gmd:CI_RoleCode>
 				</gmd:role>
 			</gmd:CI_ResponsibleParty>
 		</gmd:pointOfContact>
@@ -371,7 +390,7 @@
 				<gmd:role>
 					<gmd:CI_RoleCode
 						codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
-						codeListValue="pointOfContact">Owner</gmd:CI_RoleCode>
+						codeListValue="Owner">Owner</gmd:CI_RoleCode>
 				</gmd:role>
 			</gmd:CI_ResponsibleParty>
 		</gmd:pointOfContact>
