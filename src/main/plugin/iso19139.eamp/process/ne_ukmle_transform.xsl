@@ -141,13 +141,13 @@
 		</xsl:copy>
 	</xsl:template>
 	
-	<!-- EA AfA Status to be inserted as new gmd:resourceConstraints block, first in the list after the last gmd:descriptiveKeyword -->
+	<!-- EA AfA Status and default openData constraints to be inserted as new block, after the last gmd:descriptiveKeyword -->
 	<xsl:template match="*/gmd:descriptiveKeywords[not(following-sibling::gmd:descriptiveKeywords)]">
 		<xsl:copy copy-namespaces="no">
 			<xsl:apply-templates select="@*|node()"/>
 		</xsl:copy>
 		<gmd:resourceConstraints>
-			<xsl:message>==== Adding default AfA Status and Number ====</xsl:message>
+			<xsl:message>==== Adding default constraints ====</xsl:message>
 			<eamp:EA_Constraints>
 				<eamp:afa>
 					<eamp:EA_Afa>
@@ -161,7 +161,43 @@
 				</eamp:afa>
 			</eamp:EA_Constraints>
 		</gmd:resourceConstraints>
+		<gmd:resourceConstraints>
+			<gmd:MD_Constraints>
+				<gmd:useLimitation>
+					<gco:CharacterString>
+						There are no public access constraints to this data. Use of this data is subject to the licence identified.
+					</gco:CharacterString>
+				</gmd:useLimitation>
+			</gmd:MD_Constraints>
+		</gmd:resourceConstraints>
+		<gmd:resourceConstraints>
+			<gmd:MD_LegalConstraints>
+				<gmd:accessConstraints>
+					<gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" codeListValue="otherRestrictions" codeSpace="ISOTC211/19115">otherRestrictions</gmd:MD_RestrictionCode>
+				</gmd:accessConstraints>
+				<gmd:accessConstraints>
+					<gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" codeListValue="license" codeSpace="ISOTC211/19115">license</gmd:MD_RestrictionCode>
+				</gmd:accessConstraints>
+				<gmd:accessConstraints>
+					<gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
+				</gmd:accessConstraints>
+				<gmd:otherConstraints>
+					<gco:CharacterString>Open Government Licence</gco:CharacterString>
+				</gmd:otherConstraints>
+				<gmd:otherConstraints>
+					<gco:CharacterString>
+						© NE COPYRIGHT STATEMENT TO GO HERE
+					</gco:CharacterString>
+				</gmd:otherConstraints>
+			</gmd:MD_LegalConstraints>
+		</gmd:resourceConstraints>
 	</xsl:template>
+	
+	<!-- wipe existing gmd:resourceConstraints -->
+	<xsl:template match="*/gmd:resourceConstraints"/>
+	
+	
+
 	
 	
 	<!-- generic contacts in the form required by EAMP after abstract-->
