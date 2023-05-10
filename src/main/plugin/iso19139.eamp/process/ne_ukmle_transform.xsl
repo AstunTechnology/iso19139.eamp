@@ -182,7 +182,7 @@
 					<gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
 				</gmd:accessConstraints>
 				<gmd:otherConstraints>
-					<!-- use useLimitation -->
+					<!-- use useLimitation from original record in anchor with href form if available-->
 					<xsl:variable name="nelicensetext" select="//gmd:MD_Constraints/gmd:useLimitation/(gmx:Anchor|gco:CharacterString)"/>
 					<xsl:variable name="nelicensehref" select="//gmd:MD_Constraints/gmd:useLimitation/gmx:Anchor/@xlink:href"/>
 					<xsl:choose>
