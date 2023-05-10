@@ -182,13 +182,41 @@
 					<gmd:MD_RestrictionCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#MD_RestrictionCode" codeListValue="copyright" codeSpace="ISOTC211/19115">copyright</gmd:MD_RestrictionCode>
 				</gmd:accessConstraints>
 				<gmd:otherConstraints>
-					<gco:CharacterString>Open Government Licence</gco:CharacterString>
+					<!-- use useLimitation -->
+					<xsl:variable name="nelicensetext" select="//gmd:MD_Constraints/gmd:useLimitation/(gmx:Anchor|gco:CharacterString)"/>
+					<xsl:variable name="nelicensehref" select="//gmd:MD_Constraints/gmd:useLimitation/gmx:Anchor/@xlink:href"/>
+					<xsl:choose>
+						<xsl:when test="$nelicensehref = ''">
+							<gco:CharacterString>
+								<xsl:value-of select="$nelicensetext"></xsl:value-of>
+							</gco:CharacterString>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:element name="gmx:anchor">
+								<xsl:attribute name="xlink:href">
+									<xsl:value-of select="$nelicensehref"/>
+								</xsl:attribute>
+								<xsl:value-of select="$nelicensetext"/>
+							</xsl:element>
+						</xsl:otherwise>
+					</xsl:choose>
 				</gmd:otherConstraints>
 				<gmd:otherConstraints>
-					<gco:CharacterString>
-						© NE COPYRIGHT STATEMENT TO GO HERE
-					</gco:CharacterString>
-				</gmd:otherConstraints>
+					<!-- if Attribution statement is present in abstract, use that for copyright -->
+						<xsl:choose>
+						<xsl:when test="contains(//gmd:abstract/gco:CharacterString,'Attribution statement')">
+							<xsl:variable name="copyrightText" select="substring-after(//gmd:abstract/gco:CharacterString,'Attribution statement: ')"/>
+							<gco:CharacterString>
+								<xsl:value-of select="$copyrightText"></xsl:value-of>
+							</gco:CharacterString>
+						</xsl:when>
+						<xsl:otherwise>
+							<gco:CharacterString>
+								<xsl:text>© Natural England [year]</xsl:text>
+							</gco:CharacterString>
+						</xsl:otherwise>
+						</xsl:choose>
+							</gmd:otherConstraints>
 			</gmd:MD_LegalConstraints>
 		</gmd:resourceConstraints>
 	</xsl:template>
