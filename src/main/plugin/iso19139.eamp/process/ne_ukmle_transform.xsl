@@ -231,7 +231,16 @@
 	<!-- generic contacts in the form required by EAMP after abstract-->
 	<xsl:template match="*/gmd:abstract">
 		<gmd:abstract>
-			<gco:CharacterString><xsl:value-of select="./gco:CharacterString"></xsl:value-of></gco:CharacterString>
+			<gco:CharacterString>
+				<xsl:value-of select="./gco:CharacterString"></xsl:value-of>
+				<xsl:if test="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/gco:CharacterString">
+					<xsl:message>==== Appending Supplemental Information to Abstract ====</xsl:message>
+					<xsl:text>&#xa;</xsl:text>
+					<xsl:text>Supplemental Information: </xsl:text>
+					<xsl:value-of select="."></xsl:value-of>
+					<xsl:text>&#xa;</xsl:text>
+				</xsl:if>
+			</gco:CharacterString>
 		</gmd:abstract>
 		<xsl:message>==== Adding default contacts ====</xsl:message>
 		<gmd:pointOfContact>
