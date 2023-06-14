@@ -184,13 +184,13 @@
 				<gmd:otherConstraints>
 					<!-- use useLimitation from original record in anchor with href form if available-->
 					<xsl:variable name="nelicensetext" select="//gmd:MD_Constraints/gmd:useLimitation/(gmx:Anchor|gco:CharacterString)"/>
-					<xsl:variable name="nelicensehref" select="//gmd:MD_Constraints/gmd:useLimitation/gmx:Anchor/@xlink:href"/>
-					<xsl:choose>
-						<xsl:when test="$nelicensehref = ''">
+					<!--<xsl:variable name="nelicensehref" select="//gmd:MD_Constraints/gmd:useLimitation/gmx:Anchor/@xlink:href"/>-->
+					<!--<xsl:choose>
+						<xsl:when test="$nelicensehref = ''">-->
 							<gco:CharacterString>
 								<xsl:value-of select="$nelicensetext"></xsl:value-of>
 							</gco:CharacterString>
-						</xsl:when>
+						<!--</xsl:when>
 						<xsl:otherwise>
 							<xsl:element name="gmx:anchor">
 								<xsl:attribute name="xlink:href">
@@ -199,7 +199,7 @@
 								<xsl:value-of select="$nelicensetext"/>
 							</xsl:element>
 						</xsl:otherwise>
-					</xsl:choose>
+					</xsl:choose>-->
 				</gmd:otherConstraints>
 				<gmd:otherConstraints>
 					<!-- if Attribution statement is present in abstract, use that for copyright -->
@@ -237,7 +237,7 @@
 					<xsl:message>==== Appending Supplemental Information to Abstract ====</xsl:message>
 					<xsl:text>&#xa;</xsl:text>
 					<xsl:text>Supplemental Information: </xsl:text>
-					<xsl:value-of select="."></xsl:value-of>
+					<xsl:value-of select="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:supplementalInformation/gco:CharacterString"></xsl:value-of>
 					<xsl:text>&#xa;</xsl:text>
 				</xsl:if>
 			</gco:CharacterString>
@@ -468,6 +468,9 @@
 			</gmd:CI_ResponsibleParty>
 		</gmd:pointOfContact>
 	</xsl:template>
+	
+	<!-- wipe existing gmd:supplementalInformation -->
+	<xsl:template match="*/gmd:supplementalInformation"/>
 	
 	
 	<xsl:template match="*">
