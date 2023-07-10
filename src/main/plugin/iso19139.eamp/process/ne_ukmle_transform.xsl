@@ -48,6 +48,46 @@
 		</gmd:metadataStandardVersion>
 	</xsl:template>
 	
+	<!-- Removing optional codepsace from Citation Identifier -->
+	<xsl:template match="gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:codeSpace">
+		<xsl:message>==== Removing Citation Identifier codespace ====</xsl:message>
+	</xsl:template>
+	
+	<!-- Removing optional spatial resolution element -->
+	<xsl:template match="gmd:spatialResolution">
+		<xsl:message>==== Removing Spatial Resolution ====</xsl:message>
+	</xsl:template>
+	
+	<!-- Prefix title to ensure these are easy to find and not duplicates -->
+	<xsl:template match="gmd:citation/gmd:CI_Citation/gmd:title">
+		<xsl:variable name="recordtitle" select="gco:CharacterString/text()"/>
+		<gco:CharacterString>
+			<xsl:value-of select="concat('TEST UKMLE ', gco:CharacterString/text())"/>
+		</gco:CharacterString>
+	</xsl:template>
+	
+	<!-- remove optional fields from contact information -->
+	<xsl:template match="gmd:contact/gmd:CI_ResponsibleParty">
+	<gmd:CI_ResponsibleParty>
+		<xsl:variable name="emailAddress" select="gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress/gco:CharacterString/text()"/>
+		<xsl:apply-templates select="gmd:individualName" />
+		<xsl:apply-templates select="gmd:organisationName" />
+		<xsl:apply-templates select="gmd:positionName" />
+			<gmd:contactInfo>
+				<gmd:CI_Contact>
+					<gmd:address>
+						<gmd:CI_Address>
+						<gmd:electronicMailAddress>
+							<gco:CharacterString><xsl:value-of select="$emailAddress"/></gco:CharacterString>
+						</gmd:electronicMailAddress>
+						</gmd:CI_Address>
+					</gmd:address>
+				</gmd:CI_Contact>
+			</gmd:contactInfo>
+		<xsl:apply-templates select="gmd:role"/>
+	</gmd:CI_ResponsibleParty>
+	</xsl:template>
+	
 	
 	
 	
@@ -141,6 +181,22 @@
 		</xsl:copy>
 	</xsl:template>
 	
+	<!-- align Online Resource fields with standard EAMP -->
+	<xsl:template match="*/gmd:MD_DigitalTransferOptions/gmd:onLine/gmd:CI_OnlineResource">
+		<xsl:copy copy-namespaces="no">
+			<xsl:apply-templates select="gmd:linkage"/>
+			<xsl:apply-templates select="gmd:name"/>
+				<xsl:variable name="downloadname" select="gmd:name"/>
+		<gmd:protocol>
+			<gco:CharacterString>WWW:LINK-1.0-http--link</gco:CharacterString>
+		</gmd:protocol>
+		<gmd:description>
+			<gco:CharacterString><xsl:value-of select="$downloadname"></xsl:value-of></gco:CharacterString>
+		</gmd:description>
+		</xsl:copy>
+	</xsl:template>
+	
+	
 	<!-- EA AfA Status and default openData constraints to be inserted as new block, after the last gmd:descriptiveKeyword -->
 	<xsl:template match="*/gmd:descriptiveKeywords[not(following-sibling::gmd:descriptiveKeywords)]">
 		<xsl:copy copy-namespaces="no">
@@ -229,6 +285,7 @@
 	
 	
 	<!-- generic contacts in the form required by EAMP after abstract-->
+	<!-- remove optional fields from contact information -->
 	<xsl:template match="*/gmd:abstract">
 		<gmd:abstract>
 			<gco:CharacterString>
@@ -256,16 +313,16 @@
 				</gmd:positionName>
 				<gmd:contactInfo>
 					<gmd:CI_Contact>
-						<gmd:phone>
+						<!--<gmd:phone>
 							<gmd:CI_Telephone>
 								<gmd:voice>
 									<gco:CharacterString>0300 060 3900</gco:CharacterString>
 								</gmd:voice>
 							</gmd:CI_Telephone>
-						</gmd:phone>
+						</gmd:phone>-->
 						<gmd:address>
 							<gmd:CI_Address>
-								<gmd:deliveryPoint>
+								<!--<gmd:deliveryPoint>
 									<gco:CharacterString>Foss House, Kings Pool, 1-2 Peasholme
 										Green</gco:CharacterString>
 								</gmd:deliveryPoint>
@@ -277,19 +334,19 @@
 								</gmd:postalCode>
 								<gmd:country>
 									<gco:CharacterString>United Kingdom</gco:CharacterString>
-								</gmd:country>
+								</gmd:country>-->
 								<gmd:electronicMailAddress>
 									<gco:CharacterString>Data.Services@naturalengland.org.uk</gco:CharacterString>
 								</gmd:electronicMailAddress>
 							</gmd:CI_Address>
 						</gmd:address>
-						<gmd:onlineResource>
+						<!--<gmd:onlineResource>
 							<gmd:CI_OnlineResource>
 								<gmd:linkage>
 									<gmd:URL>https://www.gov.uk/government/organisations/natural-england</gmd:URL>
 								</gmd:linkage>
 							</gmd:CI_OnlineResource>
-						</gmd:onlineResource>
+						</gmd:onlineResource>-->
 					</gmd:CI_Contact>
 				</gmd:contactInfo>
 				<gmd:role>
@@ -311,17 +368,17 @@
 					<gco:CharacterString>Enquiries</gco:CharacterString>
 				</gmd:positionName>
 				<gmd:contactInfo>
-					<gmd:CI_Contact>
+					<!--<gmd:CI_Contact>
 						<gmd:phone>
 							<gmd:CI_Telephone>
 								<gmd:voice>
 									<gco:CharacterString>0300 060 3900</gco:CharacterString>
 								</gmd:voice>
 							</gmd:CI_Telephone>
-						</gmd:phone>
+						</gmd:phone>-->
 						<gmd:address>
 							<gmd:CI_Address>
-								<gmd:deliveryPoint>
+								<!--gmd:deliveryPoint>
 									<gco:CharacterString>Foss House, Kings Pool, 1-2 Peasholme
 										Green</gco:CharacterString>
 								</gmd:deliveryPoint>
@@ -333,19 +390,75 @@
 								</gmd:postalCode>
 								<gmd:country>
 									<gco:CharacterString>United Kingdom</gco:CharacterString>
-								</gmd:country>
+								</gmd:country>-->
 								<gmd:electronicMailAddress>
 									<gco:CharacterString>Data.Services@naturalengland.org.uk</gco:CharacterString>
 								</gmd:electronicMailAddress>
 							</gmd:CI_Address>
 						</gmd:address>
-						<gmd:onlineResource>
+						<!--<gmd:onlineResource>
 							<gmd:CI_OnlineResource>
 								<gmd:linkage>
 									<gmd:URL>https://www.gov.uk/government/organisations/natural-england</gmd:URL>
 								</gmd:linkage>
 							</gmd:CI_OnlineResource>
-						</gmd:onlineResource>
+						</gmd:onlineResource>-->
+					<!--</gmd:CI_Contact>-->
+				</gmd:contactInfo>
+				<gmd:role>
+					<gmd:CI_RoleCode
+						codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
+						codeListValue="Custodian">Custodian</gmd:CI_RoleCode>
+				</gmd:role>
+			</gmd:CI_ResponsibleParty>
+		</gmd:pointOfContact>
+		<gmd:pointOfContact>
+			<gmd:CI_ResponsibleParty>
+				<gmd:individualName>
+					<gco:CharacterString>Data Services</gco:CharacterString>
+				</gmd:individualName>
+				<gmd:organisationName>
+					<gco:CharacterString>Natural England</gco:CharacterString>
+				</gmd:organisationName>
+				<gmd:positionName>
+					<gco:CharacterString>Enquiries</gco:CharacterString>
+				</gmd:positionName>
+				<gmd:contactInfo>
+					<gmd:CI_Contact>
+						<!--<gmd:phone>
+							<gmd:CI_Telephone>
+								<gmd:voice>
+									<gco:CharacterString>0300 060 3900</gco:CharacterString>
+								</gmd:voice>
+							</gmd:CI_Telephone>
+						</gmd:phone>-->
+						<gmd:address>
+							<gmd:CI_Address>
+								<!--<gmd:deliveryPoint>
+									<gco:CharacterString>Foss House, Kings Pool, 1-2 Peasholme
+										Green</gco:CharacterString>
+								</gmd:deliveryPoint>
+								<gmd:city>
+									<gco:CharacterString>York</gco:CharacterString>
+								</gmd:city>
+								<gmd:postalCode>
+									<gco:CharacterString>YO1 7PX</gco:CharacterString>
+								</gmd:postalCode>
+								<gmd:country>
+									<gco:CharacterString>United Kingdom</gco:CharacterString>
+								</gmd:country>-->
+								<gmd:electronicMailAddress>
+									<gco:CharacterString>Data.Services@naturalengland.org.uk</gco:CharacterString>
+								</gmd:electronicMailAddress>
+							</gmd:CI_Address>
+						</gmd:address>
+						<!--<gmd:onlineResource>
+							<gmd:CI_OnlineResource>
+								<gmd:linkage>
+									<gmd:URL>https://www.gov.uk/government/organisations/natural-england</gmd:URL>
+								</gmd:linkage>
+							</gmd:CI_OnlineResource>
+						</gmd:onlineResource>-->
 					</gmd:CI_Contact>
 				</gmd:contactInfo>
 				<gmd:role>
@@ -368,16 +481,16 @@
 				</gmd:positionName>
 				<gmd:contactInfo>
 					<gmd:CI_Contact>
-						<gmd:phone>
+						<!--<gmd:phone>
 							<gmd:CI_Telephone>
 								<gmd:voice>
 									<gco:CharacterString>0300 060 3900</gco:CharacterString>
 								</gmd:voice>
 							</gmd:CI_Telephone>
-						</gmd:phone>
+						</gmd:phone>-->
 						<gmd:address>
 							<gmd:CI_Address>
-								<gmd:deliveryPoint>
+								<!--<gmd:deliveryPoint>
 									<gco:CharacterString>Foss House, Kings Pool, 1-2 Peasholme
 										Green</gco:CharacterString>
 								</gmd:deliveryPoint>
@@ -389,75 +502,19 @@
 								</gmd:postalCode>
 								<gmd:country>
 									<gco:CharacterString>United Kingdom</gco:CharacterString>
-								</gmd:country>
+								</gmd:country>-->
 								<gmd:electronicMailAddress>
 									<gco:CharacterString>Data.Services@naturalengland.org.uk</gco:CharacterString>
 								</gmd:electronicMailAddress>
 							</gmd:CI_Address>
 						</gmd:address>
-						<gmd:onlineResource>
+						<!--<gmd:onlineResource>
 							<gmd:CI_OnlineResource>
 								<gmd:linkage>
 									<gmd:URL>https://www.gov.uk/government/organisations/natural-england</gmd:URL>
 								</gmd:linkage>
 							</gmd:CI_OnlineResource>
-						</gmd:onlineResource>
-					</gmd:CI_Contact>
-				</gmd:contactInfo>
-				<gmd:role>
-					<gmd:CI_RoleCode
-						codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode"
-						codeListValue="Custodian">Custodian</gmd:CI_RoleCode>
-				</gmd:role>
-			</gmd:CI_ResponsibleParty>
-		</gmd:pointOfContact>
-		<gmd:pointOfContact>
-			<gmd:CI_ResponsibleParty>
-				<gmd:individualName>
-					<gco:CharacterString>Data Services</gco:CharacterString>
-				</gmd:individualName>
-				<gmd:organisationName>
-					<gco:CharacterString>Natural England</gco:CharacterString>
-				</gmd:organisationName>
-				<gmd:positionName>
-					<gco:CharacterString>Enquiries</gco:CharacterString>
-				</gmd:positionName>
-				<gmd:contactInfo>
-					<gmd:CI_Contact>
-						<gmd:phone>
-							<gmd:CI_Telephone>
-								<gmd:voice>
-									<gco:CharacterString>0300 060 3900</gco:CharacterString>
-								</gmd:voice>
-							</gmd:CI_Telephone>
-						</gmd:phone>
-						<gmd:address>
-							<gmd:CI_Address>
-								<gmd:deliveryPoint>
-									<gco:CharacterString>Foss House, Kings Pool, 1-2 Peasholme
-										Green</gco:CharacterString>
-								</gmd:deliveryPoint>
-								<gmd:city>
-									<gco:CharacterString>York</gco:CharacterString>
-								</gmd:city>
-								<gmd:postalCode>
-									<gco:CharacterString>YO1 7PX</gco:CharacterString>
-								</gmd:postalCode>
-								<gmd:country>
-									<gco:CharacterString>United Kingdom</gco:CharacterString>
-								</gmd:country>
-								<gmd:electronicMailAddress>
-									<gco:CharacterString>Data.Services@naturalengland.org.uk</gco:CharacterString>
-								</gmd:electronicMailAddress>
-							</gmd:CI_Address>
-						</gmd:address>
-						<gmd:onlineResource>
-							<gmd:CI_OnlineResource>
-								<gmd:linkage>
-									<gmd:URL>https://www.gov.uk/government/organisations/natural-england</gmd:URL>
-								</gmd:linkage>
-							</gmd:CI_OnlineResource>
-						</gmd:onlineResource>
+						</gmd:onlineResource>-->
 					</gmd:CI_Contact>
 				</gmd:contactInfo>
 				<gmd:role>
