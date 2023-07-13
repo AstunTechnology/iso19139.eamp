@@ -59,11 +59,18 @@
 	</xsl:template>
 	
 	<!-- Prefix title to ensure these are easy to find and not duplicates -->
-	<xsl:template match="gmd:citation/gmd:CI_Citation/gmd:title">
-		<xsl:variable name="recordtitle" select="gco:CharacterString/text()"/>
-		<gco:CharacterString>
-			<xsl:value-of select="concat('TEST UKMLE ', gco:CharacterString/text())"/>
-		</gco:CharacterString>
+	<xsl:template match="gmd:MD_DataIdentification/gmd:citation/gmd:CI_Citation">
+		<xsl:variable name="recordtitle" select="gmd:title/gco:CharacterString/text()"/>
+		<gmd:CI_Citation>
+		<gmd:title>
+			<gco:CharacterString>
+				<xsl:value-of select="concat('TEST UKMLE ', $recordtitle)"/>
+			</gco:CharacterString>
+		</gmd:title>
+		<xsl:apply-templates select="gmd:alternateTitle" />
+		<xsl:apply-templates select="gmd:date" />
+		<xsl:apply-templates select="gmd:identifier" />
+		</gmd:CI_Citation>
 	</xsl:template>
 	
 	<!-- remove optional fields from contact information -->
