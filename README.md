@@ -10,4 +10,4 @@ the outcome of an Environment Agency legal process decision as to whether or not
 ## EAMP schema plugin for GeoNetwork
 
 
-**This repository is no longer supported and has been archived. Issues or Pull Requests will not be accepted. For further information please visit https://environment.data.gov.uk/ **
+**This repository is no longer supported and has been archived. Issues or Pull Requests will not be accepted. For further information please visit https://environment.data.gov.uk/**
